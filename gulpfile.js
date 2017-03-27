@@ -12,5 +12,4 @@ gulp.task('server:test', (done) => {
     .on('end', done);
 });
 
-
 gulp.task('default', ['server:test']);
