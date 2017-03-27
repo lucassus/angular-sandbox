@@ -5,14 +5,15 @@ import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-list',
-  templateUrl: './contacts-list.component.html'
+  templateUrl: './list.component.html'
 })
-export class ContactsListComponent implements OnInit {
+export class ListComponent implements OnInit {
 
   contacts: Array<Contact>;
 
   constructor(private contactsService: ContactsService) { }
 
+  // TODO resolve it in the controller
   ngOnInit() {
     this.contactsService.query().then((contacts) => {
       this.contacts = contacts;

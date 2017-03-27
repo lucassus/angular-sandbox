@@ -14,7 +14,11 @@
   <tbody>
   <tr *ngFor="let contact of contacts">
     <td>{{contact.id}}</td>
-    <td>{{contact.firstName}} {{contact.lastName}}</td>
+    <td>
+      <a [routerLink]="['.', contact.id]">
+        {{contact.firstName}} {{contact.lastName}}
+      </a>
+    </td>
     <td>{{contact.email}}</td>
     <td>{{contact.phone}}</td>
     <td>{{contact.updatedAt | date:'medium'}}</td>

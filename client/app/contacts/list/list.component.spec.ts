@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { RouterModule, RouterOutletMap } from '@angular/router';
 
 import { Contact } from '../contact';
-import { ContactsListComponent } from './contacts-list.component';
+import { ListComponent } from './list.component';
 import { ContactsService } from '../contacts.service';
 
 const contactsServiceStub = {
@@ -15,21 +16,25 @@ const contactsServiceStub = {
 
 };
 
-describe('ContactsListComponent', () => {
+describe('ListComponent', () => {
 
-  let fixture: ComponentFixture<ContactsListComponent>;
+  let fixture: ComponentFixture<ListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterModule
+      ],
       declarations: [
-        ContactsListComponent
+        ListComponent
       ],
       providers: [
+        RouterOutletMap,
         { provide: ContactsService, useValue: contactsServiceStub }
       ]
     });
 
-    fixture = TestBed.createComponent(ContactsListComponent);
+    fixture = TestBed.createComponent(ListComponent);
     fixture.detectChanges();
   }));
 
