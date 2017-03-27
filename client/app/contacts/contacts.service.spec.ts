@@ -89,4 +89,33 @@ describe('ContactsService', () => {
 
   });
 
+  describe('.get', () => {
+
+    describe('on success', () => {
+
+      beforeEach(() => {
+        mockBackend.connections.subscribe((connection: MockConnection) => {
+          expect(connection.request.url).toBe('/api/contacts/123');
+
+          connection.mockRespond(new Response(new ResponseOptions({
+            body: JSON.stringify({ id: 123, firstName: 'Luke' })
+          })));
+        });
+      });
+
+      it('should resolve a contact', fakeAsync(() => {
+        contactsService.get(123).then((contact: Contact) => {
+          expect(contact).not.toBeUndefined();
+
+          expect(contact.id).toEqual(123);
+          expect(contact.firstName).toEqual('Luke');
+        });
+
+        tick();
+      }));
+
+    });
+
+  });
+
 });

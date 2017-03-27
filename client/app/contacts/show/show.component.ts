@@ -20,6 +20,7 @@ export class ShowComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       const { id } = params;
+
       this.contactsService.get(id).then((contact) => {
         this.contact = contact;
       });
