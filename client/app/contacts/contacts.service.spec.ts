@@ -1,5 +1,5 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ConnectionBackend, BaseRequestOptions, Http, ResponseOptions, Response } from '@angular/http';
+import { ConnectionBackend, BaseRequestOptions, Http, ResponseOptions, Response, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { ContactsService } from './contacts.service';
@@ -36,6 +36,7 @@ describe('ContactsService', () => {
 
       beforeEach(() => {
         mockBackend.connections.subscribe((connection: MockConnection) => {
+          expect(connection.request.method).toBe(RequestMethod.Get);
           expect(connection.request.url).toBe('/api/contacts');
 
           connection.mockRespond(new Response(new ResponseOptions({
@@ -72,7 +73,9 @@ describe('ContactsService', () => {
 
       beforeEach(() => {
         mockBackend.connections.subscribe((connection: MockConnection) => {
+          expect(connection.request.method).toBe(RequestMethod.Get);
           expect(connection.request.url).toBe('/api/contacts');
+
           connection.mockError(new Error('Something went wrong...'));
         });
       });
@@ -95,6 +98,7 @@ describe('ContactsService', () => {
 
       beforeEach(() => {
         mockBackend.connections.subscribe((connection: MockConnection) => {
+          expect(connection.request.method).toBe(RequestMethod.Get);
           expect(connection.request.url).toBe('/api/contacts/123');
 
           connection.mockRespond(new Response(new ResponseOptions({
@@ -109,6 +113,42 @@ describe('ContactsService', () => {
 
           expect(contact.id).toEqual(123);
           expect(contact.firstName).toEqual('Luke');
+        });
+
+        tick();
+      }));
+
+    });
+
+  });
+
+  describe('.update', () => {
+
+    describe('on success', () => {
+
+      beforeEach(() => {
+        mockBackend.connections.subscribe((connection: MockConnection) => {
+          expect(connection.request.method).toEqual(RequestMethod.Put);
+          expect(connection.request.url).toEqual('/api/contacts/124');
+
+          const data = JSON.parse(connection.request.getBody());
+          expect(data.firstName).toEqual('Luke');
+          expect(data.lastName).toEqual('Skywalker');
+
+          connection.mockRespond(new Response(new ResponseOptions({
+            body: JSON.stringify({ id: 124, firstName: 'Luke', lastName: 'Skywalker', updatedAt: 12345678 })
+          })));
+        });
+      });
+
+      it('should update a contact', fakeAsync(() => {
+        contactsService.update(124, { firstName: 'Luke', lastName: 'Skywalker' }).then((contact: Contact) => {
+          expect(contact).not.toBeUndefined();
+
+          expect(contact.id).toEqual(124);
+          expect(contact.firstName).toEqual('Luke');
+          expect(contact.lastName).toEqual('Skywalker');
+          expect(contact.updatedAt).toEqual(12345678);
         });
 
         tick();

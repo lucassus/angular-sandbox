@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ContactsModule } from './contacts/contacts.module';
-import { ContactsComponent } from './contacts/contacts.component';
+import { EditComponent } from './contacts/edit/edit.component';
 import { ListComponent } from './contacts/list/list.component';
 import { ShowComponent } from './contacts/show/show.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 import { HomeModule } from './home/home.module';
 import { HomeComponent } from './home/home.component';
@@ -32,6 +33,9 @@ const appRoutes: Routes = [{
   }, {
     path: ':id',
     component: ShowComponent
+  }, {
+    path: ':id/edit',
+    component: EditComponent
   }]
 }, {
   path: '**', component: PageNotFoundComponent

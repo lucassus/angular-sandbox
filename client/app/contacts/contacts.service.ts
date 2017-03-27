@@ -22,9 +22,16 @@ export class ContactsService {
       });
   }
 
-  // TODO write specs
   get(id: number): Promise<Contact> {
     return this.http.get(`/api/contacts/${id}`)
+      .toPromise()
+      .then((response: Response) => {
+        return buildContact(response.json());
+      });
+  }
+
+  update(id: number, data: any): Promise<Contact> {
+    return this.http.put(`/api/contacts/${id}`, data)
       .toPromise()
       .then((response: Response) => {
         return buildContact(response.json());
