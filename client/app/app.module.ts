@@ -3,19 +3,26 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ContactsModule } from './contacts/contacts.module';
+import { ContactsComponent } from './contacts/contacts.component';
 import { ListComponent } from './contacts/list/list.component';
 import { ShowComponent } from './contacts/show/show.component';
+
 import { HomeModule } from './home/home.module';
+import { HomeComponent } from './home/home.component';
 import { IndexComponent } from './home/index/index.component';
+
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppComponent } from './app.component';
-import { ContactsComponent } from './contacts/contacts.component';
 
 // TODO add separate routing module
 // TODO lazy loaded routes
 const appRoutes: Routes = [{
   path: '',
-  component: IndexComponent
+  component: HomeComponent,
+  children: [{
+    path: '',
+    component: IndexComponent
+  }]
 }, {
   path: 'contacts',
   component: ContactsComponent,

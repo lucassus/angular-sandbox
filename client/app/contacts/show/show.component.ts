@@ -5,10 +5,10 @@ import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
 @Component({
-  selector: 'app-show',
+  selector: 'app-contacts-show',
   templateUrl: './show.component.html'
 })
-export class ShowComponent implements OnInit{
+export class ShowComponent implements OnInit {
 
   contact: Contact;
 
@@ -22,7 +22,7 @@ export class ShowComponent implements OnInit{
       const { id } = params;
       this.contactsService.get(id).then((contact) => {
         this.contact = contact;
-      })
+      });
     });
   }
 

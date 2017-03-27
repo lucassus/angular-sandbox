@@ -7,7 +7,7 @@ import { Contact } from './contact';
 
 describe('ContactsService', () => {
 
-  let backend: MockBackend;
+  let mockBackend: MockBackend;
   let contactsService: ContactsService;
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('ContactsService', () => {
       ]
     });
 
-    backend = TestBed.get(MockBackend);
+    mockBackend = TestBed.get(MockBackend);
     contactsService = TestBed.get(ContactsService);
   });
 
@@ -35,7 +35,7 @@ describe('ContactsService', () => {
     describe('on success', () => {
 
       beforeEach(() => {
-        backend.connections.subscribe((connection: MockConnection) => {
+        mockBackend.connections.subscribe((connection: MockConnection) => {
           expect(connection.request.url).toBe('/api/contacts');
 
           connection.mockRespond(new Response(new ResponseOptions({
@@ -71,7 +71,7 @@ describe('ContactsService', () => {
     describe('on error', () => {
 
       beforeEach(() => {
-        backend.connections.subscribe((connection: MockConnection) => {
+        mockBackend.connections.subscribe((connection: MockConnection) => {
           expect(connection.request.url).toBe('/api/contacts');
           connection.mockError(new Error('Something went wrong...'));
         });
