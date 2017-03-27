@@ -1,6 +1,8 @@
 <h2>Contacts list</h2>
 
-<table class="table table-striped table-hover" ng-if="$ctrl.contacts.length > 0">
+<span *ngIf="!contacts">Loading contacts...</span>
+
+<table class="table table-striped table-hover" *ngIf="contacts">
   <thead>
   <tr>
     <th>#</th>

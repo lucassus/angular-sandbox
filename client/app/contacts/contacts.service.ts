@@ -3,6 +3,10 @@ import { Http, Response } from '@angular/http';
 
 import { Contact } from './contact';
 
+function buildContact({ id, firstName, lastName, email, phone, updatedAt }): Contact {
+  return new Contact(id, firstName, lastName, email, phone, updatedAt);
+}
+
 @Injectable()
 export class ContactsService {
 
@@ -14,9 +18,16 @@ export class ContactsService {
       .then((response: Response) => {
         const { contacts } = response.json();
 
-        return contacts.map(({ id, firstName, lastName, email, phone, updatedAt }) => {
-          return new Contact(id, firstName, lastName, email, phone, updatedAt);
-        });
+        return contacts.map(buildContact);
+      });
+  }
+
+  // TODO write specs
+  get(id: number): Promise<Contact> {
+    return this.http.get(`/api/contacts/${id}`)
+      .toPromise()
+      .then((response: Response) => {
+        return buildContact(response.json());
       });
   }
 

@@ -1,3 +1,4 @@
+// TODO write specs
 // TODO use `Immutable.Record`?
 export class Contact {
 

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { RouterModule, RouterOutletMap } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { Contact } from '../contact';
 import { ListComponent } from './list.component';
@@ -23,15 +23,14 @@ describe('ListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterModule
+        RouterTestingModule
       ],
       declarations: [
         ListComponent
       ],
-      providers: [
-        RouterOutletMap,
-        { provide: ContactsService, useValue: contactsServiceStub }
-      ]
+      providers: [{
+        provide: ContactsService, useValue: contactsServiceStub
+      }]
     });
 
     fixture = TestBed.createComponent(ListComponent);
