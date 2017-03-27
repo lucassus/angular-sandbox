@@ -1,7 +1,16 @@
+import { Component } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
+
+@Component({
+  selector: 'app-contacts-list',
+  template: ''
+})
+class FakeContactsList {
+
+}
 
 describe('AppComponent', () => {
 
@@ -9,7 +18,8 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        HelloWorldComponent
+        HelloWorldComponent,
+        FakeContactsList
       ],
     }).compileComponents();
   }));
