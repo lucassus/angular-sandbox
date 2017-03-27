@@ -1,32 +1,18 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { Contact } from '../contact';
-import { ContactsService } from '../contacts.service';
 import { ShowComponent } from './show.component';
 
-const contactsServiceStub = {
-
-  get(id: number): Promise<Contact> {
-    const contact = new Contact(id, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001);
-    return Promise.resolve(contact);
-  }
-
-};
-
-// TODO figure out how to stub `routerLink`
-xdescribe('ShowComponent', () => {
+describe('ShowComponent', () => {
 
   let component: ShowComponent;
   let fixture: ComponentFixture<ShowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
       declarations: [
         ShowComponent
       ],
@@ -34,11 +20,13 @@ xdescribe('ShowComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.of({ id: 123 })
+            data: Observable.of({
+              contact: new Contact(123, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001)
+            })
           }
-        },
-        { provide: ContactsService, useValue: contactsServiceStub }
-      ]
+        }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(ShowComponent);
@@ -47,19 +35,9 @@ xdescribe('ShowComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should load and show a contact', fakeAsync(() => {
-    // Given
+  it('should load and show a contact', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;
 
-    expect(compiled.querySelector('span').textContent)
-      .toContain('Loading contact...');
-    expect(compiled.querySelector('dl')).toBeNull();
-
-    // When
-    tick();
-    fixture.detectChanges();
-
-    // Then
     expect(compiled.querySelector('dl')).not.toBeNull();
 
     expect(compiled.querySelector('dl dd:nth-of-type(1)').textContent)
@@ -70,6 +48,6 @@ xdescribe('ShowComponent', () => {
       .toContain('Skywalker');
     expect(compiled.querySelector('dl dd:nth-of-type(4)').textContent)
       .toContain('luke@rebel.org');
-  }));
+  });
 
 });

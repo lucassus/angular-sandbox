@@ -1,21 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 import { EditComponent } from './edit.component';
-
-const contactsServiceStub = {
-
-  get(id: number): Promise<Contact> {
-    const contact = new Contact(id, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001);
-    return Promise.resolve(contact);
-  }
-
-};
 
 describe('EditComponent', () => {
 
@@ -25,8 +15,7 @@ describe('EditComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        RouterTestingModule
+        ReactiveFormsModule
       ],
       declarations: [
         EditComponent
@@ -35,10 +24,13 @@ describe('EditComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.of({ id: 124 })
+            data: Observable.of({
+              contact: new Contact(123, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001)
+            })
           }
         },
-        { provide: ContactsService, useValue: contactsServiceStub }
+        { provide: Router, useValue: {} },
+        { provide: ContactsService, useValue: {} }
       ]
     })
       // TODO why compileComponents ???

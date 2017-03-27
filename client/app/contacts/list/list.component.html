@@ -1,6 +1,6 @@
 <h2>Contacts list</h2>
 
-<table class="table table-striped table-hover" *ngIf="contacts; else loading">
+<table class="table table-striped table-hover">
   <thead>
   <tr>
     <th>#</th>
@@ -25,7 +25,3 @@
   </tr>
   </tbody>
 </table>
-
-<ng-template #loading>
-  <span>Loading contacts...</span>
-</ng-template>

@@ -1,29 +1,23 @@
 <h2>Show contact</h2>
 
-<div *ngIf="contact; else loading">
-  <dl class="dl-horizontal">
-    <dt>#</dt>
-    <dd>{{contact.id}}</dd>
+<dl class="dl-horizontal">
+  <dt>#</dt>
+  <dd>{{contact.id}}</dd>
 
-    <dt>First name</dt>
-    <dd>{{contact.firstName}}</dd>
+  <dt>First name</dt>
+  <dd>{{contact.firstName}}</dd>
 
-    <dt>Last name</dt>
-    <dd>{{contact.lastName}}</dd>
+  <dt>Last name</dt>
+  <dd>{{contact.lastName}}</dd>
 
-    <dt>Email</dt>
-    <dd>{{contact.email}}</dd>
+  <dt>Email</dt>
+  <dd>{{contact.email}}</dd>
 
-    <dt>Phone</dt>
-    <dd>{{contact.phone}}</dd>
+  <dt>Phone</dt>
+  <dd>{{contact.phone}}</dd>
 
-    <dt>Updated At</dt>
-    <dd>{{contact.updatedAt | date:'medium'}}</dd>
-  </dl>
+  <dt>Updated At</dt>
+  <dd>{{contact.updatedAt | date:'medium'}}</dd>
+</dl>
 
-  <a [routerLink]="['./edit']">Edit</a>
-</div>
-
-<ng-template #loading>
-  <span>Loading contact...</span>
-</ng-template>
+<a [routerLink]="['./edit']">Edit</a>

@@ -1,18 +1,19 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 import { Contact } from '../contact';
 import { ListComponent } from './list.component';
-import { ContactsService } from '../contacts.service';
 
-const contactsServiceStub = {
+const routeStub = {
 
-  query(): Promise<Array<Contact>> {
-    return Promise.resolve([
+  data: Observable.of({
+    contacts: [
       new Contact(1, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001),
       new Contact(2, 'Anakin', 'Skywalker', 'anakin@republic.com', '+48 222', 10002)
-    ]);
-  }
+    ]
+  })
 
 };
 
@@ -22,25 +23,20 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
       declarations: [
         ListComponent
       ],
-      providers: [{
-        provide: ContactsService, useValue: contactsServiceStub
-      }]
+      providers: [
+        { provide: ActivatedRoute, useValue: routeStub }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(ListComponent);
     fixture.detectChanges();
   }));
 
-  it('should render list of contacts', fakeAsync(() => {
-    tick();
-    fixture.detectChanges();
-
+  it('should render list of contacts', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;
     const rows = compiled.querySelectorAll('table tbody tr');
 
@@ -67,6 +63,6 @@ describe('ListComponent', () => {
       .toContain('+48 222');
     expect(rows[1].querySelector('td:nth-child(5)').textContent)
       .toContain('Jan 1, 1970, 1:00:10 AM');
-  }));
+  });
 
 });

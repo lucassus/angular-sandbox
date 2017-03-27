@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
@@ -20,22 +20,17 @@ export class EditComponent implements OnInit {
   });
 
   constructor(
-    private contactsService: ContactsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private contactsService: ContactsService
   ) { }
 
-  // TODO dry it (or resolve in the router)
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      const { id } = params;
+    this.route.data.subscribe(({ contact }) => {
+      this.contact = contact;
 
-      this.contactsService.get(id).then((contact) => {
-        this.contact = contact;
-
-        const { firstName, lastName } = contact;
-        this.contactForm.setValue({ firstName, lastName });
-      });
+      const { firstName, lastName } = contact;
+      this.contactForm.setValue({ firstName, lastName });
     });
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Contact } from '../contact';
-import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-list',
@@ -11,11 +11,10 @@ export class ListComponent implements OnInit {
 
   contacts: Array<Contact>;
 
-  constructor(private contactsService: ContactsService) { }
+  constructor(private route: ActivatedRoute) { }
 
-  // TODO resolve it in the controller
-  ngOnInit() {
-    this.contactsService.query().then((contacts) => {
+  ngOnInit(): void {
+    this.route.data.subscribe(({ contacts }) => {
       this.contacts = contacts;
     });
   }
