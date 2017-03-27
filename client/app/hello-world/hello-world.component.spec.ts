@@ -9,27 +9,27 @@ import { By } from '@angular/platform-browser';
     <app-hello-world [name]="name"></app-hello-world>
   `
 })
-class HelloWorldComponentWrapper {
+class HelloWorldWrapperComponent {
   name = 'Test';
 }
 
 describe('HelloWorldComponent', () => {
 
-  let component: HelloWorldComponentWrapper;
-  let fixture: ComponentFixture<HelloWorldComponentWrapper>;
+  let component: HelloWorldWrapperComponent;
+  let fixture: ComponentFixture<HelloWorldWrapperComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         HelloWorldComponent,
-        HelloWorldComponentWrapper
+        HelloWorldWrapperComponent
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HelloWorldComponentWrapper);
+    fixture = TestBed.createComponent(HelloWorldWrapperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
