@@ -1,7 +1,4 @@
-<!--TODO use ngIf else-->
-<span *ngIf="!contact">Loading contact...</span>
-
-<dl class="dl-horizontal" *ngIf="contact">
+<dl class="dl-horizontal" *ngIf="contact; else loading">
   <dt>#</dt>
   <dd>{{contact.id}}</dd>
 
@@ -20,3 +17,7 @@
   <dt>Updated At</dt>
   <dd>{{contact.updatedAt | date:'medium'}}</dd>
 </dl>
+
+<ng-template #loading>
+  <span>Loading contact...</span>
+</ng-template>
