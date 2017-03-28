@@ -122,6 +122,41 @@ describe('ContactsService', () => {
 
   });
 
+  describe('.create', () => {
+
+    describe('.on success', () => {
+
+      beforeEach(() => {
+        mockBackend.connections.subscribe((connection: MockConnection) => {
+          expect(connection.request.method).toEqual(RequestMethod.Post);
+          expect(connection.request.url).toEqual('/api/contacts');
+
+          const data = JSON.parse(connection.request.getBody());
+          expect(data.firstName).toEqual('Luke');
+          expect(data.lastName).toEqual('Skywalker');
+
+          connection.mockRespond(new Response(new ResponseOptions({
+            body: JSON.stringify({ id: 125, firstName: 'Luke', lastName: 'Skywalker' })
+          })));
+        });
+      });
+
+      it('should create a contact', fakeAsync(() => {
+        contactsService.create({ firstName: 'Luke', lastName: 'Skywalker' }).then((contact: Contact) => {
+          expect(contact).not.toBeUndefined();
+
+          expect(contact.id).toEqual(125);
+          expect(contact.firstName).toEqual('Luke');
+          expect(contact.lastName).toEqual('Skywalker');
+        });
+
+        tick();
+      }));
+
+    });
+
+  });
+
   describe('.update', () => {
 
     describe('on success', () => {

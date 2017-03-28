@@ -1,6 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { Routes, Resolve, ActivatedRouteSnapshot, RouterModule } from '@angular/router';
 
+import { CreateComponent } from './contacts/create/create.component';
 import { EditComponent } from './contacts/edit/edit.component';
 import { ListComponent } from './contacts/list/list.component';
 import { ShowComponent } from './contacts/show/show.component';
@@ -53,6 +54,9 @@ export const AppRoutes: Routes = [{
     path: '',
     resolve: { contacts: ContactsResolver },
     component: ListComponent
+  }, {
+    path: 'new',
+    component: CreateComponent
   }, {
     path: ':id',
     resolve: { contact: ContactResolver },

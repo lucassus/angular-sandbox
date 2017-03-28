@@ -30,6 +30,15 @@ export class ContactsService {
       });
   }
 
+  // TODO write specs for this method
+  create(data: any): Promise<Contact> {
+    return this.http.post('/api/contacts', data)
+      .toPromise()
+      .then((response: Response) => {
+        return buildContact(response.json());
+      });
+  }
+
   update(id: number, data: any): Promise<Contact> {
     return this.http.put(`/api/contacts/${id}`, data)
       .toPromise()

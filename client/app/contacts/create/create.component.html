@@ -1,6 +1,6 @@
-<h2>Edit contact</h2>
+<h2>Create contact</h2>
 
-<form [formGroup]="contactForm" novalidate (submit)="updateContact()">
+<form [formGroup]="contactForm" novalidate (submit)="createContact()">
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('firstName')">
     <label class="control-label" for="first-name-field">First name</label>
     <input id="first-name-field" class="form-control" formControlName="firstName" />
@@ -8,9 +8,14 @@
 
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('lastName')">
     <label class="control-label" for="last-name-field">Last name</label>
-    <input id="last-name-field" class="form-control" formControlName="lastName" />
+    <input id="last-name-field" type="text" class="form-control" formControlName="lastName" />
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="email-field">Email</label>
+    <input id="email-field" type="text" class="form-control" formControlName="email" />
   </div>
 
   <button [disabled]="contactForm.invalid"
-          type="submit" class="btn btn-success">Update</button>
+          type="submit" class="btn btn-success">Create</button>
 </form>

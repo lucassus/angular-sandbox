@@ -7,7 +7,7 @@ import { ContactsService } from '../contacts.service';
 
 // TODO write decent specs
 @Component({
-  selector: 'app-edit',
+  selector: 'app-contacts-edit',
   templateUrl: './edit.component.html'
 })
 export class EditComponent implements OnInit {
@@ -32,6 +32,11 @@ export class EditComponent implements OnInit {
       const { firstName, lastName } = contact;
       this.contactForm.setValue({ firstName, lastName });
     });
+  }
+
+  shouldDisplayErrorFor(key: string) {
+    return this.contactForm.controls[key].touched
+      && this.contactForm.controls[key].invalid;
   }
 
   updateContact() {

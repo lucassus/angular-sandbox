@@ -9,6 +9,7 @@ import { ContactsService } from './contacts.service';
 import { ShowComponent } from './show/show.component';
 import { ContactsComponent } from './contacts.component';
 import { EditComponent } from './edit/edit.component';
+import { CreateComponent } from './create/create.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { EditComponent } from './edit/edit.component';
     ContactsComponent,
     ListComponent,
     ShowComponent,
-    EditComponent
+    EditComponent,
+    CreateComponent
   ]
 })
 export class ContactsModule { }
