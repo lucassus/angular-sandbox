@@ -35,7 +35,7 @@ export class EditComponent implements OnInit {
   }
 
   shouldDisplayErrorFor(key: string) {
-    return this.contactForm.controls[key].touched
+    return this.contactForm.controls[key].dirty
       && this.contactForm.controls[key].invalid;
   }
 
