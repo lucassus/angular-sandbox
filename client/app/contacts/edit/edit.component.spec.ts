@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -12,7 +12,7 @@ describe('EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule
@@ -32,10 +32,8 @@ describe('EditComponent', () => {
         { provide: Router, useValue: {} },
         { provide: ContactsService, useValue: {} }
       ]
-    })
-      // TODO why compileComponents ???
-    .compileComponents();
-  }));
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EditComponent);

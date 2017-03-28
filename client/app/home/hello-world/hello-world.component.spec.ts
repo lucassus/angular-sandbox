@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 
 import { HelloWorldComponent } from './hello-world.component';
@@ -18,15 +18,14 @@ describe('HelloWorldComponent', () => {
   let component: HelloWorldWrapperComponent;
   let fixture: ComponentFixture<HelloWorldWrapperComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         HelloWorldComponent,
         HelloWorldWrapperComponent
       ]
-    })
-    .compileComponents();
-  }));
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HelloWorldWrapperComponent);
