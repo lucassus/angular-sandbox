@@ -45,11 +45,6 @@ export class EditComponent implements OnInit {
       && this.contactForm.get(path).invalid;
   }
 
-  hasErrorFor(path: string, validator: string): boolean {
-    const { errors } = this.contactForm.get(path);
-    return errors && errors[validator];
-  }
-
   // TODO write specs for this method
   updateContact() {
     const { value: data } = this.contactForm;

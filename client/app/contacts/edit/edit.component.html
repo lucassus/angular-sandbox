@@ -1,12 +1,14 @@
 <h2>Editing contact for {{contact.fullName}}</h2>
 
-<form [formGroup]="contactForm" novalidate (submit)="updateContact()">
+<form [formGroup]="contactForm" novalidate (submit)="updateContact()" autocomplete="off">
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('firstName')">
     <label for="first-name-field" class="control-label">First name</label>
-    <input id="first-name-field" class="form-control" formControlName="firstName" />
+    <input id="first-name-field" class="form-control" formControlName="firstName" autofocus />
 
-    <div class="help-block" *ngIf="shouldDisplayErrorFor('firstName')">
-      First name is required
+    <div [appValidationMessages]="contactForm.get('firstName')">
+      <div class="help-block" appValidationMessage="required">
+        First name is required
+      </div>
     </div>
   </div>
 
@@ -14,8 +16,10 @@
     <label for="last-name-field" class="control-label">Last name</label>
     <input id="last-name-field" class="form-control" formControlName="lastName" />
 
-    <div class="help-block" *ngIf="shouldDisplayErrorFor('lastName')">
-      Last name is required
+    <div [appValidationMessages]="contactForm.get('lastName')">
+      <div class="help-block" appValidationMessage="required">
+        Last name is required
+      </div>
     </div>
   </div>
 
@@ -23,13 +27,14 @@
     <label for="email-field" class="control-label">Email</label>
     <input id="email-field" class="form-control" type="text" formControlName="email" />
 
-    <!--TODO figure out how to dry up these messages (or create custom messages directive-->
-    <div class="help-block" *ngIf="hasErrorFor('email', 'required')">
-      Email address is required
-    </div>
+    <div [appValidationMessages]="contactForm.get('email')">
+      <div class="help-block" appValidationMessage="required">
+        Email address is required
+      </div>
 
-    <div class="help-block" *ngIf="hasErrorFor('email', 'email')">
-      Invalid email address
+      <div class="help-block" appValidationMessage="email">
+        Invalid email address
+      </div>
     </div>
   </div>
 
@@ -37,8 +42,10 @@
     <label for="phone-field" class="control-label">Phone</label>
     <input id="phone-field" class="form-control" type="text" formControlName="phone" />
 
-    <div class="help-block" *ngIf="hasErrorFor('phone', 'phone')">
-      Invalid phone number format
+    <div [appValidationMessages]="contactForm.get('phone')">
+      <div class="help-block" appValidationMessage="phone">
+        Invalid phone number format
+      </div>
     </div>
   </div>
 

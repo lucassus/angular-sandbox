@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { AppFormsModule } from '../forms/forms.module';
+
 import { ListComponent } from './list/list.component';
 import { ContactsService } from './contacts.service';
 import { ShowComponent } from './show/show.component';
@@ -16,7 +18,8 @@ import { CreateComponent } from './create/create.component';
     CommonModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule
+    RouterModule,
+    AppFormsModule
   ],
   providers: [
     ContactsService

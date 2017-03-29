@@ -12,6 +12,7 @@ class FakeHelloWorldComponent {
 }
 
 describe('IndexComponent', () => {
+
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
@@ -33,4 +34,5 @@ describe('IndexComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

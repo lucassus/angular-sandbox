@@ -15,7 +15,10 @@ export class CreateComponent {
   contactForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    email: new FormControl()
+    email: new FormControl('', Validators.compose([
+      Validators.required,
+      Validators.email
+    ]))
   });
 
   constructor(private contactsService: ContactsService) {}

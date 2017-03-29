@@ -11,7 +11,7 @@ const ContactRecord = Record({
   updatedAt: null
 });
 
-export class Contact extends ContactRecord{
+export class Contact extends ContactRecord {
 
   id: number;
   firstName: string;

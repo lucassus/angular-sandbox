@@ -17,7 +17,7 @@ import { ContactsModule } from './contacts/contacts.module';
 import { HomeModule } from './home/home.module';
 
 @Injectable()
-class ContactsResolver implements Resolve<List<Contact>> {
+export class ContactsResolver implements Resolve<List<Contact>> {
 
   constructor(private contactsService: ContactsService) { }
 
@@ -28,7 +28,7 @@ class ContactsResolver implements Resolve<List<Contact>> {
 }
 
 @Injectable()
-class ContactResolver implements Resolve<Contact> {
+export class ContactResolver implements Resolve<Contact> {
 
   constructor(private  contactsService: ContactsService) { }
 

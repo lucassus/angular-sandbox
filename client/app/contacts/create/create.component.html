@@ -1,19 +1,41 @@
 <h2>Create contact</h2>
 
-<form [formGroup]="contactForm" novalidate (submit)="createContact()">
+<form [formGroup]="contactForm" novalidate (submit)="createContact()" autocomplete="off">
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('firstName')">
     <label class="control-label" for="first-name-field">First name</label>
-    <input id="first-name-field" class="form-control" formControlName="firstName" />
+    <input id="first-name-field" class="form-control" formControlName="firstName" autofocus />
+
+    <div [appValidationMessages]="contactForm.get('firstName')">
+      <div class="help-block" appValidationMessage="required">
+        First name is required
+      </div>
+    </div>
   </div>
 
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('lastName')">
     <label class="control-label" for="last-name-field">Last name</label>
     <input id="last-name-field" type="text" class="form-control" formControlName="lastName" />
+
+    <div [appValidationMessages]="contactForm.get('lastName')">
+      <div class="help-block" appValidationMessage="required">
+        Last name is required
+      </div>
+    </div>
   </div>
 
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('email')">
     <label class="control-label" for="email-field">Email</label>
     <input id="email-field" type="text" class="form-control" formControlName="email" />
+
+    <div [appValidationMessages]="contactForm.get('email')">
+      <div class="help-block" appValidationMessage="required">
+        Email address is required
+      </div>
+
+      <div class="help-block" appValidationMessage="email">
+        Invalid email address
+      </div>
+    </div>
   </div>
 
   <button [disabled]="contactForm.invalid"
