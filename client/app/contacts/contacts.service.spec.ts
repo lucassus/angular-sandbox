@@ -1,6 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ConnectionBackend, BaseRequestOptions, Http, ResponseOptions, Response, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import { List } from 'immutable';
 
 import { ContactsService } from './contacts.service';
 import { Contact } from './contact';
@@ -53,15 +54,18 @@ describe('ContactsService', () => {
 
       it('should resolve all contacts', fakeAsync(() => {
         contactsService.query().then((contacts) => {
-          expect(contacts.length).toBe(2);
+          expect(contacts instanceof List).toBe(true);
+          expect(contacts.size).toBe(2);
 
-          expect(contacts[0] instanceof Contact).toBe(true);
-          expect(contacts[0].id).toBe(1);
-          expect(contacts[0].firstName).toBe('Luke');
+          const first = contacts.get(0);
+          expect(first instanceof Contact).toBe(true);
+          expect(first.id).toBe(1);
+          expect(first.firstName).toBe('Luke');
 
-          expect(contacts[1] instanceof Contact).toBe(true);
-          expect(contacts[1].id).toBe(2);
-          expect(contacts[1].firstName).toBe('Anakin');
+          const second = contacts.get(1);
+          expect(second instanceof Contact).toBe(true);
+          expect(second.id).toBe(2);
+          expect(second.firstName).toBe('Anakin');
         });
 
         tick();

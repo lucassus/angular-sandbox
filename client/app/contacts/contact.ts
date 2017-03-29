@@ -1,13 +1,33 @@
-// TODO write specs
-// TODO use `Immutable.Record`?
-export class Contact {
+import { Record } from 'immutable';
 
-  constructor(
-    public id: number,
-    public firstName: string,
-    public lastName: string,
-    public email: string,
-    public phone: string,
-    public updatedAt: number) {}
+const ContactRecord = Record({
+  id: null,
+  firstName: null,
+  lastName: null,
+  email: null,
+  phone: null,
+  favourite: false,
+  createdAt: null,
+  updatedAt: null
+});
+
+export class Contact extends ContactRecord{
+
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  favourite: boolean;
+  createdAt: number;
+  updatedAt: number;
+
+  constructor(params: any) {
+    super(params);
+  }
+
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
 
 }

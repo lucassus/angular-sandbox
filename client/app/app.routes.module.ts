@@ -1,5 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { Routes, Resolve, ActivatedRouteSnapshot, RouterModule } from '@angular/router';
+import { List } from 'immutable';
 
 import { CreateComponent } from './contacts/create/create.component';
 import { EditComponent } from './contacts/edit/edit.component';
@@ -16,11 +17,11 @@ import { ContactsModule } from './contacts/contacts.module';
 import { HomeModule } from './home/home.module';
 
 @Injectable()
-class ContactsResolver implements Resolve<Array<Contact>> {
+class ContactsResolver implements Resolve<List<Contact>> {
 
   constructor(private contactsService: ContactsService) { }
 
-  resolve(): Promise<Array<Contact>> {
+  resolve(): Promise<List<Contact>> {
     return this.contactsService.query();
   }
 

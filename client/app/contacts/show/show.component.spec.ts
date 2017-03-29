@@ -21,7 +21,12 @@ describe('ShowComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             data: Observable.of({
-              contact: new Contact(123, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001)
+              contact: new Contact({
+                id: 123,
+                firstName: 'Luke', lastName: 'Skywalker',
+                email: 'luke@rebel.org', phone: '+48 111',
+                updateAt: 10001
+              })
             })
           }
         }

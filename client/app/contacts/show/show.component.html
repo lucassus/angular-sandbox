@@ -1,7 +1,7 @@
 <h2>Show contact</h2>
 
 <dl class="dl-horizontal">
-  <dt>#</dt>
+  <dt>Id</dt>
   <dd>{{contact.id}}</dd>
 
   <dt>First name</dt>
@@ -15,6 +15,12 @@
 
   <dt>Phone</dt>
   <dd>{{contact.phone}}</dd>
+
+  <dt>Favourite</dt>
+  <dd>{{contact.favourite}}</dd>
+
+  <dt>Created At</dt>
+  <dd>{{contact.createdAt | date:'medium'}}</dd>
 
   <dt>Updated At</dt>
   <dd>{{contact.updatedAt | date:'medium'}}</dd>

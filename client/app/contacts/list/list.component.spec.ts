@@ -10,8 +10,19 @@ const routeStub = {
 
   data: Observable.of({
     contacts: [
-      new Contact(1, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001),
-      new Contact(2, 'Anakin', 'Skywalker', 'anakin@republic.com', '+48 222', 10002)
+      new Contact({
+        id: 1,
+        firstName: 'Luke', lastName: 'Skywalker',
+        email: 'luke@rebel.org', phone: '+48 111',
+        updatedAt: 10001
+      }),
+
+      new Contact({
+        id: 2,
+        firstName: 'Anakin', lastName: 'Skywalker',
+        email: 'anakin@republic.com', phone: '+48 222',
+        updatedAt: 10002
+      })
     ]
   })
 
