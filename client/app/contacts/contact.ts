@@ -22,7 +22,7 @@ export class Contact extends ContactRecord{
   createdAt: number;
   updatedAt: number;
 
-  constructor(params: any) {
+  constructor(params?: any) {
     super(params);
   }
 

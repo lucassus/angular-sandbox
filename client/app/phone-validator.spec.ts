@@ -1,13 +1,13 @@
-import { emailValidator } from './email-validator';
+import { phoneValidator } from './phone-validator';
 import { FormControl } from '@angular/forms';
 
-describe('.emailValidator', () => {
+describe('.phoneValidator', () => {
 
   describe('when the given value is valid', () => {
 
     it('returns no error', () => {
-      const control = new FormControl('valid@email.com');
-      const result = emailValidator(control);
+      const control = new FormControl('+48 123 123');
+      const result = phoneValidator(control);
       expect(result).toBeNull();
     });
 
@@ -16,9 +16,9 @@ describe('.emailValidator', () => {
   describe('when the given value is not valid', () => {
 
     it('returns an error', () => {
-      const control = new FormControl('invalid');
-      const result = emailValidator(control);
-      expect(result.validateEmail.valid).toBe(false);
+      const control = new FormControl('asdf');
+      const result = phoneValidator(control);
+      expect(result.phone.valid).toBe(false);
     });
 
   });
@@ -27,7 +27,7 @@ describe('.emailValidator', () => {
 
     it('returns no error', () => {
       const control = new FormControl('');
-      const result = emailValidator(control);
+      const result = phoneValidator(control);
       expect(result).toBeNull();
     });
 

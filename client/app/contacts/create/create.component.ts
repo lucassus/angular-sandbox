@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { emailValidator } from '../../email-validator';
 import { ContactsService } from '../contacts.service';
 import { Contact } from '../contact';
 
@@ -16,7 +15,7 @@ export class CreateComponent {
   contactForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    email: new FormControl('', emailValidator)
+    email: new FormControl()
   });
 
   constructor(private contactsService: ContactsService) {}
