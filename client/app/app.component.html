@@ -1,9 +1,6 @@
-<h1>
-  {{title}}
-</h1>
+<nav>
+  <a routerLink="/" routerLinkActive="active">Home</a>
+  <a routerLink="/contacts" routerLinkActive="active">Contacts</a>
+</nav>
 
-<button class="btn btn-primary">Test Button</button>
-
-<app-hello-world name="Luke"></app-hello-world>
-
-<app-contacts-list></app-contacts-list>
+<router-outlet></router-outlet>

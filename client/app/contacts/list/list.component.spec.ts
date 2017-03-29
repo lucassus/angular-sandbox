@@ -1,42 +1,53 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 import { Contact } from '../contact';
-import { ContactsListComponent } from './contacts-list.component';
-import { ContactsService } from '../contacts.service';
+import { ListComponent } from './list.component';
 
-const contactsServiceStub = {
+const routeStub = {
 
-  query(): Promise<Array<Contact>> {
-    return Promise.resolve([
-      new Contact(1, 'Luke', 'Skywalker', 'luke@rebel.org', '+48 111', 10001),
-      new Contact(2, 'Anakin', 'Skywalker', 'anakin@republic.com', '+48 222', 10002)
-    ]);
-  }
+  data: Observable.of({
+    contacts: [
+      new Contact({
+        id: 1,
+        firstName: 'Luke', lastName: 'Skywalker',
+        email: 'luke@rebel.org', phone: '+48 111',
+        updatedAt: 10001
+      }),
+
+      new Contact({
+        id: 2,
+        firstName: 'Anakin', lastName: 'Skywalker',
+        email: 'anakin@republic.com', phone: '+48 222',
+        updatedAt: 10002
+      })
+    ]
+  })
 
 };
 
-describe('ContactsListComponent', () => {
+describe('ListComponent', () => {
 
-  let fixture: ComponentFixture<ContactsListComponent>;
+  let fixture: ComponentFixture<ListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ContactsListComponent
+        ListComponent
       ],
       providers: [
-        { provide: ContactsService, useValue: contactsServiceStub }
-      ]
+        { provide: ActivatedRoute, useValue: routeStub }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
-    fixture = TestBed.createComponent(ContactsListComponent);
+    fixture = TestBed.createComponent(ListComponent);
     fixture.detectChanges();
   }));
 
-  it('should render list of contacts', fakeAsync(() => {
-    tick();
-    fixture.detectChanges();
-
+  it('should render list of contacts', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;
     const rows = compiled.querySelectorAll('table tbody tr');
 
@@ -63,6 +74,6 @@ describe('ContactsListComponent', () => {
       .toContain('+48 222');
     expect(rows[1].querySelector('td:nth-child(5)').textContent)
       .toContain('Jan 1, 1970, 1:00:10 AM');
-  }));
+  });
 
 });

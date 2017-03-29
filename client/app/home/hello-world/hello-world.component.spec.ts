@@ -1,35 +1,32 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 
 import { HelloWorldComponent } from './hello-world.component';
 import { By } from '@angular/platform-browser';
 
 @Component({
-  template: `
-    <app-hello-world [name]="name"></app-hello-world>
-  `
+  template: `<app-hello-world [name]="name"></app-hello-world>`
 })
-class HelloWorldWrapperComponent {
+class TestComponent {
   name = 'Test';
 }
 
 describe('HelloWorldComponent', () => {
 
-  let component: HelloWorldWrapperComponent;
-  let fixture: ComponentFixture<HelloWorldWrapperComponent>;
+  let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         HelloWorldComponent,
-        HelloWorldWrapperComponent
+        TestComponent
       ]
-    })
-    .compileComponents();
-  }));
+    });
+  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HelloWorldWrapperComponent);
+    fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -40,7 +37,7 @@ describe('HelloWorldComponent', () => {
 
   it('should display a title', () => {
     // Given
-    const de: DebugElement = fixture.debugElement.query(By.css('app-hello-world p|'));
+    const de: DebugElement = fixture.debugElement.query(By.css('app-hello-world'));
     const el: HTMLElement = de.nativeElement;
 
     fixture.detectChanges();

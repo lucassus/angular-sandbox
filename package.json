@@ -29,6 +29,8 @@
     "core-js": "^2.4.1",
     "express": "^4.15.2",
     "faker": "^4.1.0",
+    "immutable": "^3.8.1",
+    "intl": "^1.2.5",
     "lodash": "^4.17.4",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
@@ -51,6 +53,7 @@
     "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-phantomjs-launcher": "^1.0.4",
     "nodemon": "^1.11.0",
     "power-assert": "^1.4.2",
     "protractor": "~5.1.0",
