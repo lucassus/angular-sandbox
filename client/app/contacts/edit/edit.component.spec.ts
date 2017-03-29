@@ -38,9 +38,7 @@ describe('EditComponent', () => {
         { provide: ContactsService, useValue: {} }
       ]
     });
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(EditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

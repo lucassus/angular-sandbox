@@ -1,19 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { emailValidator } from '../../email-validator';
 import { ContactsService } from '../contacts.service';
 import { Contact } from '../contact';
-
-
-function emailValidator(control: AbstractControl): ValidationErrors {
-  const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-
-  return EMAIL_REGEXP.test(control.value) ? null : {
-    validateEmail: {
-      valid: false
-    }
-  };
-}
 
 @Component({
   selector: 'app-contacts-create',
