@@ -1,6 +1,8 @@
 <h2>Create contact</h2>
 
-<form [formGroup]="contactForm" novalidate (submit)="createContact()" autocomplete="off">
+<form [formGroup]="contactForm" (submit)="createContact()"
+      novalidate autocomplete="off">
+
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('firstName')">
     <label class="control-label" for="first-name-field">First name</label>
     <input id="first-name-field" class="form-control" formControlName="firstName" autofocus />

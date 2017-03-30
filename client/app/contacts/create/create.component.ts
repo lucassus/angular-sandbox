@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ContactsService } from '../contacts.service';
 import { Contact } from '../contact';
+import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-create',

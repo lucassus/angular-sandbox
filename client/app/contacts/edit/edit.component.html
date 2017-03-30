@@ -1,9 +1,12 @@
 <h2>Editing contact for {{contact.fullName}}</h2>
 
-<form [formGroup]="contactForm" novalidate (submit)="updateContact()" autocomplete="off">
+<form [formGroup]="contactForm" (submit)="updateContact()"
+      novalidate autocomplete="off">
+
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('firstName')">
     <label for="first-name-field" class="control-label">First name</label>
-    <input id="first-name-field" class="form-control" formControlName="firstName" autofocus />
+    <input id="first-name-field" class="form-control"
+           formControlName="firstName" autofocus />
 
     <div [appValidationMessages]="contactForm.get('firstName')">
       <div class="help-block" appValidationMessage="required">
@@ -14,7 +17,8 @@
 
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('lastName')">
     <label for="last-name-field" class="control-label">Last name</label>
-    <input id="last-name-field" class="form-control" formControlName="lastName" />
+    <input id="last-name-field" class="form-control"
+           formControlName="lastName" />
 
     <div [appValidationMessages]="contactForm.get('lastName')">
       <div class="help-block" appValidationMessage="required">
@@ -25,7 +29,8 @@
 
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('email')">
     <label for="email-field" class="control-label">Email</label>
-    <input id="email-field" class="form-control" type="text" formControlName="email" />
+    <input id="email-field" class="form-control" type="text"
+           formControlName="email" />
 
     <div [appValidationMessages]="contactForm.get('email')">
       <div class="help-block" appValidationMessage="required">
@@ -40,7 +45,8 @@
 
   <div class="form-group" [class.has-error]="shouldDisplayErrorFor('phone')">
     <label for="phone-field" class="control-label">Phone</label>
-    <input id="phone-field" class="form-control" type="text" formControlName="phone" />
+    <input id="phone-field" class="form-control" type="text"
+           formControlName="phone" />
 
     <div [appValidationMessages]="contactForm.get('phone')">
       <div class="help-block" appValidationMessage="phone">
@@ -51,7 +57,8 @@
 
   <div class="form-group">
     <label for="favourite-checkbox" class="control-label">Favourite</label>
-    <input id="favourite-checkbox" class="form-control" type="checkbox" formControlName="favourite" />
+    <input id="favourite-checkbox" class="form-control" type="checkbox"
+           formControlName="favourite" />
   </div>
 
   <button [disabled]="contactForm.invalid"

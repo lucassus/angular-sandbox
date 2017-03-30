@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
 import { ValidationMessageDirective } from './validation-message.directive';
 import { ValidationMessagesDirective } from './validation-messages.directive';
 

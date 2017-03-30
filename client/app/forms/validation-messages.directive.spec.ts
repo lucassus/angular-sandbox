@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ValidationMessageDirective } from './validation-message.directive';
 import { ValidationMessagesDirective } from './validation-messages.directive';

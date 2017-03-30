@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { phoneValidator } from '../../phone-validator';
@@ -45,12 +45,11 @@ export class EditComponent implements OnInit {
       && this.contactForm.get(path).invalid;
   }
 
-  // TODO write specs for this method
   updateContact() {
     const { value: data } = this.contactForm;
 
-    this.contactsService.update(this.contact.id, data).then((contact: Contact) => {
-      return this.router.navigate(['./contacts', contact.id]);
+    this.contactsService.update(this.contact.id, data).then(() => {
+      return this.router.navigate(['./contacts', this.contact.id]);
     });
   }
 
