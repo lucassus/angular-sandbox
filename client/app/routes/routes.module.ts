@@ -2,20 +2,20 @@ import { Injectable, NgModule } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterModule, Routes } from '@angular/router';
 import { List } from 'immutable';
 
-import { Contact } from './contacts/contact';
-import { ContactsComponent } from './contacts/contacts.component';
-import { ContactsModule } from './contacts/contacts.module';
-import { ContactsService } from './contacts/contacts.service';
-import { CreateComponent } from './contacts/create/create.component';
-import { EditComponent } from './contacts/edit/edit.component';
-import { ListComponent } from './contacts/list/list.component';
-import { ShowComponent } from './contacts/show/show.component';
+import { Contact } from '../contacts/contact';
+import { ContactsComponent } from '../contacts/contacts.component';
+import { ContactsModule } from '../contacts/contacts.module';
+import { ContactsService } from '../contacts/contacts.service';
+import { CreateComponent } from '../contacts/create/create.component';
+import { EditComponent } from '../contacts/edit/edit.component';
+import { ListComponent } from '../contacts/list/list.component';
+import { ShowComponent } from '../contacts/show/show.component';
 
-import { HomeComponent } from './home/home.component';
-import { HomeModule } from './home/home.module';
-import { IndexComponent } from './home/index/index.component';
+import { HomeComponent } from '../home/home.component';
+import { HomeModule } from '../home/home.module';
+import { IndexComponent } from '../home/index/index.component';
 
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 
 @Injectable()
 export class ContactsResolver implements Resolve<List<Contact>> {
@@ -40,7 +40,6 @@ export class ContactResolver implements Resolve<Contact> {
 
 }
 
-// TODO lazy loaded routes
 export const AppRoutes: Routes = [{
   path: '',
   component: HomeComponent,
@@ -72,8 +71,6 @@ export const AppRoutes: Routes = [{
   path: '**',
   component: PageNotFoundComponent
 }];
-
-// TODO this module file causes `SilentError: Multiple module files found` error
 
 @NgModule({
   imports: [
