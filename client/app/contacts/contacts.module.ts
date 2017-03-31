@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppFormsModule } from '../forms/forms.module';
+import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactsComponent } from './contacts.component';
 import { ContactsService } from './contacts.service';
 import { CreateComponent } from './create/create.component';
@@ -24,6 +25,7 @@ import { ShowComponent } from './show/show.component';
     ContactsService
   ],
   declarations: [
+    ContactFormComponent,
     ContactsComponent,
     ListComponent,
     ShowComponent,

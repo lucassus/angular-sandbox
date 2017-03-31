@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
@@ -10,29 +10,16 @@ import { ContactsService } from '../contacts.service';
 })
 export class CreateComponent {
 
-  // TODO dry up the form
+  contact = new Contact();
 
-  contactForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.email
-    ]))
-  });
+  constructor(
+    private router: Router,
+    private contactsService: ContactsService
+  ) { }
 
-  constructor(private contactsService: ContactsService) {}
-
-  shouldDisplayErrorFor(key: string) {
-    return this.contactForm.controls[key].dirty
-      && this.contactForm.controls[key].invalid;
-  }
-
-  createContact() {
-    const { value: data } = this.contactForm;
-
+  createContact(data: any): void {
     this.contactsService.create(data).then((contact: Contact) => {
-      console.log('Created contact', contact);
+      return this.router.navigate(['./contacts', contact.id]);
     });
   }
 

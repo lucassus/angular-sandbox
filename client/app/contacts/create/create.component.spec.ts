@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ContactsService } from '../contacts.service';
 import { CreateComponent } from './create.component';
@@ -19,6 +20,7 @@ describe('CreateComponent', () => {
         CreateComponent
       ],
       providers: [
+        { provide: Router, useValue: { } },
         { provide: ContactsService, useValue: {} }
       ],
       schemas: [NO_ERRORS_SCHEMA]

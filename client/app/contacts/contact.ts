@@ -22,12 +22,16 @@ export class Contact extends ContactRecord {
   createdAt: number;
   updatedAt: number;
 
-  constructor(params?: any) {
-    super(params);
+  constructor(data?: any) {
+    super(data);
   }
 
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
+  }
+
+  isPersisted(): boolean {
+    return Boolean(this.id);
   }
 
 }

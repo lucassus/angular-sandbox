@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { phoneValidator } from '../../phone-validator';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
@@ -15,18 +13,6 @@ export class EditComponent implements OnInit {
 
   contact: Contact;
 
-  // TODO nested address form example
-  contactForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.email
-    ])),
-    phone: new FormControl('', phoneValidator),
-    favourite: new FormControl()
-  });
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -36,18 +22,10 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(({ contact }) => {
       this.contact = contact;
-      this.contactForm.patchValue(contact.toJS());
     });
   }
 
-  shouldDisplayErrorFor(path: string) {
-    return this.contactForm.get(path).dirty
-      && this.contactForm.get(path).invalid;
-  }
-
-  updateContact() {
-    const { value: data } = this.contactForm;
-
+  updateContact(data: any): void {
     this.contactsService.update(this.contact.id, data).then(() => {
       return this.router.navigate(['./contacts', this.contact.id]);
     });

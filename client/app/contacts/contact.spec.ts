@@ -19,4 +19,18 @@ describe('Contact', () => {
 
   });
 
+  describe('.isPersisted', () => {
+
+    it('returns true when a contact has an id', () => {
+      const contact = new Contact({ id: 123 });
+      expect(contact.isPersisted()).toBeTruthy();
+    });
+
+    it('returns false when a contact does not have an id', () => {
+      const contact = new Contact({ id: null });
+      expect(contact.isPersisted()).toBeFalsy();
+    });
+
+  });
+
 });
