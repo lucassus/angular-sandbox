@@ -1,68 +1,88 @@
 <form [formGroup]="contactForm" (ngSubmit)="submit()"
-      novalidate autocomplete="off">
+      class="form-horizontal" novalidate autocomplete="off">
 
   <div class="form-group" [appHasError]="contactForm.get('firstName')">
-    <label for="first-name-field" class="control-label">First name</label>
-    <input id="first-name-field" class="form-control"
-           formControlName="firstName" autofocus />
+    <label for="first-name-field" class="col-sm-2 control-label">First name</label>
 
-    <div [appValidationMessages]="contactForm.get('firstName')">
-      <div class="help-block" appValidationMessage="required">
-        First name is required
+    <div class="col-sm-10">
+      <input id="first-name-field" class="form-control"
+             formControlName="firstName" autofocus />
+
+      <div [appValidationMessages]="contactForm.get('firstName')">
+        <div class="help-block" appValidationMessage="required">
+          First name is required
+        </div>
       </div>
     </div>
   </div>
 
   <div class="form-group" [appHasError]="contactForm.get('lastName')">
-    <label for="last-name-field" class="control-label">Last name</label>
-    <input id="last-name-field" class="form-control"
-           formControlName="lastName" />
+    <label for="last-name-field" class="col-sm-2 control-label">Last name</label>
 
-    <div [appValidationMessages]="contactForm.get('lastName')">
-      <div class="help-block" appValidationMessage="required">
-        Last name is required
+    <div class="col-sm-10">
+      <input id="last-name-field" class="form-control"
+             formControlName="lastName" />
+
+      <div [appValidationMessages]="contactForm.get('lastName')">
+        <div class="help-block" appValidationMessage="required">
+          Last name is required
+        </div>
       </div>
     </div>
   </div>
 
   <div class="form-group" [appHasError]="contactForm.get('email')">
-    <label for="email-field" class="control-label">Email</label>
-    <input id="email-field" class="form-control" type="text"
-           formControlName="email" />
+    <label for="email-field" class="col-sm-2 control-label">Email</label>
 
-    <div [appValidationMessages]="contactForm.get('email')">
-      <div class="help-block" appValidationMessage="required">
-        Email address is required
-      </div>
+    <div class="col-sm-10">
+      <input id="email-field" class="form-control" type="text"
+             formControlName="email" />
 
-      <div class="help-block" appValidationMessage="email">
-        Invalid email address
+      <div [appValidationMessages]="contactForm.get('email')">
+        <div class="help-block" appValidationMessage="required">
+          Email address is required
+        </div>
+
+        <div class="help-block" appValidationMessage="email">
+          Invalid email address
+        </div>
       </div>
     </div>
   </div>
 
   <div class="form-group" [appHasError]="contactForm.get('phone')">
-    <label for="phone-field" class="control-label">Phone</label>
-    <input id="phone-field" class="form-control" type="text"
-           formControlName="phone" />
+    <label for="phone-field" class="col-sm-2 control-label">Phone</label>
 
-    <div [appValidationMessages]="contactForm.get('phone')">
-      <div class="help-block" appValidationMessage="phone">
-        Invalid phone number format
+    <div class="col-sm-10">
+      <input id="phone-field" class="form-control" type="text"
+             formControlName="phone" />
+
+      <div [appValidationMessages]="contactForm.get('phone')">
+        <div class="help-block" appValidationMessage="phone">
+          Invalid phone number format
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" formControlName="favourite" /> Favourite
-    </label>
+  <div class="form-group">
+    <div class="checkbox">
+      <div class="col-sm-offset-2 col-sm-10">
+        <label>
+          <input type="checkbox" formControlName="favourite" /> Favourite
+        </label>
+      </div>
+    </div>
   </div>
 
-  <button [disabled]="contactForm.invalid"
-          [ngSwitch]="contact.isPersisted()"
-          type="submit" class="btn btn-success">
-    <span *ngSwitchCase="true">Update</span>
-    <span *ngSwitchCase="false">Create</span>
-  </button>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button [disabled]="contactForm.invalid"
+              [ngSwitch]="contact.isPersisted()"
+              type="submit" class="btn btn-success">
+        <span *ngSwitchCase="true">Update</span>
+        <span *ngSwitchCase="false">Create</span>
+      </button>
+    </div>
+  </div>
 </form>
