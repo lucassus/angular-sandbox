@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
-// TODO write decent specs
 @Component({
   selector: 'app-contacts-edit',
   templateUrl: './edit.component.html'
