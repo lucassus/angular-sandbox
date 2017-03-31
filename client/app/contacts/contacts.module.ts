@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppFormsModule } from '../forms/forms.module';
+import { CheckmarkPipe } from './checkmark.pipe';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactsComponent } from './contacts.component';
 import { ContactsService } from './contacts.service';
@@ -30,7 +31,8 @@ import { ShowComponent } from './show/show.component';
     ListComponent,
     ShowComponent,
     EditComponent,
-    CreateComponent
+    CreateComponent,
+    CheckmarkPipe
   ]
 })
 export class ContactsModule { }
