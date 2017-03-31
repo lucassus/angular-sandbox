@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
+import { CheckmarkPipe } from '../checkmark.pipe';
 import { Contact } from '../contact';
 import { ShowComponent } from './show.component';
 
@@ -14,6 +15,7 @@ describe('ShowComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        CheckmarkPipe,
         ShowComponent
       ],
       providers: [
