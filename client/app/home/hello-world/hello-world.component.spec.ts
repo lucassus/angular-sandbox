@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { HelloWorldComponent } from './hello-world.component';
-import { By } from '@angular/platform-browser';
 
 @Component({
   template: `<app-hello-world [name]="name"></app-hello-world>`

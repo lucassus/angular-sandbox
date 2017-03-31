@@ -1,7 +1,8 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { RouterOutlet, RouterOutletMap } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { RouterOutlet, RouterOutletMap } from '@angular/router';
 
 describe('AppComponent', () => {
 
@@ -13,7 +14,8 @@ describe('AppComponent', () => {
       ],
       providers: [
         RouterOutletMap
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
   });
 

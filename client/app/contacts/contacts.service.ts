@@ -28,6 +28,7 @@ export class ContactsService {
   }
 
   create(data: any): Promise<Contact> {
+    console.log(data);
     return this.http.post('/api/contacts', data)
       .toPromise()
       .then((response: Response) => {

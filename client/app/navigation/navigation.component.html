@@ -1,0 +1,18 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/">Angular Sandbox</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/">Home</a>
+        </li>
+
+        <li routerLinkActive="active">
+          <a routerLink="/contacts">Contacts</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

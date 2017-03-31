@@ -1,4 +1,4 @@
-import { Directive, Input, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { AfterContentInit, ContentChildren, Directive, Input, QueryList } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 import { ValidationMessageDirective } from './validation-message.directive';

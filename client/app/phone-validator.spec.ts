@@ -1,5 +1,5 @@
-import { phoneValidator } from './phone-validator';
 import { FormControl } from '@angular/forms';
+import { phoneValidator } from './phone-validator';
 
 describe('.phoneValidator', () => {
 
