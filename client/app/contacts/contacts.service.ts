@@ -42,4 +42,13 @@ export class ContactsService {
       });
   }
 
+  checkEmailUniqueness(id: number, email: string): Promise<boolean> {
+    return this.http.get('/api/contacts/validate-email', { params: { id, email } })
+      .toPromise()
+      .then((response: Response) => {
+        const { taken } = response.json();
+        return taken;
+      });
+  }
+
 }

@@ -1,11 +1,12 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
-import { Contact } from '../contact';
-import { ContactFormComponent } from './contact-form.component';
 import { Config } from '../../config';
+import { Contact } from '../contact';
+import { ContactsService } from '../contacts.service';
+import { ContactFormComponent } from './contact-form.component';
 
 @Component({
   template: `
@@ -22,6 +23,10 @@ class TestComponent {
   saveContact = spy();
 }
 
+const fakeContactsService = {
+  checkEmailUniqueness: stub().returns(Promise.resolve(false))
+};
+
 describe('ContactFormComponent', () => {
 
   let fixture: ComponentFixture<TestComponent>;
@@ -31,7 +36,8 @@ describe('ContactFormComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: Config, useValue: new Config() }
+        { provide: Config, useValue: new Config() },
+        { provide: ContactsService, useValue: fakeContactsService }
       ],
       declarations: [
         ContactFormComponent,

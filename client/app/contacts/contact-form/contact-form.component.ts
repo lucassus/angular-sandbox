@@ -5,6 +5,7 @@ import { Config } from '../../config';
 import { phoneValidator } from '../../phone-validator';
 import { ICountry } from '../address';
 import { Contact } from '../contact';
+import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contact-form',
@@ -23,7 +24,7 @@ export class ContactFormComponent implements OnInit {
     email: new FormControl('', Validators.compose([
       Validators.required,
       Validators.email
-    ]), this.uniqueEmailValidator),
+    ]), this.uniqueEmailValidator.bind(this)),
     phone: new FormControl('', phoneValidator),
     favourite: new FormControl(),
 
@@ -35,25 +36,34 @@ export class ContactFormComponent implements OnInit {
     })
   });
 
-  constructor(config: Config) {
-    this.countries = config.countries;
-  }
-
-  private uniqueEmailValidator(control: AbstractControl): Promise<ValidationErrors> {
-    const { value: email } = control;
-
-    return new Promise((resolve) => {
-      if (email === 'taken@email.com') {
-        resolve({ uniqueEmail: { valid: false } });
-      } else {
-        resolve(null);
-      }
-    });
-  }
+  constructor(
+    private config: Config,
+    private contactsService: ContactsService
+  ) { }
 
   ngOnInit(): void {
+    const { countries } = this.config;
+    this.countries = countries;
+
     const value = this.contact.toJS();
     this.contactForm.patchValue(value);
+  }
+
+  // TODO debounce
+  private uniqueEmailValidator(control: AbstractControl): Promise<ValidationErrors> {
+    const { id } = this.contact;
+    const { value: email } = control;
+
+    return this.contactsService.checkEmailUniqueness(id, email)
+      .then((taken) => {
+        console.log('Taken', taken);
+
+        if (taken) {
+          return { uniqueEmail: { valid: false } };
+        } else {
+          return null;
+        }
+      });
   }
 
   submit() {
