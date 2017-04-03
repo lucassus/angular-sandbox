@@ -8,7 +8,9 @@ app.use(require('body-parser').json());
 
 app.get('/api/config', (req, res) => {
   const environment = app.get('env');
-  res.json({ environment });
+  const countries = require('./countries.json');
+
+  res.json({ environment, countries });
 });
 
 if (app.get('env') !== 'production') {
