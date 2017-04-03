@@ -35,6 +35,12 @@
 
   <dt>Zip code</dt>
   <dd>{{contact.address.zipCode}}</dd>
+
+  <dt>Country</dt>
+  <dd>
+    {{getCountryNameFor(contact.address.countryCode)}}
+    ({{contact.address.countryCode}})
+  </dd>
 </dl>
 
 <a [routerLink]="['./edit']">Edit</a>

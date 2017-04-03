@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
+import { Config } from '../../config';
 import { CheckmarkPipe } from '../checkmark.pipe';
 import { Contact } from '../contact';
 import { ShowComponent } from './show.component';
@@ -31,6 +32,10 @@ describe('ShowComponent', () => {
               })
             })
           }
+        },
+        {
+          provide: Config,
+          useValue: new Config({ countries: [{ code: 'PL', name: 'Poland' }] })
         }
       ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -41,6 +46,26 @@ describe('ShowComponent', () => {
 
     fixture.detectChanges();
   }));
+
+  describe('.getCountryNameFor', () => {
+
+    describe('when the country exists', () => {
+
+      it('returns valid name', () => {
+        expect(component.getCountryNameFor('PL')).toEqual('Poland');
+      });
+
+    });
+
+    describe('otherwise', () => {
+
+      it('returns undefined', () => {
+        expect(component.getCountryNameFor('XX')).toBeUndefined();
+      });
+
+    });
+
+  });
 
   it('should load and show a contact', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;
