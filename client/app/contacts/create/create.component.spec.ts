@@ -38,6 +38,11 @@ describe('CreateComponent', () => {
     fixture.detectChanges();
   });
 
+  it('has contact', () => {
+    expect(component.contact instanceof Contact).toBeTruthy();
+    expect(component.contact.id).toBeNull();
+  });
+
   describe('.createContact', () => {
 
     it('creates a contact', () => {

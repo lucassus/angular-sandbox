@@ -52,6 +52,11 @@ describe('EditComponent', () => {
     fixture.detectChanges();
   });
 
+  it('has contact', () => {
+    expect(component.contact instanceof Contact).toBeTruthy();
+    expect(component.contact.id).toEqual(124);
+  });
+
   describe('.updateContact', () => {
 
     it('updates a contact', () => {

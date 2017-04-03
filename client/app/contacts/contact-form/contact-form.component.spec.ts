@@ -56,6 +56,20 @@ describe('ContactFormComponent', () => {
     expect(data.favourite).toBeFalsy();
   });
 
+  it('validates `address.zipCode` format', () => {
+    const control = component.contactForm.get('address.zipCode');
+    expect(control).not.toBeNull();
+
+    control.setValue('');
+    expect(control.hasError('pattern')).toBeFalsy();
+
+    control.setValue('123-123');
+    expect(control.hasError('pattern')).toBeTruthy();
+
+    control.setValue('24-313');
+    expect(control.hasError('pattern')).toBeFalsy();
+  });
+
   describe('.submit', () => {
 
     it('emits an event with valid data', () => {

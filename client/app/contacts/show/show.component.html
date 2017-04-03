@@ -26,4 +26,15 @@
   <dd>{{contact.updatedAt | date:'medium'}}</dd>
 </dl>
 
+<dl class="dl-horizontal" *ngIf="contact.hasAddress()">
+  <dt>Street</dt>
+  <dd>{{contact.address.street}}</dd>
+
+  <dt>Town</dt>
+  <dd>{{contact.address.town}}</dd>
+
+  <dt>Zip code</dt>
+  <dd>{{contact.address.zipCode}}</dd>
+</dl>
+
 <a [routerLink]="['./edit']">Edit</a>

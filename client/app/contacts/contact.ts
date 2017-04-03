@@ -1,5 +1,7 @@
 import { Record } from 'immutable';
 
+import { Address } from './address';
+
 const ContactRecord = Record({
   id: null,
   firstName: null,
@@ -8,7 +10,9 @@ const ContactRecord = Record({
   phone: null,
   favourite: false,
   createdAt: null,
-  updatedAt: null
+  updatedAt: null,
+
+  address: new Address()
 });
 
 export class Contact extends ContactRecord {
@@ -22,12 +26,23 @@ export class Contact extends ContactRecord {
   createdAt: number;
   updatedAt: number;
 
-  constructor(data?: any) {
-    super(data);
+  address: Address;
+
+  constructor(data: any = {}) {
+    const { address: rawAddress, ...rawData } = data;
+
+    super({
+      ...rawData,
+      address: new Address(rawAddress)
+    });
   }
 
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
+  }
+
+  hasAddress(): boolean {
+    return this.address.isPresent();
   }
 
   isPersisted(): boolean {
