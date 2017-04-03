@@ -3,8 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
+import { Config } from '../../config';
 import { CheckmarkPipe } from '../checkmark.pipe';
 import { Contact } from '../contact';
+import { CountryNamePipe } from '../country-name.pipe';
 import { ShowComponent } from './show.component';
 
 describe('ShowComponent', () => {
@@ -16,6 +18,7 @@ describe('ShowComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CheckmarkPipe,
+        CountryNamePipe,
         ShowComponent
       ],
       providers: [
@@ -31,7 +34,8 @@ describe('ShowComponent', () => {
               })
             })
           }
-        }
+        },
+        { provide: Config, useValue: new Config() }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });

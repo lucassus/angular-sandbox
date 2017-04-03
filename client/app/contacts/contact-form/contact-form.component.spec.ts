@@ -5,6 +5,7 @@ import { spy } from 'sinon';
 
 import { Contact } from '../contact';
 import { ContactFormComponent } from './contact-form.component';
+import { Config } from '../../config';
 
 @Component({
   template: `
@@ -29,6 +30,9 @@ describe('ContactFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      providers: [
+        { provide: Config, useValue: new Config() }
+      ],
       declarations: [
         ContactFormComponent,
         TestComponent

@@ -13,6 +13,7 @@ import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { ListComponent } from './list/list.component';
 import { ShowComponent } from './show/show.component';
+import { CountryNamePipe } from './country-name.pipe';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { ShowComponent } from './show/show.component';
     ShowComponent,
     EditComponent,
     CreateComponent,
-    CheckmarkPipe
+    CheckmarkPipe,
+    CountryNamePipe
   ]
 })
 export class ContactsModule { }

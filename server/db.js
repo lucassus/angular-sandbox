@@ -16,7 +16,7 @@ class Db {
     return this.drop().then(() => {
       return Promise.all(_.times(n, () => {
         const address = {
-          country: faker.address.country(),
+          countryCode: faker.address.countryCode(),
           town: faker.address.city(),
           zipCode: faker.address.zipCode(),
           street: faker.address.streetAddress(),
