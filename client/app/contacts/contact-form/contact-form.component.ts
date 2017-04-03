@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Config } from '../../config';
 import { phoneValidator } from '../../phone-validator';
@@ -19,12 +19,13 @@ export class ContactFormComponent implements OnInit {
   countries: Array<ICountry>;
 
   contactForm = new FormGroup({
+    id: new FormControl(),
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
     email: new FormControl('', Validators.compose([
       Validators.required,
       Validators.email
-    ]), this.uniqueEmailValidator.bind(this)),
+    ])),
     phone: new FormControl('', phoneValidator),
     favourite: new FormControl(),
 
@@ -47,21 +48,24 @@ export class ContactFormComponent implements OnInit {
 
     const value = this.contact.toJS();
     this.contactForm.patchValue(value);
+
+    this.uniqueEmailValidator(this.contactForm.get('email'));
   }
 
-  // TODO debounce
-  private uniqueEmailValidator(control: AbstractControl): Promise<ValidationErrors> {
-    const { id } = this.contact;
-    const { value: email } = control;
+  // TODO block form submission until the control is validated
+  // TODO refactor
+  private uniqueEmailValidator(control: AbstractControl): void {
+     const { value: id } = control.root.get('id');
 
-    return this.contactsService.checkEmailUniqueness(id, email)
-      .then((taken) => {
-        console.log('Taken', taken);
-
+    control.valueChanges
+      .debounceTime(500)
+      .distinctUntilChanged()
+      .switchMap((email: string) => {
+        return this.contactsService.checkEmailUniqueness(id, email);
+      })
+      .subscribe(({ email, taken }) => {
         if (taken) {
-          return { uniqueEmail: { valid: false } };
-        } else {
-          return null;
+          control.setErrors({ emailTaken: email });
         }
       });
   }

@@ -47,7 +47,7 @@
           Invalid email address
         </div>
 
-        <div class="help-block" appValidationMessage="uniqueEmail">
+        <div class="help-block" appValidationMessage="emailTaken">
           Email is already taken
         </div>
       </div>
@@ -131,7 +131,7 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button [disabled]="contactForm.invalid"
+      <button [disabled]="contactForm.pending || contactForm.invalid"
               [ngSwitch]="contact.isPersisted()"
               type="submit" class="btn btn-success">
         <span *ngSwitchCase="true">Update</span>

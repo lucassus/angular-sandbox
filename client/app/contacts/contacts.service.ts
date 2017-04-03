@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { List } from 'immutable';
 
 import { Contact } from './contact';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ContactsService {
@@ -42,12 +43,15 @@ export class ContactsService {
       });
   }
 
-  checkEmailUniqueness(id: number, email: string): Promise<boolean> {
-    return this.http.get('/api/contacts/validate-email', { params: { id, email } })
-      .toPromise()
-      .then((response: Response) => {
-        const { taken } = response.json();
-        return taken;
+  // TODO write specs
+  checkEmailUniqueness(id: number, email: string): Observable<{ email: string, taken: Boolean }> {
+    const params = { id, email };
+    return this.http.get('/api/contacts/validate-email', { params })
+      .map((response: Response) => {
+        const data = response.json();
+        const taken = Boolean(data.taken);
+
+        return { email, taken };
       });
   }
 
