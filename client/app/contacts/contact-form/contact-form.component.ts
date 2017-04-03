@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 import { Config } from '../../config';
 import { phoneValidator } from '../../phone-validator';
@@ -23,7 +23,7 @@ export class ContactFormComponent implements OnInit {
     email: new FormControl('', Validators.compose([
       Validators.required,
       Validators.email
-    ])),
+    ]), this.uniqueEmailValidator),
     phone: new FormControl('', phoneValidator),
     favourite: new FormControl(),
 
@@ -37,6 +37,18 @@ export class ContactFormComponent implements OnInit {
 
   constructor(config: Config) {
     this.countries = config.countries;
+  }
+
+  private uniqueEmailValidator(control: AbstractControl): Promise<ValidationErrors> {
+    const { value: email } = control;
+
+    return new Promise((resolve) => {
+      if (email === 'taken@email.com') {
+        resolve({ uniqueEmail: { valid: false } });
+      } else {
+        resolve(null);
+      }
+    });
   }
 
   ngOnInit(): void {
