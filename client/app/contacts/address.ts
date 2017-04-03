@@ -1,10 +1,15 @@
 import { Record } from 'immutable';
 
+export interface ICountry {
+  code: string;
+  name: string;
+}
+
 const AddressRecord = Record({
   street: null,
   town: null,
   zipCode: null,
-  country: null
+  countryCode: null
 });
 
 export class Address extends AddressRecord {
@@ -12,7 +17,7 @@ export class Address extends AddressRecord {
   street: string;
   town: string;
   zipCode: string;
-  country: string;
+  countryCode: string;
 
   constructor(data: any = {}) {
     super(data);

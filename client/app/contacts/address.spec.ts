@@ -6,13 +6,13 @@ describe('Address', () => {
     const address = new Address({
       town: 'Kraków',
       zipCode: '31-502',
-      country: 'Poland'
+      countryCode: 'PL'
     });
 
     expect(address.street).toBeNull();
     expect(address.town).toEqual('Kraków');
     expect(address.zipCode).toEqual('31-502');
-    expect(address.country).toEqual('Poland');
+    expect(address.countryCode).toEqual('PL');
   });
 
   describe('.isPresent', () => {
