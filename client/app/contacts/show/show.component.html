@@ -36,11 +36,13 @@
   <dt>Zip code</dt>
   <dd>{{contact.address.zipCode}}</dd>
 
-  <dt>Country</dt>
-  <dd>
-    {{contact.address.countryCode | countryName}}
-    ({{contact.address.countryCode}})
-  </dd>
+  <span *ngIf="contact.address.countryCode">
+    <dt>Country</dt>
+    <dd>
+      {{contact.address.countryCode | countryName}}
+      ({{contact.address.countryCode}})
+    </dd>
+  </span>
 </dl>
 
 <a [routerLink]="['./edit']">Edit</a>
