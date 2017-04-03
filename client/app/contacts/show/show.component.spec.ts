@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Config } from '../../config';
 import { CheckmarkPipe } from '../checkmark.pipe';
 import { Contact } from '../contact';
+import { CountryNamePipe } from '../country-name.pipe';
 import { ShowComponent } from './show.component';
 
 describe('ShowComponent', () => {
@@ -17,6 +18,7 @@ describe('ShowComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CheckmarkPipe,
+        CountryNamePipe,
         ShowComponent
       ],
       providers: [
@@ -33,10 +35,7 @@ describe('ShowComponent', () => {
             })
           }
         },
-        {
-          provide: Config,
-          useValue: new Config({ countries: [{ code: 'PL', name: 'Poland' }] })
-        }
+        { provide: Config, useValue: new Config() }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });
@@ -46,26 +45,6 @@ describe('ShowComponent', () => {
 
     fixture.detectChanges();
   }));
-
-  describe('.getCountryNameFor', () => {
-
-    describe('when the country exists', () => {
-
-      it('returns valid name', () => {
-        expect(component.getCountryNameFor('PL')).toEqual('Poland');
-      });
-
-    });
-
-    describe('otherwise', () => {
-
-      it('returns undefined', () => {
-        expect(component.getCountryNameFor('XX')).toBeUndefined();
-      });
-
-    });
-
-  });
 
   it('should load and show a contact', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;

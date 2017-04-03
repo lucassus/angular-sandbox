@@ -38,7 +38,7 @@
 
   <dt>Country</dt>
   <dd>
-    {{getCountryNameFor(contact.address.countryCode)}}
+    {{contact.address.countryCode | countryName}}
     ({{contact.address.countryCode}})
   </dd>
 </dl>
