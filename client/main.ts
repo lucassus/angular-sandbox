@@ -3,12 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { Config } from './app/config';
-import { environment } from './environments/environment';
 import './rxjs-operators';
-
-if (environment.production) {
-  enableProdMode();
-}
 
 function fetchConfig(): Promise<Config> {
   return fetch('/api/config').then((response: Response) => {
