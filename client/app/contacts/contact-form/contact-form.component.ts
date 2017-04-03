@@ -26,9 +26,7 @@ export class ContactFormComponent implements OnInit {
     address: new FormGroup({
       street: new FormControl(),
       town: new FormControl(),
-
-      // TODO add pattern validation
-      zipCode: new FormControl()
+      zipCode: new FormControl('', Validators.pattern(/^\d{2}-\d{3}$/))
     })
   });
 
