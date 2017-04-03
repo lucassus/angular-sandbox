@@ -14,7 +14,6 @@ export class ContactsService {
       .toPromise()
       .then((response: Response) => {
         const { contacts } = response.json();
-
         return List(contacts.map((params) => new Contact(params)));
       });
   }
@@ -28,7 +27,6 @@ export class ContactsService {
   }
 
   create(data: any): Promise<Contact> {
-    console.log(data);
     return this.http.post('/api/contacts', data)
       .toPromise()
       .then((response: Response) => {

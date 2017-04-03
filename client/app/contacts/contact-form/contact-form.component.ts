@@ -21,7 +21,15 @@ export class ContactFormComponent implements OnInit {
       Validators.email
     ])),
     phone: new FormControl('', phoneValidator),
-    favourite: new FormControl()
+    favourite: new FormControl(),
+
+    address: new FormGroup({
+      street: new FormControl(),
+      town: new FormControl(),
+
+      // TODO add pattern validation
+      zipCode: new FormControl()
+    })
   });
 
   ngOnInit(): void {
