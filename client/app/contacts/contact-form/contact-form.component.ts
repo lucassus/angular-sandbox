@@ -1,11 +1,53 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 
 import { Config } from '../../config';
 import { phoneValidator } from '../../phone-validator';
 import { ICountry } from '../address';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
+
+// TODO move to the separate file
+// TODO write specs
+class UniqueEmailValidator {
+
+  private validatorInput = new Subject<{ id: number, email: string }>();
+  private validatorChain: Observable<ValidationErrors | null>;
+
+  // TODO pass a generic function
+  constructor(private contactsService: ContactsService) {
+    this.validatorChain = this.validatorInput
+      .debounceTime(500)
+      .distinctUntilChanged()
+      .switchMap(({ id, email }) => {
+        return this.contactsService.checkEmailUniqueness(id, email);
+      })
+      .map(({ email, taken }) => {
+        if (taken) {
+          return { emailTaken: email };
+        }
+
+        return null;
+      })
+      .share()
+      .take(1);
+  }
+
+  validate(control: AbstractControl): Observable<ValidationErrors | null> {
+    const { value: id } = control.root.get('id');
+    const { value: email } = control;
+
+    console.log(this);
+
+    setTimeout(() => {
+      this.validatorInput.next({ id, email });
+    });
+
+    return this.validatorChain;
+  }
+
+}
 
 @Component({
   selector: 'app-contact-form',
@@ -16,31 +58,36 @@ export class ContactFormComponent implements OnInit {
   @Input('contact') contact: Contact;
   @Output() onSubmit = new EventEmitter();
 
+  contactForm: FormGroup;
+
   countries: Array<ICountry>;
-
-  contactForm = new FormGroup({
-    id: new FormControl(),
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.email
-    ])),
-    phone: new FormControl('', phoneValidator),
-    favourite: new FormControl(),
-
-    address: new FormGroup({
-      street: new FormControl(),
-      town: new FormControl(),
-      zipCode: new FormControl('', Validators.pattern(/^\d{2}-\d{3}$/)),
-      countryCode: new FormControl()
-    })
-  });
 
   constructor(
     private config: Config,
-    private contactsService: ContactsService
-  ) { }
+    contactsService: ContactsService,
+  ) {
+    // TODO consider use FormBuilder
+    const validator = new UniqueEmailValidator(contactsService);
+
+    this.contactForm = new FormGroup({
+      id: new FormControl(),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.email
+      ]), validator.validate.bind(validator)),
+      phone: new FormControl('', phoneValidator),
+      favourite: new FormControl(),
+
+      address: new FormGroup({
+        street: new FormControl(),
+        town: new FormControl(),
+        zipCode: new FormControl('', Validators.pattern(/^\d{2}-\d{3}$/)),
+        countryCode: new FormControl()
+      })
+    });
+  }
 
   ngOnInit(): void {
     const { countries } = this.config;
@@ -48,26 +95,6 @@ export class ContactFormComponent implements OnInit {
 
     const value = this.contact.toJS();
     this.contactForm.patchValue(value);
-
-    this.uniqueEmailValidator(this.contactForm.get('email'));
-  }
-
-  // TODO block form submission until the control is validated
-  // TODO refactor
-  private uniqueEmailValidator(control: AbstractControl): void {
-     const { value: id } = control.root.get('id');
-
-    control.valueChanges
-      .debounceTime(500)
-      .distinctUntilChanged()
-      .switchMap((email: string) => {
-        return this.contactsService.checkEmailUniqueness(id, email);
-      })
-      .subscribe(({ email, taken }) => {
-        if (taken) {
-          control.setErrors({ emailTaken: email });
-        }
-      });
   }
 
   submit() {
