@@ -1,5 +1,6 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { spy, stub } from 'sinon';
 
@@ -36,6 +37,7 @@ describe('ContactFormComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        FormBuilder,
         { provide: Config, useValue: new Config() },
         { provide: ContactsService, useValue: fakeContactsService }
       ],
