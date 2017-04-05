@@ -1,24 +1,27 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
+import { Subject } from 'rxjs/Subject';
 
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
-// TODO move to the separate file
 // TODO write specs
+@Injectable()
 export class UniqueEmailValidator {
 
-  private validatorInput = new Subject<string>();
-  private validatorChain: Observable<ValidationErrors | null>;
+  // TODO pass a function here ???
+  constructor(private contactsService: ContactsService) { }
 
-  // TODO pass a function here
-  constructor(contact: Contact, contactsService: ContactsService) {
-    this.validatorChain = this.validatorInput
+  // TODO add a signature
+  createValidator(contact: Contact): AsyncValidatorFn {
+    const { id } = contact;
+
+    const validatorInput = new Subject<string>();
+    const validatorChain = validatorInput
       .debounceTime(500)
       .distinctUntilChanged()
       .switchMap((email) => {
-        const { id } = contact;
-        return contactsService.checkEmailUniqueness(id, email);
+        return this.contactsService.checkEmailUniqueness(id, email);
       })
       .map(({ email, taken }) => {
         if (taken) {
@@ -29,16 +32,16 @@ export class UniqueEmailValidator {
       })
       .share()
       .take(1);
-  }
 
-  validate(control: AbstractControl): Observable<ValidationErrors | null> {
-    const { value: email } = control;
+    return (control: AbstractControl) => {
+      const { value: email } = control;
 
-    setTimeout(() => {
-      this.validatorInput.next(email);
-    });
+      setTimeout(() => {
+        validatorInput.next(email);
+      });
 
-    return this.validatorChain;
+      return validatorChain;
+    };
   }
 
 }

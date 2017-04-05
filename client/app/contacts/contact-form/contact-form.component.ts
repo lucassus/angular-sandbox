@@ -5,12 +5,12 @@ import { Config } from '../../config';
 import { phoneValidator } from '../../phone-validator';
 import { ICountry } from '../address';
 import { Contact } from '../contact';
-import { ContactsService } from '../contacts.service';
 import { UniqueEmailValidator } from './unique-email-validator';
 
 @Component({
   selector: 'app-contact-form',
-  templateUrl: './contact-form.component.html'
+  templateUrl: './contact-form.component.html',
+  providers: [UniqueEmailValidator]
 })
 export class ContactFormComponent implements OnInit {
 
@@ -23,22 +23,15 @@ export class ContactFormComponent implements OnInit {
 
   constructor(
     private config: Config,
-    private contactsService: ContactsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private uniqueEmailValidator: UniqueEmailValidator
   ) { }
 
   ngOnInit(): void {
     const { countries } = this.config;
     this.countries = countries;
 
-    this.contactForm = this.buildForm();
-  }
-
-  private buildForm(): FormGroup {
-    // TODO pass it as a service (stub and test in isolation)
-    const uniqueEmailValidator = new UniqueEmailValidator(this.contact, this.contactsService);
-
-    return this.fb.group({
+    this.contactForm = this.fb.group({
       id: this.contact.id,
 
       firstName: [this.contact.firstName, Validators.required],
@@ -46,7 +39,7 @@ export class ContactFormComponent implements OnInit {
       email: [this.contact.email, Validators.compose([
         Validators.required,
         Validators.email
-      ]), uniqueEmailValidator.validate.bind(uniqueEmailValidator)],
+      ]), this.uniqueEmailValidator.createValidator(this.contact)],
       phone: [this.contact.phone, phoneValidator],
       favourite: this.contact.favourite,
 

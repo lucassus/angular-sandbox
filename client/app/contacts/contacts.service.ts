@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { List } from 'immutable';
 
 import { Contact } from './contact';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ContactsService {
@@ -44,6 +44,7 @@ export class ContactsService {
   }
 
   // TODO write specs
+  // TODO create a separate service?
   checkEmailUniqueness(id: number, email: string): Observable<{ email: string, taken: Boolean }> {
     const params = { id, email };
     return this.http.get('/api/contacts/validate-email', { params })
