@@ -35,9 +35,9 @@ describe('app', () => {
           const { contacts } = res.body;
           assert(contacts.length === 20);
 
-          assert(contacts[0].firstName === 'Wallace');
-          assert(contacts[0].lastName === 'Rath');
-          assert(contacts[0].email === 'Tessie_Carter16@gmail.com');
+          assert(contacts[0].firstName === 'Dawid');
+          assert(contacts[0].lastName === 'Walczak');
+          assert(contacts[0].email === 'luke@rebel.org');
         })
         .end(done);
     });
@@ -78,7 +78,7 @@ describe('app', () => {
 
         it('responds with `{ taken: false }`', (done) => {
           request(app)
-            .get('/api/contacts/validate-email?email=luke@rebel.org')
+            .get('/api/contacts/validate-email?email=test@email.com')
             .expect(200)
             .expect((res) => {
               assert(!res.body.taken);
@@ -183,9 +183,9 @@ describe('app', () => {
             const { body: contact } = res;
 
             assert(contact.id === 3);
-            assert(contact.firstName === 'Caterina');
-            assert(contact.lastName === 'Hackett');
-            assert(contact.email === 'Destin.Kassulke80@hotmail.com');
+            assert(contact.firstName === 'Rafał');
+            assert(contact.lastName === 'Mikulski');
+            assert(contact.email === 'taken@email.com');
           })
           .end(done);
       });
