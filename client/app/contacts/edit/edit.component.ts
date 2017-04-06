@@ -24,10 +24,20 @@ export class EditComponent implements OnInit {
     });
   }
 
-  updateContact(data: any): void {
-    this.contactsService.update(this.contact.id, data).then(() => {
-      return this.router.navigate(['./contacts', this.contact.id]);
-    });
+  updateContact(data: any): Promise<boolean> {
+    const contact = this.contact.mergeDeep(data);
+
+    if (contact !== this.contact) {
+      return this.contactsService.update(contact).then((updatedContact: Contact) => {
+        return this.redirectToShow(updatedContact);
+      });
+    } else {
+      return this.redirectToShow(contact);
+    }
+  }
+
+  private redirectToShow(contact: Contact): Promise<boolean> {
+    return this.router.navigate(['./contacts', contact.id]);
   }
 
 }

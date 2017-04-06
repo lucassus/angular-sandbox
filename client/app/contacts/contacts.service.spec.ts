@@ -146,13 +146,14 @@ describe('ContactsService', () => {
       });
 
       it('should create a contact', fakeAsync(() => {
-        contactsService.create({ firstName: 'Luke', lastName: 'Skywalker' }).then((contact: Contact) => {
-          expect(contact).not.toBeUndefined();
+        contactsService.create(new Contact({ firstName: 'Luke', lastName: 'Skywalker' }))
+          .then((contact: Contact) => {
+            expect(contact).not.toBeUndefined();
 
-          expect(contact.id).toEqual(125);
-          expect(contact.firstName).toEqual('Luke');
-          expect(contact.lastName).toEqual('Skywalker');
-        });
+            expect(contact.id).toEqual(125);
+            expect(contact.firstName).toEqual('Luke');
+            expect(contact.lastName).toEqual('Skywalker');
+          });
 
         tick();
       }));
@@ -181,13 +182,15 @@ describe('ContactsService', () => {
       });
 
       it('should update a contact', fakeAsync(() => {
-        contactsService.update(124, { firstName: 'Luke', lastName: 'Skywalker' }).then((contact: Contact) => {
-          expect(contact).not.toBeUndefined();
+        const contact = new Contact({ id: 124, firstName: 'Luke', lastName: 'Skywalker' });
 
-          expect(contact.id).toEqual(124);
-          expect(contact.firstName).toEqual('Luke');
-          expect(contact.lastName).toEqual('Skywalker');
-          expect(contact.updatedAt).toEqual(12345678);
+        contactsService.update(contact).then((updatedContact: Contact) => {
+          expect(updatedContact).not.toBeUndefined();
+
+          expect(updatedContact.id).toEqual(124);
+          expect(updatedContact.firstName).toEqual('Luke');
+          expect(updatedContact.lastName).toEqual('Skywalker');
+          expect(updatedContact.updatedAt).toEqual(12345678);
         });
 
         tick();

@@ -27,20 +27,19 @@ export class ContactsService {
       });
   }
 
-  // TODO use `Contact` instead of generic `data` ???
-  create(data: any): Promise<Contact> {
-    return this.http.post('/api/contacts', data)
+  create(contact: Contact): Promise<Contact> {
+    return this.http.post('/api/contacts', contact.toJS())
       .toPromise()
       .then((response: Response) => {
-        return new Contact(response.json());
+        return contact.mergeDeep(response.json());
       });
   }
 
-  update(id: number, data: any): Promise<Contact> {
-    return this.http.put(`/api/contacts/${id}`, data)
+  update(contact: Contact): Promise<Contact> {
+    return this.http.put(`/api/contacts/${contact.id}`, contact.toJS())
       .toPromise()
       .then((response: Response) => {
-        return new Contact(response.json());
+        return contact.mergeDeep(response.json());
       });
   }
 

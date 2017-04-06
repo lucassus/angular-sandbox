@@ -9,7 +9,6 @@ import { ContactsService } from '../contacts.service';
 @Injectable()
 export class UniqueEmailValidator {
 
-  // TODO pass a function here ???
   constructor(private contactsService: ContactsService) { }
 
   // TODO add a signature

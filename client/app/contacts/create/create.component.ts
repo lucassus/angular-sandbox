@@ -17,9 +17,11 @@ export class CreateComponent {
     private contactsService: ContactsService
   ) { }
 
-  createContact(data: any): void {
-    this.contactsService.create(data).then((contact: Contact) => {
-      return this.router.navigate(['./contacts', contact.id]);
+  createContact(data: any): Promise<boolean> {
+    const contact = new Contact(data);
+
+    return this.contactsService.create(contact).then((createdContact: Contact) => {
+      return this.router.navigate(['./contacts', createdContact.id]);
     });
   }
 

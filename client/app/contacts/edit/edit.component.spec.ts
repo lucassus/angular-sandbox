@@ -12,16 +12,18 @@ const fakeRouter = {
   navigate: stub()
 };
 
-const fakeContactService = {
-  update: stub().returns(Promise.resolve(new Contact({ id: 124 })))
-};
-
 describe('EditComponent', () => {
+
+  let fakeContactsService;
 
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
 
   beforeEach(() => {
+    fakeContactsService = {
+      update: stub().returns(Promise.resolve(new Contact({ id: 124 })))
+    };
+
     TestBed.configureTestingModule({
       declarations: [
         EditComponent
@@ -35,13 +37,14 @@ describe('EditComponent', () => {
                 id: 124,
                 firstName: 'Luke', lastName: 'Skywalker',
                 email: 'luke@rebel.org', phone: '+48 111',
+                address: { town: 'Foo' },
                 updateAt: 10001
               })
             })
           }
         },
         { provide: Router, useValue: fakeRouter },
-        { provide: ContactsService, useValue: fakeContactService }
+        { provide: ContactsService, useValue: fakeContactsService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });
@@ -59,19 +62,43 @@ describe('EditComponent', () => {
 
   describe('.updateContact', () => {
 
-    it('updates a contact', () => {
-      component.updateContact({ firstName: 'Anakin' });
-      expect(fakeContactService.update.called).toBeTruthy();
+    describe('when the data was changed', () => {
 
-      const [id, data] = fakeContactService.update.lastCall.args;
-      expect(id).toEqual(124);
-      expect(data.firstName).toEqual('Anakin');
+      beforeEach(() => {
+        component.updateContact({ firstName: 'Anakin' });
+      });
+
+      it('updates a contact', () => {
+        expect(fakeContactsService.update.called).toBeTruthy();
+
+        const [contact] = fakeContactsService.update.lastCall.args;
+        expect(contact instanceof Contact).toBeTruthy();
+        expect(contact.id).toEqual(124);
+        expect(contact.firstName).toEqual('Anakin');
+      });
+
+      describe('on success', () => {
+
+        it('redirects to the show page', () => {
+          expect(fakeRouter.navigate.called).toBeTruthy();
+
+          const [commands] = fakeRouter.navigate.lastCall.args;
+          expect(commands[0]).toEqual('./contacts');
+          expect(commands[1]).toEqual(124);
+        });
+
+      });
+
     });
 
-    describe('on success', () => {
+    describe('when the data was unchanged', () => {
 
-      it('redirects to the show page', () => {
-        component.updateContact({});
+      beforeEach(() => {
+        component.updateContact({ firstName: 'Luke', address: { town: 'Foo' } });
+      });
+
+      it('just redirects to the show page', () => {
+        expect(fakeContactsService.update.called).toBeFalsy();
         expect(fakeRouter.navigate.called).toBeTruthy();
 
         const [commands] = fakeRouter.navigate.lastCall.args;
