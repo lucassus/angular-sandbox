@@ -28,12 +28,12 @@ export class Contact extends ContactRecord {
 
   address: Address;
 
-  constructor(data: any = {}) {
-    const { address: rawAddress, ...rawData } = data;
+  constructor(nestedData: any = {}) {
+    const { address: addressData, ...data } = nestedData;
 
     super({
-      ...rawData,
-      address: new Address(rawAddress)
+      ...data,
+      address: new Address(addressData)
     });
   }
 
