@@ -197,4 +197,37 @@ describe('ContactsService', () => {
 
   });
 
+  describe('.checkEmailUniqueness', () => {
+
+    describe('when an email is unique', () => {
+
+      const contact = new Contact({
+        email: 'test@email.com'
+      });
+
+      beforeEach(() => {
+        mockBackend.connections.subscribe((connection: MockConnection) => {
+          expect(connection.request.method).toEqual(RequestMethod.Get);
+          expect(connection.request.url).toEqual(`/api/contacts/validate-email?id=null&email=${contact.email}`);
+
+          connection.mockRespond(new Response(new ResponseOptions({
+            body: JSON.stringify({ email: contact.email, taken: false })
+          })));
+        });
+
+      });
+
+      it('should return valid response', () => {
+        contactsService.checkEmailUniqueness(contact.id, contact.email).subscribe((result) => {
+          const { email, taken } = result;
+
+          expect(email).toEqual(contact.email);
+          expect(taken).toBeFalsy();
+        });
+      });
+
+    });
+
+  });
+
 });

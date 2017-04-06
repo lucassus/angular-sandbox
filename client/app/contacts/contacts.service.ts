@@ -27,6 +27,7 @@ export class ContactsService {
       });
   }
 
+  // TODO use `Contact` instead of generic `data` ???
   create(data: any): Promise<Contact> {
     return this.http.post('/api/contacts', data)
       .toPromise()
@@ -43,15 +44,11 @@ export class ContactsService {
       });
   }
 
-  // TODO write specs
-  // TODO create a separate service?
   checkEmailUniqueness(id: number, email: string): Observable<{ email: string, taken: Boolean }> {
     const params = { id, email };
     return this.http.get('/api/contacts/validate-email', { params })
       .map((response: Response) => {
-        const data = response.json();
-        const taken = Boolean(data.taken);
-
+        const { taken } = response.json();
         return { email, taken };
       });
   }
