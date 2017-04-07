@@ -5,13 +5,11 @@ import { Subject } from 'rxjs/Subject';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
-// TODO write specs
 @Injectable()
 export class UniqueEmailValidator {
 
   constructor(private contactsService: ContactsService) { }
 
-  // TODO add a signature
   createValidator(contact: Contact): AsyncValidatorFn {
     const { id } = contact;
 
