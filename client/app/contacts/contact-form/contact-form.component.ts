@@ -14,7 +14,8 @@ import { UniqueEmailValidator } from './unique-email-validator';
 })
 export class ContactFormComponent implements OnInit {
 
-  @Input('contact') contact: Contact;
+  @Input() pending: boolean;
+  @Input() contact: Contact;
   @Output() onSubmit = new EventEmitter();
 
   contactForm: FormGroup;

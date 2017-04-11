@@ -12,10 +12,12 @@ import { UniqueEmailValidator } from './unique-email-validator';
 
 @Component({
   template: `
-    <app-contact-form [contact]="contact"
+    <app-contact-form [pending]="pending" [contact]="contact"
                       (onSubmit)="saveContact($event)"></app-contact-form>`
 })
 class TestComponent {
+  pending = false;
+
   contact = new Contact({
     firstName: 'Luke',
     lastName: 'Skywalker',
@@ -114,7 +116,7 @@ describe('ContactFormComponent', () => {
 
   describe('submit button', () => {
 
-    let buttonEl: HTMLElement;
+    let buttonEl: HTMLButtonElement;
 
     beforeEach(() => {
        buttonEl = fixture.debugElement
@@ -139,6 +141,19 @@ describe('ContactFormComponent', () => {
 
       it('should display valid label', () => {
         expect(buttonEl.textContent).toContain('Update');
+      });
+
+    });
+
+    describe('when the request is pending', () => {
+
+      beforeEach(() => {
+        testComponent.pending = true;
+        fixture.detectChanges();
+      });
+
+      it('should be disabled', () => {
+        expect(buttonEl.disabled).toBeTruthy();
       });
 
     });

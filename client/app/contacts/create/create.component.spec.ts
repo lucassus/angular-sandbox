@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { stub } from 'sinon';
 
@@ -20,7 +20,8 @@ describe('CreateComponent', () => {
 
   beforeEach(() => {
     fakeContactsService = {
-      create: stub().returns(Promise.resolve(new Contact({ id: 124 })))
+      create: stub()
+        .returns(Promise.resolve(new Contact({ id: 124 })))
     };
 
     TestBed.configureTestingModule({
@@ -48,10 +49,14 @@ describe('CreateComponent', () => {
   describe('.createContact', () => {
 
     beforeEach(() => {
-      component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+      expect(component.pending).toBeFalsy();
+
+      fakeContactsService.create
+        .returns(Promise.resolve(new Contact({ id: 124 })));
     });
 
     it('creates a contact', () => {
+      component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
       expect(fakeContactsService.create.called).toBeTruthy();
 
       const [contact] = fakeContactsService.create.lastCall.args;
@@ -62,13 +67,46 @@ describe('CreateComponent', () => {
 
     describe('on success', () => {
 
+      it('toggles `pending` flag', fakeAsync(() => {
+        // When
+        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+
+        // Then
+        expect(component.pending).toBeTruthy();
+        tick();
+        expect(component.pending).toBeFalsy();
+      }));
+
       it('redirects to the show page', () => {
+        // When
+        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+
+        // Then
         expect(fakeRouter.navigate.called).toBeTruthy();
 
         const [commands] = fakeRouter.navigate.lastCall.args;
         expect(commands[0]).toEqual('./contacts');
         expect(commands[1]).toEqual(124);
       });
+
+    });
+
+    describe('on error', () => {
+
+      beforeEach(() => {
+        fakeContactsService.create
+          .returns(Promise.reject(null));
+      });
+
+      it('toggles `pending` flag', fakeAsync(() => {
+        // When
+        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+
+        // Then
+        expect(component.pending).toBeTruthy();
+        tick();
+        expect(component.pending).toBeFalsy();
+      }));
 
     });
 

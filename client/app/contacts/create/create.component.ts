@@ -10,6 +10,7 @@ import { ContactsService } from '../contacts.service';
 })
 export class CreateComponent {
 
+  pending = false;
   contact = new Contact();
 
   constructor(
@@ -20,8 +21,12 @@ export class CreateComponent {
   createContact(data: any): Promise<boolean> {
     const contact = new Contact(data);
 
+    this.pending = true;
     return this.contactsService.create(contact).then((createdContact: Contact) => {
+      this.pending = false;
       return this.router.navigate(['./contacts', createdContact.id]);
+    }).catch(() => {
+      this.pending = false;
     });
   }
 
