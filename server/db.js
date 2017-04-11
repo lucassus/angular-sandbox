@@ -4,6 +4,14 @@ const _ = require('lodash');
 
 const Collection = require('./collection');
 
+faker.locale = 'pl';
+
+const EMAILS = [
+  'luke@rebel.org',
+  'vader@empire.gov',
+  'taken@email.com'
+];
+
 class Db {
 
   constructor() {
@@ -14,7 +22,9 @@ class Db {
     faker.seed(667);
 
     return this.drop().then(() => {
-      return Promise.all(_.times(n, () => {
+      return Promise.all(_.times(n, (i) => {
+        const email = EMAILS[i] || faker.internet.email();
+
         const address = {
           countryCode: faker.address.countryCode(),
           town: faker.address.city(),
@@ -30,7 +40,7 @@ class Db {
           favourite: faker.random.boolean(),
           firstName: faker.name.firstName(),
           lastName: faker.name.lastName(),
-          email: faker.internet.email(),
+          email,
           phone: faker.phone.phoneNumber(),
           address
         });

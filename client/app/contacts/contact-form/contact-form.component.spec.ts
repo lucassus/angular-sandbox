@@ -1,11 +1,14 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AsyncValidatorFn, FormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Observable';
 import { spy } from 'sinon';
 
+import { Config } from '../../config';
 import { Contact } from '../contact';
 import { ContactFormComponent } from './contact-form.component';
-import { Config } from '../../config';
+import { UniqueEmailValidator } from './unique-email-validator';
 
 @Component({
   template: `
@@ -22,6 +25,14 @@ class TestComponent {
   saveContact = spy();
 }
 
+const fakeUniqueEmailValidator = {
+  createValidator(contact: Contact): AsyncValidatorFn {
+    return () => {
+      return Observable.of(null);
+    };
+  }
+};
+
 describe('ContactFormComponent', () => {
 
   let fixture: ComponentFixture<TestComponent>;
@@ -31,6 +42,7 @@ describe('ContactFormComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        FormBuilder,
         { provide: Config, useValue: new Config() }
       ],
       declarations: [
@@ -38,6 +50,14 @@ describe('ContactFormComponent', () => {
         TestComponent
       ],
       schemas: [NO_ERRORS_SCHEMA]
+    });
+
+    TestBed.overrideComponent(ContactFormComponent, {
+      set: {
+        providers: [
+          { provide: UniqueEmailValidator, useValue: fakeUniqueEmailValidator }
+        ]
+      }
     });
 
     fixture = TestBed.createComponent(TestComponent);

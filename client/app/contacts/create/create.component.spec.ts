@@ -11,23 +11,25 @@ const fakeRouter = {
   navigate: stub()
 };
 
-const fakeContactService = {
-  create: stub().returns(Promise.resolve(new Contact({ id: 124 })))
-};
-
 describe('CreateComponent', () => {
+
+  let fakeContactsService;
 
   let component: CreateComponent;
   let fixture: ComponentFixture<CreateComponent>;
 
   beforeEach(() => {
+    fakeContactsService = {
+      create: stub().returns(Promise.resolve(new Contact({ id: 124 })))
+    };
+
     TestBed.configureTestingModule({
       declarations: [
         CreateComponent
       ],
       providers: [
         { provide: Router, useValue: fakeRouter },
-        { provide: ContactsService, useValue: fakeContactService }
+        { provide: ContactsService, useValue: fakeContactsService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });
@@ -45,19 +47,22 @@ describe('CreateComponent', () => {
 
   describe('.createContact', () => {
 
-    it('creates a contact', () => {
+    beforeEach(() => {
       component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
-      expect(fakeContactService.create.called).toBeTruthy();
+    });
 
-      const [data] = fakeContactService.create.lastCall.args;
-      expect(data.firstName).toEqual('Luke');
-      expect(data.lastName).toEqual('Skywalker');
+    it('creates a contact', () => {
+      expect(fakeContactsService.create.called).toBeTruthy();
+
+      const [contact] = fakeContactsService.create.lastCall.args;
+      expect(contact instanceof Contact).toBeTruthy();
+      expect(contact.firstName).toEqual('Luke');
+      expect(contact.lastName).toEqual('Skywalker');
     });
 
     describe('on success', () => {
 
       it('redirects to the show page', () => {
-        component.createContact({});
         expect(fakeRouter.navigate.called).toBeTruthy();
 
         const [commands] = fakeRouter.navigate.lastCall.args;

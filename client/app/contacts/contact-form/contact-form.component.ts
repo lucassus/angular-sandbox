@@ -1,47 +1,55 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Config } from '../../config';
 import { phoneValidator } from '../../phone-validator';
 import { ICountry } from '../address';
 import { Contact } from '../contact';
+import { UniqueEmailValidator } from './unique-email-validator';
 
 @Component({
   selector: 'app-contact-form',
-  templateUrl: './contact-form.component.html'
+  templateUrl: './contact-form.component.html',
+  providers: [UniqueEmailValidator]
 })
 export class ContactFormComponent implements OnInit {
 
   @Input('contact') contact: Contact;
   @Output() onSubmit = new EventEmitter();
 
+  contactForm: FormGroup;
+
   countries: Array<ICountry>;
 
-  contactForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.compose([
-      Validators.required,
-      Validators.email
-    ])),
-    phone: new FormControl('', phoneValidator),
-    favourite: new FormControl(),
-
-    address: new FormGroup({
-      street: new FormControl(),
-      town: new FormControl(),
-      zipCode: new FormControl('', Validators.pattern(/^\d{2}-\d{3}$/)),
-      countryCode: new FormControl()
-    })
-  });
-
-  constructor(config: Config) {
-    this.countries = config.countries;
-  }
+  constructor(
+    private config: Config,
+    private fb: FormBuilder,
+    private uniqueEmailValidator: UniqueEmailValidator
+  ) { }
 
   ngOnInit(): void {
-    const value = this.contact.toJS();
-    this.contactForm.patchValue(value);
+    const { countries } = this.config;
+    this.countries = countries;
+
+    this.contactForm = this.fb.group({
+      id: this.contact.id,
+
+      firstName: [this.contact.firstName, Validators.required],
+      lastName: [this.contact.lastName, Validators.required],
+      email: [this.contact.email, Validators.compose([
+        Validators.required,
+        Validators.email
+      ]), this.uniqueEmailValidator.createValidator(this.contact)],
+      phone: [this.contact.phone, phoneValidator],
+      favourite: this.contact.favourite,
+
+      address: this.fb.group({
+        street: this.contact.address.street,
+        town: this.contact.address.town,
+        zipCode: [this.contact.address.zipCode, Validators.pattern(/^\d{2}-\d{3}$/)],
+        countryCode: this.contact.address.countryCode
+      })
+    });
   }
 
   submit() {
