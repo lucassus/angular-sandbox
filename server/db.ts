@@ -1,8 +1,8 @@
-const Promise = require('bluebird');
-const faker = require('faker');
-const _ = require('lodash');
+import * as Promise from 'bluebird';
+import * as faker from 'faker';
+import * as _ from 'lodash';
 
-const Collection = require('./collection');
+import { Collection } from './collection';
 
 faker.locale = 'pl';
 
@@ -12,11 +12,9 @@ const EMAILS = [
   'taken@email.com'
 ];
 
-class Db {
+export class Db {
 
-  constructor() {
-    this.contacts = new Collection();
-  }
+  contacts = new Collection();
 
   seed(n = 20) {
     faker.seed(667);
@@ -56,4 +54,4 @@ class Db {
 
 }
 
-module.exports = new Db();
+export const db = new Db();

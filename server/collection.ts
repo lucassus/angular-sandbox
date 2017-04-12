@@ -1,5 +1,5 @@
-const Promise = require('bluebird');
-const _ = require('lodash');
+import { Promise } from 'bluebird';
+import * as _ from 'lodash';
 
 function *idGenerator() {
   let id = 1;
@@ -11,14 +11,16 @@ function *idGenerator() {
   }
 }
 
-module.exports = class {
+export class Collection {
+
+  private _id = null;
+  private _documents = [];
 
   constructor() {
     this._initialize();
   }
 
   _initialize() {
-    this._documents = [];
     this._id = idGenerator();
   }
 
@@ -77,4 +79,4 @@ module.exports = class {
     });
   }
 
-};
+}

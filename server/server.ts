@@ -1,5 +1,5 @@
-const app = require('./app');
-const db = require('./db');
+import { app } from './app';
+import { db } from './db';
 
 const port = process.env.PORT || 9090;
 
