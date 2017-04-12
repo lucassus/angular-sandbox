@@ -1,51 +1,49 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { FakeActivatedRoute } from '../../../testing/router-stubs';
 
 import { Contact } from '../contact';
 import { ListComponent } from './list.component';
 
-const routeStub = {
-
-  data: Observable.of({
-    contacts: [
-      new Contact({
-        id: 1,
-        firstName: 'Luke', lastName: 'Skywalker',
-        email: 'luke@rebel.org', phone: '+48 111',
-        updatedAt: 10001
-      }),
-
-      new Contact({
-        id: 2,
-        firstName: 'Anakin', lastName: 'Skywalker',
-        email: 'anakin@republic.com', phone: '+48 222',
-        updatedAt: 10002
-      })
-    ]
-  })
-
-};
-
 describe('ListComponent', () => {
 
+  let fakeActivatedRoute: FakeActivatedRoute;
   let fixture: ComponentFixture<ListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
+    fakeActivatedRoute = new FakeActivatedRoute();
+    fakeActivatedRoute.testData = {
+      contacts: [
+        new Contact({
+          id: 1,
+          firstName: 'Luke', lastName: 'Skywalker',
+          email: 'luke@rebel.org', phone: '+48 111',
+          updatedAt: 10001
+        }),
+
+        new Contact({
+          id: 2,
+          firstName: 'Anakin', lastName: 'Skywalker',
+          email: 'anakin@republic.com', phone: '+48 222',
+          updatedAt: 10002
+        })
+      ]
+    };
+
     TestBed.configureTestingModule({
       declarations: [
         ListComponent
       ],
       providers: [
-        { provide: ActivatedRoute, useValue: routeStub }
+        { provide: ActivatedRoute, useValue: fakeActivatedRoute }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(ListComponent);
     fixture.detectChanges();
-  }));
+  });
 
   it('should render list of contacts', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;

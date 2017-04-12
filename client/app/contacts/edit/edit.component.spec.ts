@@ -1,15 +1,16 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { stub } from 'sinon';
 
+import { FakeActivatedRoute } from 'testing/router-stubs';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 import { EditComponent } from './edit.component';
 
 describe('EditComponent', () => {
 
+  let fakeActivatedRoute: FakeActivatedRoute;
   let fakeRouter;
   let fakeContactsService;
 
@@ -17,6 +18,17 @@ describe('EditComponent', () => {
   let fixture: ComponentFixture<EditComponent>;
 
   beforeEach(() => {
+    fakeActivatedRoute = new FakeActivatedRoute();
+    fakeActivatedRoute.testData = {
+      contact: new Contact({
+        id: 124,
+        firstName: 'Luke', lastName: 'Skywalker',
+        email: 'luke@rebel.org', phone: '+48 111',
+        address: { town: 'Foo' },
+        updateAt: 10001
+      })
+    };
+
     fakeRouter = {
       navigate: stub()
     };
@@ -25,26 +37,15 @@ describe('EditComponent', () => {
       update: stub()
         .returns(Promise.resolve(new Contact({ id: 124 })))
     };
+  });
 
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         EditComponent
       ],
       providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            data: Observable.of({
-              contact: new Contact({
-                id: 124,
-                firstName: 'Luke', lastName: 'Skywalker',
-                email: 'luke@rebel.org', phone: '+48 111',
-                address: { town: 'Foo' },
-                updateAt: 10001
-              })
-            })
-          }
-        },
+        { provide: ActivatedRoute, useValue: fakeActivatedRoute },
         { provide: Router, useValue: fakeRouter },
         { provide: ContactsService, useValue: fakeContactsService }
       ],
