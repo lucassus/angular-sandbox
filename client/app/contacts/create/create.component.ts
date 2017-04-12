@@ -10,6 +10,7 @@ import { ContactsService } from '../contacts.service';
 })
 export class CreateComponent {
 
+  remotePending = false;
   contact = new Contact();
 
   constructor(
@@ -20,8 +21,13 @@ export class CreateComponent {
   createContact(data: any): Promise<boolean> {
     const contact = new Contact(data);
 
+    this.remotePending = true;
     return this.contactsService.create(contact).then((createdContact: Contact) => {
+      this.remotePending = false;
       return this.router.navigate(['./contacts', createdContact.id]);
+    }).catch(() => {
+      this.remotePending = false;
+      return false;
     });
   }
 

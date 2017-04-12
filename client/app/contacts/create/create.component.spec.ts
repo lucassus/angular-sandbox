@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { stub } from 'sinon';
 
@@ -7,20 +7,22 @@ import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 import { CreateComponent } from './create.component';
 
-const fakeRouter = {
-  navigate: stub()
-};
-
 describe('CreateComponent', () => {
 
+  let fakeRouter;
   let fakeContactsService;
 
   let component: CreateComponent;
   let fixture: ComponentFixture<CreateComponent>;
 
   beforeEach(() => {
+    fakeRouter = {
+      navigate: stub()
+    };
+
     fakeContactsService = {
-      create: stub().returns(Promise.resolve(new Contact({ id: 124 })))
+      create: stub()
+        .returns(Promise.resolve(new Contact({ id: 124 })))
     };
 
     TestBed.configureTestingModule({
@@ -48,10 +50,21 @@ describe('CreateComponent', () => {
   describe('.createContact', () => {
 
     beforeEach(() => {
-      component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+      expect(component.remotePending).toBeFalsy();
+
+      fakeContactsService.create
+        .returns(Promise.resolve(new Contact({ id: 124 })));
     });
 
+    function createContact() {
+      return component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+    }
+
     it('creates a contact', () => {
+      // When
+      createContact();
+
+      // Then
       expect(fakeContactsService.create.called).toBeTruthy();
 
       const [contact] = fakeContactsService.create.lastCall.args;
@@ -62,13 +75,44 @@ describe('CreateComponent', () => {
 
     describe('on success', () => {
 
-      it('redirects to the show page', () => {
-        expect(fakeRouter.navigate.called).toBeTruthy();
+      it('toggles `remotePending` flag', fakeAsync(() => {
+        // When
+        createContact();
 
-        const [commands] = fakeRouter.navigate.lastCall.args;
-        expect(commands[0]).toEqual('./contacts');
-        expect(commands[1]).toEqual(124);
+        // Then
+        expect(component.remotePending).toBeTruthy();
+        tick();
+        expect(component.remotePending).toBeFalsy();
+      }));
+
+      it('redirects to the show page', async(() => {
+        createContact().then(() => {
+          expect(fakeRouter.navigate.called).toBeTruthy();
+
+          const [commands] = fakeRouter.navigate.lastCall.args;
+          expect(commands[0]).toEqual('./contacts');
+          expect(commands[1]).toEqual(124);
+        });
+      }));
+
+    });
+
+    describe('on error', () => {
+
+      beforeEach(() => {
+        fakeContactsService.create
+          .returns(Promise.reject(null));
       });
+
+      it('toggles `remotePending` flag', fakeAsync(() => {
+        // When
+        createContact();
+
+        // Then
+        expect(component.remotePending).toBeTruthy();
+        tick();
+        expect(component.remotePending).toBeFalsy();
+      }));
 
     });
 

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { stub } from 'sinon';
 
 import { Contact } from '../contact';
@@ -16,7 +16,7 @@ describe('UniqueEmailValidator', () => {
     fakeContactsService = {
       checkEmailUniqueness: stub().callsFake((id, email) => {
         const taken = (email === 'taken@email.com');
-        return Observable.of({ email, taken })
+        return Observable.of({ email, taken });
       })
     };
 
