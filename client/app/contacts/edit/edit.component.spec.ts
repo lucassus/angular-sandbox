@@ -97,14 +97,14 @@ describe('EditComponent', () => {
           expect(commands[1]).toEqual(124);
         }));
 
-        it('toggles `pending` flag', fakeAsync(() => {
+        it('toggles `remotePending` flag', fakeAsync(() => {
           // When
           component.updateContact({ firstName: 'Anakin' });
 
           // Then
-          expect(component.pending).toBeTruthy();
+          expect(component.remotePending).toBeTruthy();
           tick();
-          expect(component.pending).toBeFalsy();
+          expect(component.remotePending).toBeFalsy();
         }));
 
       });
@@ -125,14 +125,14 @@ describe('EditComponent', () => {
           expect(fakeRouter.navigate.called).toBeFalsy();
         }));
 
-        it('toggles `pending` flag', fakeAsync(() => {
+        it('toggles `remotePending` flag', fakeAsync(() => {
           // When
           component.updateContact({ firstName: 'Anakin' });
 
           // Then
-          expect(component.pending).toBeTruthy();
+          expect(component.remotePending).toBeTruthy();
           tick();
-          expect(component.pending).toBeFalsy();
+          expect(component.remotePending).toBeFalsy();
         }));
 
       });

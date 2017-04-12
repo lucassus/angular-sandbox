@@ -12,11 +12,11 @@ import { UniqueEmailValidator } from './unique-email-validator';
 
 @Component({
   template: `
-    <app-contact-form [pending]="pending" [contact]="contact"
+    <app-contact-form [remotePending]="remotePending" [contact]="contact"
                       (onSubmit)="saveContact($event)"></app-contact-form>`
 })
 class TestComponent {
-  pending = false;
+  remotePending = false;
 
   contact = new Contact({
     firstName: 'Luke',
@@ -148,7 +148,7 @@ describe('ContactFormComponent', () => {
     describe('when the request is pending', () => {
 
       beforeEach(() => {
-        testComponent.pending = true;
+        testComponent.remotePending = true;
         fixture.detectChanges();
       });
 

@@ -50,7 +50,7 @@ describe('CreateComponent', () => {
   describe('.createContact', () => {
 
     beforeEach(() => {
-      expect(component.pending).toBeFalsy();
+      expect(component.remotePending).toBeFalsy();
 
       fakeContactsService.create
         .returns(Promise.resolve(new Contact({ id: 124 })));
@@ -68,14 +68,14 @@ describe('CreateComponent', () => {
 
     describe('on success', () => {
 
-      it('toggles `pending` flag', fakeAsync(() => {
+      it('toggles `remotePending` flag', fakeAsync(() => {
         // When
         component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
 
         // Then
-        expect(component.pending).toBeTruthy();
+        expect(component.remotePending).toBeTruthy();
         tick();
-        expect(component.pending).toBeFalsy();
+        expect(component.remotePending).toBeFalsy();
       }));
 
       it('redirects to the show page', async(() => {
@@ -97,14 +97,14 @@ describe('CreateComponent', () => {
           .returns(Promise.reject(null));
       });
 
-      it('toggles `pending` flag', fakeAsync(() => {
+      it('toggles `remotePending` flag', fakeAsync(() => {
         // When
         component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
 
         // Then
-        expect(component.pending).toBeTruthy();
+        expect(component.remotePending).toBeTruthy();
         tick();
-        expect(component.pending).toBeFalsy();
+        expect(component.remotePending).toBeFalsy();
       }));
 
     });

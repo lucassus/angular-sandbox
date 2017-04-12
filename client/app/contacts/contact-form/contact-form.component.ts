@@ -14,7 +14,7 @@ import { UniqueEmailValidator } from './unique-email-validator';
 })
 export class ContactFormComponent implements OnInit {
 
-  @Input() pending: boolean;
+  @Input() remotePending: boolean;
   @Input() contact: Contact;
   @Output() onSubmit = new EventEmitter();
 
