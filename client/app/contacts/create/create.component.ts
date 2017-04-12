@@ -27,6 +27,7 @@ export class CreateComponent {
       return this.router.navigate(['./contacts', createdContact.id]);
     }).catch(() => {
       this.pending = false;
+      return false;
     });
   }
 

@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { stub } from 'sinon';
 
@@ -7,18 +7,19 @@ import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 import { CreateComponent } from './create.component';
 
-const fakeRouter = {
-  navigate: stub()
-};
-
 describe('CreateComponent', () => {
 
+  let fakeRouter;
   let fakeContactsService;
 
   let component: CreateComponent;
   let fixture: ComponentFixture<CreateComponent>;
 
   beforeEach(() => {
+    fakeRouter = {
+      navigate: stub()
+    };
+
     fakeContactsService = {
       create: stub()
         .returns(Promise.resolve(new Contact({ id: 124 })))
@@ -77,17 +78,15 @@ describe('CreateComponent', () => {
         expect(component.pending).toBeFalsy();
       }));
 
-      it('redirects to the show page', () => {
-        // When
-        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+      it('redirects to the show page', async(() => {
+        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' }).then(() => {
+          expect(fakeRouter.navigate.called).toBeTruthy();
 
-        // Then
-        expect(fakeRouter.navigate.called).toBeTruthy();
-
-        const [commands] = fakeRouter.navigate.lastCall.args;
-        expect(commands[0]).toEqual('./contacts');
-        expect(commands[1]).toEqual(124);
-      });
+          const [commands] = fakeRouter.navigate.lastCall.args;
+          expect(commands[0]).toEqual('./contacts');
+          expect(commands[1]).toEqual(124);
+        });
+      }));
 
     });
 

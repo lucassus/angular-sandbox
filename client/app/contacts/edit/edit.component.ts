@@ -10,6 +10,7 @@ import { ContactsService } from '../contacts.service';
 })
 export class EditComponent implements OnInit {
 
+  pending = false;
   contact: Contact;
 
   constructor(
@@ -28,8 +29,13 @@ export class EditComponent implements OnInit {
     const contact = this.contact.mergeDeep(data);
 
     if (contact !== this.contact) {
+      this.pending = true;
+
       return this.contactsService.update(contact).then((updatedContact: Contact) => {
+        this.pending = false;
         return this.redirectToShow(updatedContact);
+      }).catch(() => {
+        this.pending = false;
       });
     } else {
       return this.redirectToShow(contact);
