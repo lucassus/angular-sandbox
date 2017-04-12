@@ -56,8 +56,15 @@ describe('CreateComponent', () => {
         .returns(Promise.resolve(new Contact({ id: 124 })));
     });
 
+    function createContact() {
+      return component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+    }
+
     it('creates a contact', () => {
-      component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+      // When
+      createContact();
+
+      // Then
       expect(fakeContactsService.create.called).toBeTruthy();
 
       const [contact] = fakeContactsService.create.lastCall.args;
@@ -70,7 +77,7 @@ describe('CreateComponent', () => {
 
       it('toggles `remotePending` flag', fakeAsync(() => {
         // When
-        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+        createContact();
 
         // Then
         expect(component.remotePending).toBeTruthy();
@@ -79,7 +86,7 @@ describe('CreateComponent', () => {
       }));
 
       it('redirects to the show page', async(() => {
-        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' }).then(() => {
+        createContact().then(() => {
           expect(fakeRouter.navigate.called).toBeTruthy();
 
           const [commands] = fakeRouter.navigate.lastCall.args;
@@ -99,7 +106,7 @@ describe('CreateComponent', () => {
 
       it('toggles `remotePending` flag', fakeAsync(() => {
         // When
-        component.createContact({ firstName: 'Luke', lastName: 'Skywalker' });
+        createContact();
 
         // Then
         expect(component.remotePending).toBeTruthy();

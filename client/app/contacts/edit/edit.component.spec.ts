@@ -67,12 +67,13 @@ describe('EditComponent', () => {
 
     describe('when the data was changed', () => {
 
-      beforeEach(() => {
-        component.updateContact({ firstName: 'Anakin' });
-      });
+      function updateContact() {
+        return component.updateContact({ firstName: 'Anakin' });
+      }
 
       it('updates a contact', () => {
         // When
+        updateContact();
         expect(fakeContactsService.update.called).toBeTruthy();
 
         // Then
@@ -86,7 +87,7 @@ describe('EditComponent', () => {
 
         it('redirects to the show page', fakeAsync(() => {
           // When
-          component.updateContact({ firstName: 'Anakin' });
+          updateContact();
           tick();
 
           // Then
@@ -99,7 +100,7 @@ describe('EditComponent', () => {
 
         it('toggles `remotePending` flag', fakeAsync(() => {
           // When
-          component.updateContact({ firstName: 'Anakin' });
+          updateContact();
 
           // Then
           expect(component.remotePending).toBeTruthy();
@@ -118,7 +119,7 @@ describe('EditComponent', () => {
 
         it('does not redirect to the show page', fakeAsync(() => {
           // When
-          component.updateContact({ firstName: 'Anakin' });
+          updateContact();
           tick();
 
           // Then
@@ -127,7 +128,7 @@ describe('EditComponent', () => {
 
         it('toggles `remotePending` flag', fakeAsync(() => {
           // When
-          component.updateContact({ firstName: 'Anakin' });
+          updateContact();
 
           // Then
           expect(component.remotePending).toBeTruthy();
