@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { ActivatedRoute, Router } from '@angular/router';
 import { stub } from 'sinon';
 
-import { FakeActivatedRoute } from 'testing/router-stubs';
+import { FakeActivatedRoute } from '../../../testing/router-stubs';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 import { EditComponent } from './edit.component';
