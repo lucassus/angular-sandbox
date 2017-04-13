@@ -39,8 +39,8 @@ class Page {
 
   rowFor(contact: Contact): DebugElement {
     return this.rows.find((de) => {
-      const otherId = de.nativeElement.getAttribute('id');
-      return otherId === `contact-row-${contact.id}`;
+      const contactId = de.nativeElement.getAttribute('data-contact-id');
+      return contactId === contact.id.toString();
     });
   }
 

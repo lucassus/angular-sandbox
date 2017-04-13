@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let contact of contacts" id="contact-row-{{contact.id}}">
+  <tr *ngFor="let contact of contacts" [attr.data-contact-id]="contact.id">
     <td>{{contact.id}}</td>
     <td>
       <a [routerLink]="['.', contact.id]">
