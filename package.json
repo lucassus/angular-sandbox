@@ -17,12 +17,15 @@
     "start": "node dist/server/server.js"
   },
   "jest": {
+    "roots": [
+      "<rootDir>/client"
+    ],
     "preset": "jest-preset-angular",
     "globals": {
       "__TS_CONFIG__": "<rootDir>/client/tsconfig.spec.json",
       "__TRANSFORM_HTML__": true
     },
-    "testRegex": "client/.*\\.spec\\.ts$",
+    "testRegex": ".*\\.spec\\.ts$",
     "setupTestFrameworkScriptFile": "<rootDir>/client/testing/setup-jest.ts"
   },
   "private": true,
