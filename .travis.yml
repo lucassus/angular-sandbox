@@ -1,0 +1,41 @@
+sudo: required
+dist: trusty
+
+language: node_js
+
+node_js:
+  - 6.10.1
+
+addons:
+  firefox: latest
+
+before_install:
+  # Start xvfb
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+
+  # Install latest Chrome
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
+  - export CHROME_BIN=/usr/bin/google-chrome
+
+install:
+  - npm install --global @angular/cli
+  - npm install --global gulp
+  - npm install --global codecov
+
+before_script:
+  - npm install
+
+script:
+  - npm run server:test
+  - ng lint
+  - ng test --browsers=PhantomJS --progress=false --code-coverage --single-run
+  - ng test --browsers=Chrome --progress=false --single-run
+  - ng test --browsers=Firefox --progress=false --single-run
+
+after_success:
+  - codecov
