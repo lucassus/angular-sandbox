@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "client:build": "ng build",
+    "client:build": "ng build --target=production --sourcemaps",
     "server:build": "tsc --project server",
     "client:test": "ng test",
     "server:test": "npm run server:build && gulp server:test",
