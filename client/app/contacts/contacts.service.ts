@@ -43,6 +43,11 @@ export class ContactsService {
       });
   }
 
+  delete(contact: Contact): Promise<Response> {
+    return this.http.delete(`/api/contacts/${contact.id}`)
+      .toPromise();
+  }
+
   checkEmailUniqueness(id: number, email: string): Observable<{ email: string, taken: Boolean }> {
     const params = { id, email };
     return this.http.get('/api/contacts/validate-email', { params })

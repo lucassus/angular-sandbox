@@ -200,6 +200,31 @@ describe('ContactsService', () => {
 
   });
 
+  describe('.delete', () => {
+
+    beforeEach(() => {
+      mockBackend.connections.subscribe((connection: MockConnection) => {
+        expect(connection.request.method).toEqual(RequestMethod.Delete);
+        expect(connection.request.url).toEqual('/api/contacts/125');
+
+        connection.mockRespond(new Response(new ResponseOptions({
+          status: 200
+        })));
+      });
+    });
+
+    it('should delete a contact', fakeAsync(() => {
+      const contact = new Contact({ id: 125 });
+
+      contactsService.delete(contact).then((response) => {
+        expect(response.status).toEqual(200);
+      });
+
+      tick();
+    }));
+
+  });
+
   describe('.checkEmailUniqueness', () => {
 
     describe('when an email is unique', () => {
