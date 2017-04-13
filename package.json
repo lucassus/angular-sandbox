@@ -18,7 +18,8 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/client"
+      "<rootDir>/client",
+      "<rootDir>/server"
     ],
     "preset": "jest-preset-angular",
     "globals": {
