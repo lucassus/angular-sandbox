@@ -1,6 +1,7 @@
-const assert = require('power-assert');
-const Collection = require('./collection');
-const Promise = require('bluebird');
+import * as assert from 'power-assert';
+import * as Promise from 'bluebird';
+
+import { Collection } from './collection';
 
 describe('Collection', () => {
 

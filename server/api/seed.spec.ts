@@ -1,8 +1,8 @@
-const assert = require('power-assert');
-const request = require('supertest');
+import * as assert from 'power-assert';
+import * as request from 'supertest';
 
-const app = require('../app');
-const db = require('../db');
+import { app } from '../app';
+import { db } from '../db';
 
 describe('app', () => {
 

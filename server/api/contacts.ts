@@ -1,11 +1,13 @@
-const router = require('express').Router();
-const db = require('../db');
+import { Router } from 'express';
+import { db } from '../db';
+
+const router: Router = Router();
 
 router.param('id', (req, res, next, id) => {
   id = parseInt(id);
 
   db.contacts.findOne({ id }).then((contact) => {
-    req.contact = contact;
+    req['contact'] = contact;
     next();
   }).catch(() => {
     res.sendStatus(404);
@@ -43,11 +45,11 @@ router.get('/validate-email', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  res.json(req.contact);
+  res.json(req['contact']);
 });
 
 router.put('/:id', (req, res) => {
-  const { id } = req.contact;
+  const { id } = req['contact'];
   const data = req.body;
 
   db.contacts.updateOne({ id }, data).then((contact) => {
@@ -56,11 +58,11 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  const { id } = req.contact;
+  const { id } = req['contact'];
 
   db.contacts.deleteOne({ id }).then(() => {
     res.sendStatus(200);
   });
 });
 
-module.exports = router;
+export { router };

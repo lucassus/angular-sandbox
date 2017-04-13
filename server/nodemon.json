@@ -1,9 +1,0 @@
-{
-  "ignore": [
-    "build/*",
-    "src/*",
-    "gulpfile.js",
-    "karma.config.js",
-    "webpack.config.js"
-  ]
-}
