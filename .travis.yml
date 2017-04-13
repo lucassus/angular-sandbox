@@ -6,6 +6,19 @@ language: node_js
 node_js:
   - 6.10.1
 
+addons:
+  firefox: latest
+
+before_install:
+ - export DISPLAY=:99.0
+ - sh -e /etc/init.d/xvfb start
+ - sleep 3 # give xvfb some time to start
+ - sudo apt-get update
+ - sudo apt-get install -y libappindicator1 fonts-liberation
+ - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ - sudo dpkg -i google-chrome*.deb
+ - export CHROME_BIN=/usr/bin/google-chrome
+
 install:
   - npm install --global @angular/cli
   - npm install --global gulp
@@ -16,4 +29,4 @@ before_script:
 script:
   - npm run server:test
   - ng lint
-  - ng test --browsers=PhantomJS --progress=false --code-coverage --single-run
+  - ng test --browsers=PhantomJS,Chrome,Firefox --progress=false --code-coverage --single-run
