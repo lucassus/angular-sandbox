@@ -1,0 +1,3 @@
+client-dev-server:  PORT=4200 ng serve --proxy-config proxy.conf.json
+server-tsc:         tsc --watch --project server
+server-start:       PORT=9090 ENV=development nodemon --watch dist/server ./dist/server/server.js

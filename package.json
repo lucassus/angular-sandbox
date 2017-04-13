@@ -7,14 +7,12 @@
     "client:build": "ng build",
     "server:build": "tsc --project server",
     "client:test": "ng test",
+    "server:test": "gulp server:test",
     "client:jest": "jest",
     "client:jest-watch": "jest --watch",
     "client:lint": "ng lint",
-    "client:dev-server": "ng serve --proxy-config proxy.conf.json",
     "e2e": "ng e2e",
-    "server:compile": "tsc --watch --project server",
-    "server:start": "nodemon --watch dist/server ./dist/server/server.js",
-    "dev-server": "concurrently --raw 'npm run client:dev-server' 'npm run server:compile' 'npm run server:start'"
+    "dev-server": "nf start --procfile Procfile.dev"
   },
   "jest": {
     "preset": "jest-preset-angular",
@@ -55,8 +53,8 @@
     "@types/node": "7.0.12",
     "@types/sinon": "2.1.1",
     "codelyzer": "2.0.1",
-    "concurrently": "3.4.0",
     "espower-loader": "1.2.0",
+    "foreman": "2.0.0",
     "gulp": "3.9.1",
     "gulp-mocha": "4.2.0",
     "jasmine-core": "2.5.2",
