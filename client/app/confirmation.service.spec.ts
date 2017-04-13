@@ -9,7 +9,7 @@ describe('ConfirmationService', () => {
 
   beforeEach(() => {
     fakeWindow = { confirm: stub() };
-    confirmationService = new ConfirmationService(fakeWindow);
+    confirmationService = new ConfirmationService({ nativeWindow: fakeWindow });
   });
 
   describe('.confirm', () => {
