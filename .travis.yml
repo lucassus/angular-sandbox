@@ -16,4 +16,4 @@ before_script:
 script:
   - npm run server:test
   - ng lint
-  - ng test --code-coverage --single-run
+  - ng test --browsers=PhantomJS --progress=false --code-coverage --single-run

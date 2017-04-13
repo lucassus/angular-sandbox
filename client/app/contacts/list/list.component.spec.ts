@@ -59,8 +59,6 @@ describe('ListComponent', () => {
       .toContain('luke@rebel.org');
     expect(rows[0].querySelector('td:nth-child(4)').textContent)
       .toContain('+48 111');
-    expect(rows[0].querySelector('td:nth-child(5)').textContent)
-      .toContain('Jan 1, 1970, 1:00:10 AM');
 
     expect(rows[1].querySelector('td:nth-child(1)').textContent)
       .toContain('2');
@@ -70,8 +68,6 @@ describe('ListComponent', () => {
       .toContain('anakin@republic.com');
     expect(rows[1].querySelector('td:nth-child(4)').textContent)
       .toContain('+48 222');
-    expect(rows[1].querySelector('td:nth-child(5)').textContent)
-      .toContain('Jan 1, 1970, 1:00:10 AM');
   });
 
 });
