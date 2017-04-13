@@ -7,6 +7,7 @@ import { stub } from 'sinon';
 
 import { click } from '../../../testing';
 import { FakeActivatedRoute } from '../../../testing/router-stubs';
+import { ConfirmationService } from '../../confirmation.service';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 import { ListComponent } from './list.component';
@@ -54,6 +55,7 @@ describe('ListComponent', () => {
 
   let fakeActivatedRoute: FakeActivatedRoute;
   let fakeContactsService;
+  let fakeConfirmationService;
 
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
@@ -71,6 +73,10 @@ describe('ListComponent', () => {
         .returns(Promise.resolve())
     };
 
+    fakeConfirmationService = {
+      confirm: stub()
+    };
+
     TestBed.configureTestingModule({
       declarations: [
         ListComponent
@@ -80,6 +86,12 @@ describe('ListComponent', () => {
         { provide: ContactsService, useValue: fakeContactsService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
+    }).overrideComponent(ListComponent, {
+      set: {
+        providers: [
+          { provide: ConfirmationService, useValue: fakeConfirmationService }
+        ]
+      }
     });
 
     fixture = TestBed.createComponent(ListComponent);
@@ -126,32 +138,65 @@ describe('ListComponent', () => {
         .query(By.css('button.btn-danger'));
     });
 
-    it('should delete a contact', () => {
+    it('displays a confirmation', () => {
       // When
       click(deleteButtonEl);
 
       // Then
-      expect(fakeContactsService.delete.called).toBeTruthy();
+      expect(fakeConfirmationService.confirm
+        .calledWith(`Delete ${contactToDelete.fullName}?`)).toBeTruthy();
     });
 
-    it('should reload the list', fakeAsync(() => {
-      // Given
-      const newContacts = contacts.filterNot((contact) => {
-        return contact.id === contactToDelete.id;
+    describe('when confirmed', () => {
+
+      beforeEach(() => {
+        fakeConfirmationService.confirm.returns(true);
       });
 
-      fakeContactsService.query
-        .returns(Promise.resolve(newContacts));
+      it('should delete a contact', () => {
+        // When
+        click(deleteButtonEl);
 
-      // When
-      click(deleteButtonEl);
-      tick();
-      fixture.detectChanges();
+        // Then
+        expect(fakeContactsService.delete.called).toBeTruthy();
+      });
 
-      // Then
-      expect(fakeContactsService.query.called).toBeTruthy();
-      expect(page.rows.length).toEqual(1);
-    }));
+      it('should reload the list', fakeAsync(() => {
+        // Given
+        const newContacts = contacts.filterNot((contact) => {
+          return contact.id === contactToDelete.id;
+        });
+
+        fakeContactsService.query
+          .returns(Promise.resolve(newContacts));
+
+        // When
+        click(deleteButtonEl);
+        tick();
+        fixture.detectChanges();
+
+        // Then
+        expect(fakeContactsService.query.called).toBeTruthy();
+        expect(page.rows.length).toEqual(1);
+      }));
+
+    });
+
+    describe('when not confirmed', () => {
+
+      beforeEach(() => {
+        fakeConfirmationService.confirm.returns(false);
+      });
+
+      it('should delete a contact', () => {
+        // When
+        click(deleteButtonEl);
+
+        // Then
+        expect(fakeContactsService.delete.called).toBeFalsy();
+      });
+
+    });
 
   });
 

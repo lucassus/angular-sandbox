@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { List } from 'immutable';
 
+import { ConfirmationService } from '../../confirmation.service';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-list',
+  providers: [ConfirmationService],
   templateUrl: './list.component.html'
 })
 export class ListComponent implements OnInit {
@@ -15,7 +17,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private contactsService: ContactsService
+    private contactsService: ContactsService,
+    private confirmation: ConfirmationService,
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +28,9 @@ export class ListComponent implements OnInit {
   }
 
   delete(contact: Contact) {
-    return this.contactsService.delete(contact).then(() => {
+    if (!this.confirmation.confirm(`Delete ${contact.fullName}?`)) { return; }
+
+    this.contactsService.delete(contact).then(() => {
       return this.contactsService.query().then((contacts) => {
         this.contacts = contacts;
       });
