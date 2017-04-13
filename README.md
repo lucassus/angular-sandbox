@@ -4,6 +4,8 @@
 [![codecov](https://codecov.io/gh/lucassus/angular-sandbox/branch/master/graph/badge.svg)](https://codecov.io/gh/lucassus/angular-sandbox)
 [![Dependency Status](https://gemnasium.com/badges/github.com/lucassus/angular-sandbox.svg)](https://gemnasium.com/github.com/lucassus/angular-sandbox)
 
+https://lucassus-angular-sandbox.herokuapp.com/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
 ## Development server
