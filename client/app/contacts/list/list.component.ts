@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { List } from 'immutable';
 
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
@@ -10,7 +11,7 @@ import { ContactsService } from '../contacts.service';
 })
 export class ListComponent implements OnInit {
 
-  contacts: Array<Contact>;
+  contacts: List<Contact>;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,9 +24,12 @@ export class ListComponent implements OnInit {
     });
   }
 
-  // TODO reload the list
   delete(contact: Contact) {
-    return this.contactsService.delete(contact);
+    return this.contactsService.delete(contact).then(() => {
+      return this.contactsService.query().then((contacts) => {
+        this.contacts = contacts;
+      });
+    });
   }
 
 }
