@@ -91,27 +91,39 @@ describe('ListComponent', () => {
 
   describe('click on delete button', () => {
 
+    let contactToDelete: Contact;
     let deleteButtonEl: DebugElement;
 
     beforeEach(() => {
       expect(component.contacts.size).toEqual(2);
 
+      contactToDelete = component.contacts.get(1);
       deleteButtonEl = fixture.debugElement
-        .query(By.css('table tbody tr:nth-child(1) button.btn-danger'));
+        .query(By.css(`table tbody tr#contact-row-${contactToDelete.id} button.btn-danger`));
     });
 
     it('should delete a contact', () => {
+      // When
       click(deleteButtonEl);
+
+      // Then
       expect(fakeContactsService.delete.called).toBeTruthy();
     });
 
     it('should reload the list', fakeAsync(() => {
-      fakeContactsService.query
-        .returns(Promise.resolve(contacts.remove(0)));
+      // Given
+      const newContacts = contacts.filterNot((contact) => {
+        return contact.id === contactToDelete.id;
+      });
 
+      fakeContactsService.query
+        .returns(Promise.resolve(newContacts));
+
+      // When
       click(deleteButtonEl);
       tick();
 
+      // Then
       expect(fakeContactsService.query.called).toBeTruthy();
       expect(component.contacts.size).toEqual(1);
     }));
