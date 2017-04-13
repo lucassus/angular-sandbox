@@ -15,7 +15,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
 
-  # Install latest Chrome
+  # Install the latest Chrome
   - sudo apt-get update
   - sudo apt-get install -y libappindicator1 fonts-liberation
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -31,11 +31,13 @@ before_script:
   - npm install
 
 script:
+  # Server
   - npm run server:test
+
+  # Client
   - ng lint
   - ng test --browsers=PhantomJS --progress=false --code-coverage --single-run
-  - ng test --browsers=Chrome --progress=false --single-run
-  - ng test --browsers=Firefox --progress=false --single-run
+  - ng test --browsers=Chrome,Firefox --progress=false --single-run
 
 after_success:
   - codecov

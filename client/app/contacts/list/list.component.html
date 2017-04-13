@@ -10,11 +10,12 @@
     <th>Email</th>
     <th>Phone</th>
     <th>Updated At</th>
+    <th></th>
   </tr>
   </thead>
 
   <tbody>
-  <tr *ngFor="let contact of contacts">
+  <tr *ngFor="let contact of contacts" [attr.data-contact-id]="contact.id">
     <td>{{contact.id}}</td>
     <td>
       <a [routerLink]="['.', contact.id]">
@@ -24,6 +25,11 @@
     <td>{{contact.email}}</td>
     <td>{{contact.phone}}</td>
     <td>{{contact.updatedAt | date:'medium'}}</td>
+    <td>
+      <button (click)="delete(contact)" class="btn btn-danger btn-small">
+        Delete
+      </button>
+    </td>
   </tr>
   </tbody>
 </table>
