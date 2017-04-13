@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "client:build": "ng build",
+    "client:build": "ng build --target=production --sourcemaps",
     "server:build": "tsc --project server",
     "client:test": "ng test",
     "server:test": "npm run server:build && gulp server:test",
@@ -12,15 +12,21 @@
     "client:jest-watch": "jest --watch",
     "client:lint": "ng lint",
     "e2e": "ng e2e",
-    "dev-server": "nf start --procfile Procfile.dev"
+    "dev-server": "nf start --procfile Procfile.dev",
+    "heroku-postbuild": "npm run client:build && npm run server:build",
+    "start": "node dist/server/server.js"
   },
   "jest": {
+    "roots": [
+      "<rootDir>/client",
+      "<rootDir>/server"
+    ],
     "preset": "jest-preset-angular",
     "globals": {
       "__TS_CONFIG__": "<rootDir>/client/tsconfig.spec.json",
       "__TRANSFORM_HTML__": true
     },
-    "testRegex": "client/.*\\.spec\\.ts$",
+    "testRegex": ".*\\.spec\\.ts$",
     "setupTestFrameworkScriptFile": "<rootDir>/client/testing/setup-jest.ts"
   },
   "private": true,

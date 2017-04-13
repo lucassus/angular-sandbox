@@ -1,6 +1,6 @@
 import { stub } from 'sinon';
 
-import { ConfirmationService } from './confirmation.service';
+import { ConfirmationService, confirmationServiceFactory } from './confirmation.service';
 
 describe('ConfirmationService', () => {
 
@@ -26,6 +26,14 @@ describe('ConfirmationService', () => {
       expect(result).toBeTruthy();
     });
 
+  });
+
+});
+
+describe('.confirmationServiceFactory', () => {
+
+  it('returns service', () => {
+    expect(confirmationServiceFactory() instanceof ConfirmationService).toBeTruthy();
   });
 
 });

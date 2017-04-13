@@ -11,9 +11,6 @@ import { AppRoutesModule } from './routes/routes.module';
     AppComponent,
     NavigationComponent
   ],
-  providers: [
-    { provide: 'window', useValue: window }
-  ],
   imports: [
     BrowserModule,
     RouterModule,

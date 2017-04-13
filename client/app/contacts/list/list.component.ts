@@ -2,13 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { List } from 'immutable';
 
-import { ConfirmationService } from '../../confirmation.service';
+import { confirmationServiceFactory, ConfirmationService } from '../../confirmation.service';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-list',
-  providers: [ConfirmationService],
+  providers: [
+    {
+      provide: ConfirmationService,
+      useFactory: confirmationServiceFactory
+    }
+  ],
   templateUrl: './list.component.html'
 })
 export class ListComponent implements OnInit {

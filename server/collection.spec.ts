@@ -20,16 +20,16 @@ describe('Collection', () => {
     it('removes all documents', () => {
       return collection.drop().then(() => {
         return collection.find().then((documents) => {
-          assert(documents.length === 0);
+          assert.equal(documents.length, 0);
         });
       });
     });
 
     it('reset current id', () => {
       return collection.drop().then(() => {
-        assert(collection._nextId() === 1);
-        assert(collection._nextId() === 2);
-        assert(collection._nextId() === 3);
+        assert.equal(collection._nextId(), 1);
+        assert.equal(collection._nextId(), 2);
+        assert.equal(collection._nextId(), 3);
       });
     });
 
@@ -46,7 +46,7 @@ describe('Collection', () => {
 
     it('returns all documents', () => {
       return collection.find().then((documents) => {
-        assert(documents.length === 2);
+        assert.equal(documents.length, 2);
       });
     });
 
@@ -65,7 +65,7 @@ describe('Collection', () => {
       it('resolves with the found document', () => {
         return collection.findOne({ email }).then((document) => {
           assert(document);
-          assert(document.email === email);
+          assert.equal(document.email, email);
         });
       });
 
@@ -88,9 +88,9 @@ describe('Collection', () => {
     it('inserts a document', () => {
       return collection.insertOne({ email: 'foo@email.com' }).then(() => {
         return collection.find().then((documents) => {
-          assert(documents.length === 1);
+          assert.equal(documents.length, 1);
           assert(documents[0].id);
-          assert(documents[0].email === 'foo@email.com');
+          assert.equal(documents[0].email, 'foo@email.com');
           assert(documents[0].createdAt);
           assert(documents[0].updatedAt);
         });
@@ -111,8 +111,8 @@ describe('Collection', () => {
 
     it('updates a document', () => {
       return collection.updateOne({ id }, { firstName: 'Luke' }).then((document) => {
-        assert(document.id === id);
-        assert(document.firstName === 'Luke');
+        assert.equal(document.id, id);
+        assert.equal(document.firstName, 'Luke');
         assert(document.updatedAt);
         assert(document.createdAt);
       });
@@ -133,7 +133,7 @@ describe('Collection', () => {
     it('deletes a document', () => {
       return collection.deleteOne({ id }).then(() => {
         return collection.find().then((documents) => {
-          assert(documents.length === 0);
+          assert.equal(documents.length, 0);
         });
       });
     });

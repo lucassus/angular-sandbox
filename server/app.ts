@@ -7,7 +7,7 @@ import { countries } from './countries';
 
 const app: express.Application = express();
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+app.use(express.static(path.join(__dirname, '..', 'client')));
 app.use(require('body-parser').json());
 
 app.get('/api/config', (req, res) => {
@@ -23,7 +23,7 @@ app.use('/api/contacts', contactsRouter);
 
 if (app.get('env') === 'production') {
   app.all('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
   });
 }
 
