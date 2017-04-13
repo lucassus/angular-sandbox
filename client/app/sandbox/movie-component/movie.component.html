@@ -1,16 +1,19 @@
-<div>
-  <div>
-    Title:
+<dl class="dl-horizontal">
+  <dt>Title</dt>
+  <dd>
     <strong><ng-content select=".app-movie-title"></ng-content></strong>
-  </div>
+  </dd>
 
-  <div [ngSwitch]="hasDescription()">
+  <dt>Description</dt>
+  <dd [ngSwitch]="hasDescription()">
     <span *ngSwitchCase="true">
-      <ng-content select="app-movie-description"></ng-content>
+      <blockquote>
+        <ng-content select="app-movie-description"></ng-content>
+      </blockquote>
     </span>
 
     <span *ngSwitchCase="false">
       <i>Description is not present</i>
     </span>
-  </div>
-</div>
+  </dd>
+</dl>
