@@ -9,6 +9,9 @@ export const AppRoutes: Routes = [{
   path: 'contacts',
   loadChildren: 'app/contacts/contacts.module#ContactsModule',
 }, {
+  path: 'sandbox',
+  loadChildren: 'app/sandbox/sandbox.module#SandboxModule'
+}, {
   path: '**',
   component: PageNotFoundComponent
 }];
