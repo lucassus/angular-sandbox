@@ -4,8 +4,12 @@
     <ng-content select=".app-my-component-title"></ng-content>
   </div>
 
-  <div #content>
+  <div *ngIf="hasContent()">
     Content:
     <ng-content select="app-my-component-content"></ng-content>
+  </div>
+
+  <div *ngIf="!hasContent()">
+    <i>Content is not present</i>
   </div>
 </div>
