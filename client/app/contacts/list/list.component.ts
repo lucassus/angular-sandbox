@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { List } from 'immutable';
 
-import { ConfirmationService, WindowRefService } from '../../confirmation.service';
+import { confirmationServiceFactory, ConfirmationService } from '../../confirmation.service';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-list',
   providers: [
-    WindowRefService,
-    ConfirmationService
+    {
+      provide: ConfirmationService,
+      useFactory: confirmationServiceFactory
+    }
   ],
   templateUrl: './list.component.html'
 })

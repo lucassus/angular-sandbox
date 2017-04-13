@@ -1,24 +1,6 @@
 import { stub } from 'sinon';
 
-import { ConfirmationService, WindowRefService } from './confirmation.service';
-
-describe('WindowRefService', () => {
-
-  let windowRef: WindowRefService;
-
-  beforeEach(() => {
-    windowRef = new WindowRefService();
-  });
-
-  describe('.nativeWindow', () => {
-
-    it('returns native window', () => {
-      expect(windowRef.nativeWindow).toBe(window);
-    });
-
-  });
-
-});
+import { ConfirmationService, confirmationServiceFactory } from './confirmation.service';
 
 describe('ConfirmationService', () => {
 
@@ -27,7 +9,7 @@ describe('ConfirmationService', () => {
 
   beforeEach(() => {
     fakeWindow = { confirm: stub() };
-    confirmationService = new ConfirmationService({ nativeWindow: fakeWindow });
+    confirmationService = new ConfirmationService(fakeWindow);
   });
 
   describe('.confirm', () => {
@@ -44,6 +26,14 @@ describe('ConfirmationService', () => {
       expect(result).toBeTruthy();
     });
 
+  });
+
+});
+
+describe('.confirmationServiceFactory', () => {
+
+  it('returns service', () => {
+    expect(confirmationServiceFactory() instanceof ConfirmationService).toBeTruthy();
   });
 
 });
