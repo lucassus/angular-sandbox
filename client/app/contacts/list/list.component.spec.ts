@@ -1,14 +1,20 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { FakeActivatedRoute } from '../../../testing/router-stubs';
+import { stub } from 'sinon';
 
+import { click } from '../../../testing';
+import { FakeActivatedRoute } from '../../../testing/router-stubs';
 import { Contact } from '../contact';
+import { ContactsService } from '../contacts.service';
 import { ListComponent } from './list.component';
 
 describe('ListComponent', () => {
 
   let fakeActivatedRoute: FakeActivatedRoute;
+  let fakeContactsService;
+
   let fixture: ComponentFixture<ListComponent>;
 
   beforeEach(() => {
@@ -31,12 +37,18 @@ describe('ListComponent', () => {
       ]
     };
 
+    fakeContactsService = {
+      delete: stub()
+        .returns(Promise.resolve())
+    };
+
     TestBed.configureTestingModule({
       declarations: [
         ListComponent
       ],
       providers: [
-        { provide: ActivatedRoute, useValue: fakeActivatedRoute }
+        { provide: ActivatedRoute, useValue: fakeActivatedRoute },
+        { provide: ContactsService, useValue: fakeContactsService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });
@@ -68,6 +80,19 @@ describe('ListComponent', () => {
       .toContain('anakin@republic.com');
     expect(rows[1].querySelector('td:nth-child(4)').textContent)
       .toContain('+48 222');
+  });
+
+  describe('click on delete button', () => {
+
+    it('should delete a contact', () => {
+      const buttonEl = fixture.debugElement
+        .query(By.css('tbody tr:nth-child(1) button.btn-danger'));
+
+      click(buttonEl);
+
+      expect(fakeContactsService.delete.called).toBeTruthy();
+    });
+
   });
 
 });
