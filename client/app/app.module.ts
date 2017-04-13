@@ -4,17 +4,18 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { AppRoutesModule } from './routes/routes.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AppRoutes } from './routes';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent
+    NavigationComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule,
-    AppRoutesModule
+    RouterModule.forRoot(AppRoutes)
   ],
   bootstrap: [AppComponent]
 })

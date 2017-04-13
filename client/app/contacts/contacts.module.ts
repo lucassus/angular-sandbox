@@ -4,27 +4,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { ContactResolver, ContactsResolver, ContactsRoutes } from './routes';
 import { AppFormsModule } from '../forms/forms.module';
 import { CheckmarkPipe } from './checkmark.pipe';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactsComponent } from './contacts.component';
 import { ContactsService } from './contacts.service';
+import { CountryNamePipe } from './country-name.pipe';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { ListComponent } from './list/list.component';
 import { ShowComponent } from './show/show.component';
-import { CountryNamePipe } from './country-name.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule,
-    AppFormsModule
+    AppFormsModule,
+    RouterModule.forChild(ContactsRoutes)
   ],
   providers: [
-    ContactsService
+    ContactsService,
+    ContactsResolver,
+    ContactResolver
   ],
   declarations: [
     ContactFormComponent,
