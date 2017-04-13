@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 })
 export class IndexComponent {
 
-  chapter = 'New Hope';
+  chapterOne = 'A New Hope';
+  chapterTwo = 'Return of the Jedi';
 
 }
