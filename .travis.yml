@@ -22,6 +22,7 @@ before_install:
 install:
   - npm install --global @angular/cli
   - npm install --global gulp
+  - npm install --global codecov
 
 before_script:
   - npm install
@@ -29,4 +30,9 @@ before_script:
 script:
   - npm run server:test
   - ng lint
-  - ng test --browsers=PhantomJS,Chrome,Firefox --progress=false --code-coverage --single-run
+  - ng test --browsers=PhantomJS --progress=false --code-coverage --single-run
+  - ng test --browsers=Chrome --progress=false --single-run
+  - ng test --browsers=Firefox --progress=false --single-run
+
+after_success:
+  - codecov
