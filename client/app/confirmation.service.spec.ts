@@ -1,6 +1,24 @@
 import { stub } from 'sinon';
 
-import { ConfirmationService } from './confirmation.service';
+import { ConfirmationService, WindowRefService } from './confirmation.service';
+
+describe('WindowRefService', () => {
+
+  let windowRef: WindowRefService;
+
+  beforeEach(() => {
+    windowRef = new WindowRefService();
+  });
+
+  describe('.nativeWindow', () => {
+
+    it('returns native window', () => {
+      expect(windowRef.nativeWindow).toBe(window);
+    });
+
+  });
+
+});
 
 describe('ConfirmationService', () => {
 
