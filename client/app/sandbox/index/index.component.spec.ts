@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndexComponent } from './index.component';
+import { MovieComponent, MovieDescriptionComponent } from '../movie-component/movie.component';
 
 describe('IndexComponent', () => {
   let component: IndexComponent;
@@ -8,7 +9,11 @@ describe('IndexComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndexComponent ]
+      declarations: [
+        IndexComponent,
+        MovieComponent,
+        MovieDescriptionComponent
+      ]
     })
     .compileComponents();
   }));

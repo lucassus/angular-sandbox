@@ -1,20 +1,11 @@
 <h2>Sandbox</h2>
 
-<app-my-component>
-  <span class="app-my-component-title">
-    Star Wars: {{chapterOne}}
-  </span>
-</app-my-component>
-
-<hr />
-
-<app-my-component>
-  <span class="app-my-component-title">
-    Star Wars: {{chapterTwo}}
+<app-movie *ngFor="let movie of movies">
+  <span class="app-movie-title">
+    Title: {{movie.title}}
   </span>
 
-  <app-my-component-content>
-    Return of the Jedi (also known as Star Wars: Episode VI – Return of the Jedi)
-    is a 1983 American epic space opera film directed by Richard Marquand.
-  </app-my-component-content>
-</app-my-component>
+  <app-movie-description *ngIf="movie.description">
+    {{movie.description}}
+  </app-movie-description>
+</app-movie>

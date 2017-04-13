@@ -1,0 +1,16 @@
+<div>
+  <div>
+    Title:
+    <strong><ng-content select=".app-movie-title"></ng-content></strong>
+  </div>
+
+  <div [ngSwitch]="hasDescription()">
+    <span *ngSwitchCase="true">
+      <ng-content select="app-movie-description"></ng-content>
+    </span>
+
+    <span *ngSwitchCase="false">
+      <i>Description is not present</i>
+    </span>
+  </div>
+</div>

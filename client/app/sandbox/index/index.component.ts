@@ -6,7 +6,14 @@ import { Component } from '@angular/core';
 })
 export class IndexComponent {
 
-  chapterOne = 'A New Hope';
-  chapterTwo = 'Return of the Jedi';
+  movies = [{
+    title: 'Star Wars: A New Hope'
+  }, {
+    title: 'Star Wars: Return of the Jedi',
+    description: `
+      Return of the Jedi (also known as Star Wars: Episode VI – Return of the Jedi)
+      is a 1983 American epic space opera film directed by Richard Marquand.
+    `
+  }]
 
 }

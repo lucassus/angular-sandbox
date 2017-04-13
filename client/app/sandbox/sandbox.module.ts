@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { IndexComponent } from './index/index.component';
-import { MyComponentComponent, MyComponentContentComponent } from './my-component/my-component.component';
+import { MovieComponent, MovieDescriptionComponent } from './movie-component/movie.component';
 import { SandboxRoutes } from './routes';
 
 @NgModule({
@@ -13,8 +13,8 @@ import { SandboxRoutes } from './routes';
   ],
   declarations: [
     IndexComponent,
-    MyComponentComponent,
-    MyComponentContentComponent
+    MovieComponent,
+    MovieDescriptionComponent
   ]
 })
 export class SandboxModule { }
