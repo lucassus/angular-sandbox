@@ -27,6 +27,29 @@ const contacts = List<Contact>([
   })
 ]);
 
+class Page {
+
+  constructor(private fixture: ComponentFixture<ListComponent>) {}
+
+  get rows(): DebugElement[] {
+    return this.fixture.debugElement
+      .queryAll(By.css('table tbody tr'));
+  }
+
+  rowFor(contact: Contact): DebugElement {
+    return this.rows.find((de) => {
+      const otherId = de.nativeElement.getAttribute('id');
+      return otherId === `contact-row-${contact.id}`;
+    });
+  }
+
+  cellContentFor(contact: Contact, n: number): string {
+    return this.rowFor(contact).query(By.css(`td:nth-child(${n})`))
+      .nativeElement.textContent;
+  }
+
+}
+
 describe('ListComponent', () => {
 
   let fakeActivatedRoute: FakeActivatedRoute;
@@ -34,6 +57,7 @@ describe('ListComponent', () => {
 
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
+  let page: Page;
 
   beforeEach(() => {
     fakeActivatedRoute = new FakeActivatedRoute();
@@ -59,34 +83,34 @@ describe('ListComponent', () => {
     });
 
     fixture = TestBed.createComponent(ListComponent);
-    component = fixture.componentInstance;
-
     fixture.detectChanges();
+
+    page = new Page(fixture);
+    component = fixture.componentInstance;
   });
 
   it('should render list of contacts', () => {
-    const compiled: HTMLElement = fixture.debugElement.nativeElement;
-    const rows = compiled.querySelectorAll('table tbody tr');
+    expect(page.rows.length).toBe(2);
 
-    expect(rows.length).toBe(2);
+    const firstContact = contacts.get(0);
+    expect(page.cellContentFor(firstContact, 1))
+      .toContain(contacts.get(0).id.toString());
+    expect(page.cellContentFor(firstContact, 2))
+      .toContain(firstContact.fullName);
+    expect(page.cellContentFor(firstContact, 3))
+      .toContain(contacts.get(0).email);
+    expect(page.cellContentFor(firstContact, 4))
+      .toContain(firstContact.phone);
 
-    expect(rows[0].querySelector('td:nth-child(1)').textContent)
-      .toContain('1');
-    expect(rows[0].querySelector('td:nth-child(2)').textContent)
-      .toContain('Luke Skywalker');
-    expect(rows[0].querySelector('td:nth-child(3)').textContent)
-      .toContain('luke@rebel.org');
-    expect(rows[0].querySelector('td:nth-child(4)').textContent)
-      .toContain('+48 111');
-
-    expect(rows[1].querySelector('td:nth-child(1)').textContent)
-      .toContain('2');
-    expect(rows[1].querySelector('td:nth-child(2)').textContent)
-      .toContain('Anakin Skywalker');
-    expect(rows[1].querySelector('td:nth-child(3)').textContent)
-      .toContain('anakin@republic.com');
-    expect(rows[1].querySelector('td:nth-child(4)').textContent)
-      .toContain('+48 222');
+    const secondContact = contacts.get(1);
+    expect(page.cellContentFor(secondContact, 1))
+      .toContain(contacts.get(1).id.toString());
+    expect(page.cellContentFor(secondContact, 2))
+      .toContain(secondContact.fullName);
+    expect(page.cellContentFor(secondContact, 3))
+      .toContain(contacts.get(1).email);
+    expect(page.cellContentFor(secondContact, 4))
+      .toContain(secondContact.phone);
   });
 
   describe('click on delete button', () => {
@@ -95,11 +119,11 @@ describe('ListComponent', () => {
     let deleteButtonEl: DebugElement;
 
     beforeEach(() => {
-      expect(component.contacts.size).toEqual(2);
+      expect(page.rows.length).toEqual(2);
 
       contactToDelete = component.contacts.get(1);
-      deleteButtonEl = fixture.debugElement
-        .query(By.css(`table tbody tr#contact-row-${contactToDelete.id} button.btn-danger`));
+      deleteButtonEl = page.rowFor(contactToDelete)
+        .query(By.css('button.btn-danger'));
     });
 
     it('should delete a contact', () => {
@@ -122,10 +146,11 @@ describe('ListComponent', () => {
       // When
       click(deleteButtonEl);
       tick();
+      fixture.detectChanges();
 
       // Then
       expect(fakeContactsService.query.called).toBeTruthy();
-      expect(component.contacts.size).toEqual(1);
+      expect(page.rows.length).toEqual(1);
     }));
 
   });
