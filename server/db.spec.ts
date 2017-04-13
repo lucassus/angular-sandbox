@@ -1,7 +1,10 @@
-const assert = require('power-assert');
-const db = require('./db');
+import * as assert from 'power-assert';
+
+import { Db } from './db';
 
 describe('db', () => {
+
+  const db = new Db();
 
   describe('seed', () => {
 

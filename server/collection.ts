@@ -1,4 +1,4 @@
-import { Promise } from 'bluebird';
+import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 
 function *idGenerator() {
@@ -13,8 +13,8 @@ function *idGenerator() {
 
 export class Collection {
 
-  private _id = null;
-  private _documents = [];
+  private _id;
+  private _documents;
 
   constructor() {
     this._initialize();
@@ -22,6 +22,7 @@ export class Collection {
 
   _initialize() {
     this._id = idGenerator();
+    this._documents = [];
   }
 
   drop() {

@@ -3,11 +3,11 @@ const gulp = require('gulp');
 gulp.task('server:test', (done) => {
   const mocha = require('gulp-mocha');
 
-  gulp.src(['server/**/*.spec.js'], { read: false })
+  gulp.src(['dist/server/**/*.spec.js'], { read: false })
     .pipe(mocha({
       ui: 'bdd',
       reporter: 'dot',
-      require: ['./server/enable-power-assert']
+      require: ['./dist/server/enable-power-assert']
     }))
     .on('end', done);
 });
