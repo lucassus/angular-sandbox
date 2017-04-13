@@ -12,7 +12,9 @@
     "client:jest-watch": "jest --watch",
     "client:lint": "ng lint",
     "e2e": "ng e2e",
-    "dev-server": "nf start --procfile Procfile.dev"
+    "dev-server": "nf start --procfile Procfile.dev",
+    "heroku-postbuild": "npm run client:build && npm run server:build",
+    "start": "node dist/server/server.js"
   },
   "jest": {
     "preset": "jest-preset-angular",
