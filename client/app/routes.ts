@@ -4,13 +4,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 export const AppRoutes: Routes = [{
   path: '',
-  loadChildren: 'app/home/home.module#HomeModule'
+  loadChildren: './home/home.module#HomeModule'
 }, {
   path: 'contacts',
-  loadChildren: 'app/contacts/contacts.module#ContactsModule',
+  loadChildren: './contacts/contacts.module#ContactsModule',
 }, {
   path: 'sandbox',
-  loadChildren: 'app/sandbox/sandbox.module#SandboxModule'
+  loadChildren: './sandbox/sandbox.module#SandboxModule'
 }, {
   path: '**',
   component: PageNotFoundComponent
