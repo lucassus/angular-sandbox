@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 export class IndexComponent {
 
-  movies = [{
+  movies: any = [{
     title: 'Star Wars: A New Hope'
   }, {
     title: 'Star Wars: Return of the Jedi',

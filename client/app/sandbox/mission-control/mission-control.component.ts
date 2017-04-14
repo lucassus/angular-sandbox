@@ -8,9 +8,9 @@ import { MissionService } from '../mission.service';
 })
 export class MissionControlComponent {
 
-  private astronauts = ['Lovell', 'Swigert', 'Haise', 'Lucassus'];
+  astronauts = ['Lovell', 'Swigert', 'Haise', 'Lucassus'];
 
-  private history: string[] = [];
+  history: string[] = [];
 
   private missions = [
     'Fly to the moon!',
