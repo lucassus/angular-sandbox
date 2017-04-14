@@ -1,19 +1,19 @@
-import { Directive, Injectable, Input } from '@angular/core';
+import { Directive, HostListener, Injectable, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Directive({
-  selector: '[routerLink]',
-  host: {
-    '(click)': 'onClick()'
-  }
+  selector: '[routerLink]'
 })
 export class FakeRouterLinkDirective {
+
   @Input('routerLink') linkParams: any;
   navigatedTo: any = null;
 
+  @HostListener('click')
   onClick() {
     this.navigatedTo = this.linkParams;
   }
+
 }
 
 @Injectable()
