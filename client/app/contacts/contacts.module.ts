@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { ContactResolver, ContactsResolver, ContactsRoutes } from './routes';
 import { AppFormsModule } from '../forms/forms.module';
 import { CheckmarkPipe } from './checkmark.pipe';
 import { ContactFormComponent } from './contact-form/contact-form.component';
@@ -14,6 +13,7 @@ import { CountryNamePipe } from './country-name.pipe';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { ListComponent } from './list/list.component';
+import { ContactResolver, ContactsResolver, ContactsRoutes } from './routes';
 import { ShowComponent } from './show/show.component';
 
 @NgModule({

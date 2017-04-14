@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { List } from 'immutable';
 
-import { confirmationServiceFactory, ConfirmationService } from '../../confirmation.service';
+import { ConfirmationService, confirmationServiceFactory } from '../../confirmation.service';
 import { Contact } from '../contact';
 import { ContactsService } from '../contacts.service';
 

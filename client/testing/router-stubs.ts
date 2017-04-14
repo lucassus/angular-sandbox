@@ -2,6 +2,7 @@ import { Directive, HostListener, Injectable, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Directive({
+  // tslint:disable-next-line
   selector: '[routerLink]'
 })
 export class FakeRouterLinkDirective {

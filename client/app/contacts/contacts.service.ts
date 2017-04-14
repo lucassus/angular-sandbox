@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { List } from 'immutable';
 
-import { Contact } from './contact';
 import { Observable } from 'rxjs/Observable';
+import { Contact } from './contact';
 
 @Injectable()
 export class ContactsService {
