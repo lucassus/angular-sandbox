@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-hello-world',
   templateUrl: './hello-world.component.html'
 })
-export class HelloWorldComponent {
+export class HelloWorldComponent implements OnChanges {
 
   static DEFAULT_NAME = 'World';
 
@@ -18,6 +18,10 @@ export class HelloWorldComponent {
 
   get name() {
     return this._name;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('HelloWorldComponent.ngOnChanges', changes);
   }
 
 }
