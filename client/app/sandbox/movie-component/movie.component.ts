@@ -7,10 +7,10 @@ import { Component, ContentChild, forwardRef } from '@angular/core';
 export class MovieComponent {
 
   @ContentChild(forwardRef(() => MovieDescriptionComponent))
-  description: MovieDescriptionComponent;
+  private descriptionComponent: MovieDescriptionComponent;
 
   hasDescription(): boolean {
-    return this.description !== undefined;
+    return this.descriptionComponent !== undefined;
   }
 
 }

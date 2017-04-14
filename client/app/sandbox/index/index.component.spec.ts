@@ -1,14 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
-import { IndexComponent } from './index.component';
 import { MovieComponent, MovieDescriptionComponent } from '../movie-component/movie.component';
+import { IndexComponent } from './index.component';
 
 describe('IndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        FormsModule
+      ],
       declarations: [
         IndexComponent,
         MovieComponent,
@@ -16,7 +20,7 @@ describe('IndexComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(IndexComponent);
