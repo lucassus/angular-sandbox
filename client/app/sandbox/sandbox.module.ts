@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { IndexComponent } from './index/index.component';
 import { MovieComponent, MovieDescriptionComponent } from './movie-component/movie.component';
 import { SandboxRoutes } from './routes';
+import { VoteTakerComponent } from './vote-taker/vote-taker.component';
+import { VoterComponent } from './voter/voter.component';
 
 @NgModule({
   imports: [
@@ -16,7 +18,9 @@ import { SandboxRoutes } from './routes';
   declarations: [
     IndexComponent,
     MovieComponent,
-    MovieDescriptionComponent
+    MovieDescriptionComponent,
+    VoteTakerComponent,
+    VoterComponent
   ]
 })
 export class SandboxModule { }
