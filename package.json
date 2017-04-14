@@ -27,7 +27,9 @@
       "__TRANSFORM_HTML__": true
     },
     "testRegex": ".*\\.spec\\.ts$",
-    "setupTestFrameworkScriptFile": "<rootDir>/client/testing/setup-jest.ts"
+    "setupTestFrameworkScriptFile": "<rootDir>/client/testing/setup-jest.ts",
+    "coverageReporters": ["json", "lcov", "text-summary"],
+    "coveragePathIgnorePatterns": ["<rootDir>/client/testing/"]
   },
   "private": true,
   "dependencies": {
