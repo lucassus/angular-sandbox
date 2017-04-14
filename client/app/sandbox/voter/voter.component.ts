@@ -6,18 +6,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class VoterComponent {
 
-  @Input() name;
-  @Output() onVoted = new EventEmitter();
+  @Input() private name;
+  @Output() private onVoted = new EventEmitter();
 
-  voted = false;
+  private _voted = false;
 
   vote(agree: boolean) {
-    this.voted = true;
+    this._voted = true;
     this.onVoted.next(agree);
   }
 
+  get voted() {
+    return this._voted;
+  }
+
   reset() {
-    this.voted = false;
+    this._voted = false;
   }
 
 }

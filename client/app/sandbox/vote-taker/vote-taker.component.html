@@ -11,5 +11,5 @@
 
 <hr />
 
-<button (click)="resetVotes()"
+<button (click)="resetVotes()" [disabled]="!canResetVotes()"
         class="btn btn-danger">Reset votes</button>

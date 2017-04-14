@@ -19,6 +19,17 @@ export class VoteTakerComponent {
     agreed ? this.agreed++ : this.disagreed++;
   }
 
+  canResetVotes() {
+    if (this.voterComponents === undefined) {
+      return false;
+    }
+
+    // At least one voter has voted
+    return this.voterComponents.find((component) => {
+      return component.voted;
+    });
+  }
+
   resetVotes() {
     this.agreed = 0;
     this.disagreed = 0;
