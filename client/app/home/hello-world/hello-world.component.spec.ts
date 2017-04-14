@@ -1,4 +1,4 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -15,6 +15,7 @@ describe('HelloWorldComponent', () => {
 
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
+  let element: HTMLElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,10 +24,12 @@ describe('HelloWorldComponent', () => {
         TestComponent
       ]
     });
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
+    element = fixture.debugElement
+      .query(By.css('app-hello-world'))
+      .nativeElement;
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -35,20 +38,21 @@ describe('HelloWorldComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display a title', () => {
-    // Given
-    const de: DebugElement = fixture.debugElement.query(By.css('app-hello-world'));
-    const el: HTMLElement = de.nativeElement;
+  it('should display a name', () => {
+    expect(element.textContent).toContain('Hello Test!');
+  });
 
-    fixture.detectChanges();
-    expect(el.textContent).toContain('Hello Test!');
+  describe('when the name is not given', () => {
 
-    // When
-    component.name = 'Angular';
-    fixture.detectChanges();
+    beforeEach(() => {
+      component.name = null;
+      fixture.detectChanges();
+    });
 
-    // Then
-    expect(el.textContent).toContain('Hello Angular!');
+    it('should display default name', () => {
+      expect(element.textContent).toContain('Hello World!');
+    });
+
   });
 
 });

@@ -6,6 +6,18 @@ import { Component, Input } from '@angular/core';
 })
 export class HelloWorldComponent {
 
-  @Input() name: string;
+  static DEFAULT_NAME = 'World';
+
+  private _name = HelloWorldComponent.DEFAULT_NAME;
+
+  @Input()
+  set name(name: string) {
+    this._name = (name && name.trim())
+      || HelloWorldComponent.DEFAULT_NAME;
+  }
+
+  get name() {
+    return this._name;
+  }
 
 }
