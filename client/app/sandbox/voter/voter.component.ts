@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class VoterComponent {
 
-  @Input() private name;
+  @Input() name;
   @Output() private onVoted = new EventEmitter();
 
   private _voted = false;

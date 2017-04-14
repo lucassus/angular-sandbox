@@ -9,11 +9,11 @@ import { MissionService } from '../mission.service';
 export class AstronautComponent implements OnDestroy {
 
   @Input()
-  private astronaut: string;
+  astronaut: string;
 
-  private mission = '-- no mission announced --';
-  private confirmed = false;
-  private announced = false;
+  mission = '-- no mission announced --';
+  confirmed = false;
+  announced = false;
 
   private subscription: Subscription;
 

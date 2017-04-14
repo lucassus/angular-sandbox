@@ -10,10 +10,10 @@ export class VoteTakerComponent {
   @ViewChildren(VoterComponent)
   private voterComponents: QueryList<VoterComponent>;
 
-  private agreed = 0;
-  private disagreed = 0;
+  agreed = 0;
+  disagreed = 0;
 
-  private voters = ['Mr. IQ', 'Ms. Universe', 'Bombasto'];
+  voters = ['Mr. IQ', 'Ms. Universe', 'Bombasto'];
 
   onVoted(agreed: boolean) {
     agreed ? this.agreed++ : this.disagreed++;
