@@ -25,6 +25,7 @@ before_install:
 install:
   - npm install --global @angular/cli
   - npm install --global gulp
+  - npm install --global jest
   - npm install --global codecov
 
 before_script:
@@ -38,6 +39,7 @@ script:
   - ng lint
   - ng test --browsers=PhantomJS --progress=false --code-coverage --single-run
   - ng test --browsers=Chrome,Firefox --progress=false --single-run
+  - jest --runInBand
 
 after_success:
   - codecov

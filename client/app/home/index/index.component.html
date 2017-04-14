@@ -1,3 +1,8 @@
 <h2>Home page</h2>
 
-<app-hello-world name="Luke"></app-hello-world>
+<app-hello-world></app-hello-world>
+
+<hr />
+
+<app-hello-world [name]="name"></app-hello-world>
+<input type="text" [(ngModel)]="name" />

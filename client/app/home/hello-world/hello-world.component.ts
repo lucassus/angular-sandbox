@@ -1,11 +1,27 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-hello-world',
   templateUrl: './hello-world.component.html'
 })
-export class HelloWorldComponent {
+export class HelloWorldComponent implements OnChanges {
 
-  @Input() name: string;
+  static DEFAULT_NAME = 'World';
+
+  private _name = HelloWorldComponent.DEFAULT_NAME;
+
+  @Input()
+  set name(name: string) {
+    this._name = (name && name.trim())
+      || HelloWorldComponent.DEFAULT_NAME;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('HelloWorldComponent.ngOnChanges', changes);
+  }
 
 }

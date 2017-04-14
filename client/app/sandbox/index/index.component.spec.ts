@@ -1,16 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
+import { MovieComponent, MovieDescriptionComponent } from '../movie-component/movie.component';
 import { IndexComponent } from './index.component';
-
-@Component({
-  template: '<p>Hello World!</p>',
-  selector: 'app-hello-world'
-})
-class FakeHelloWorldComponent {
-  @Input() name;
-}
 
 describe('IndexComponent', () => {
 
@@ -20,11 +13,14 @@ describe('IndexComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        FormsModule,
+        FormsModule
       ],
       declarations: [
-        FakeHelloWorldComponent,
-        IndexComponent
+        IndexComponent,
+        MovieComponent,
+        MovieDescriptionComponent
+      ], schemas: [
+        NO_ERRORS_SCHEMA
       ]
     });
 
@@ -35,7 +31,6 @@ describe('IndexComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.name).toEqual('Luke');
   });
 
 });

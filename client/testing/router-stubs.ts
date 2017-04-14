@@ -1,5 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Directive, HostListener, Injectable, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+@Directive({
+  // tslint:disable-next-line
+  selector: '[routerLink]'
+})
+export class FakeRouterLinkDirective {
+
+  @Input('routerLink') linkParams: any;
+  navigatedTo: any = null;
+
+  @HostListener('click')
+  onClick() {
+    this.navigatedTo = this.linkParams;
+  }
+
+}
 
 @Injectable()
 export class FakeActivatedRoute {

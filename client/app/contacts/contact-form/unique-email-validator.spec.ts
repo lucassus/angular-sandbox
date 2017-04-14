@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { stub } from 'sinon';
@@ -39,22 +39,22 @@ describe('UniqueEmailValidator', () => {
       validator = uniqueEmailValidator.createValidator(contact);
     });
 
-    it('validates', () => {
+    it('validates', async(() => {
       const control = new FormControl('other@email.com');
 
       validator(control).subscribe((result) => {
         expect(result).toBeNull();
       });
-    });
+    }));
 
-    it('validates', () => {
+    it('validates', async(() => {
       const control = new FormControl('taken@email.com');
 
       validator(control).subscribe((result) => {
         expect(result).not.toBeNull();
         expect(result.emailTaken).toEqual('taken@email.com');
       });
-    });
+    }));
 
   });
 
