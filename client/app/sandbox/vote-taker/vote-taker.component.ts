@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
+import { VoterComponent } from '../voter/voter.component';
 
 @Component({
   selector: 'app-vote-taker',
@@ -6,13 +7,25 @@ import { Component } from '@angular/core';
 })
 export class VoteTakerComponent {
 
-  agreed = 0;
-  disagreed = 0;
+  @ViewChildren(VoterComponent)
+  private voterComponents: QueryList<VoterComponent>;
 
-  voters = ['Mr. IQ', 'Ms. Universe', 'Bombasto'];
+  private agreed = 0;
+  private disagreed = 0;
+
+  private voters = ['Mr. IQ', 'Ms. Universe', 'Bombasto'];
 
   onVoted(agreed: boolean) {
     agreed ? this.agreed++ : this.disagreed++;
+  }
+
+  resetVotes() {
+    this.agreed = 0;
+    this.disagreed = 0;
+
+    this.voterComponents.forEach((component) => {
+      component.reset();
+    });
   }
 
 }

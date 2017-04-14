@@ -16,4 +16,8 @@ export class VoterComponent {
     this.onVoted.next(agree);
   }
 
+  reset() {
+    this.voted = false;
+  }
+
 }
