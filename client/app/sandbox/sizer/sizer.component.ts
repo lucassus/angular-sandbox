@@ -9,19 +9,19 @@ export class SizerComponent {
   @Input() size: number;
 
   @Output()
-  private sizeUpdated = new EventEmitter<number>();
+  private sizeChange = new EventEmitter<number>();
 
   increment() {
-    this.resize(this.size + 1);
+    this.resize(+1);
   }
 
   decrement() {
-    this.resize(this.size - 1);
+    this.resize(-1);
   }
 
-  private resize(size) {
-    this.size = size;
-    this.sizeUpdated.emit(this.size);
+  private resize(delta: number) {
+    this.size = Math.min(40, Math.max(8, +this.size + delta));
+    this.sizeChange.emit(this.size);
   }
 
 }
