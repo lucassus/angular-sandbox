@@ -3,6 +3,17 @@
 <a [routerLink]="['./voting']">Voting</a> |
 <a [routerLink]="['./mission-control']">Mission Control</a>
 
+<h3>Two way data binding</h3>
+
+<app-sizer [(size)]="size"></app-sizer>
+Current size: {{size}}
+<button class="btn btn-default" (click)="resetSize()">
+  Reset size
+</button>
+<button class="btn btn-default" (click)="size = 32">
+  Set size to 32
+</button>
+
 <h3>Movies</h3>
 
 <app-movie *ngFor="let movie of movies">
