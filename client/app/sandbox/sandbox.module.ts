@@ -11,6 +11,7 @@ import { MovieComponent, MovieDescriptionComponent } from './movie-component/mov
 import { SandboxRoutes } from './routes';
 import { VoteTakerComponent } from './vote-taker/vote-taker.component';
 import { VoterComponent } from './voter/voter.component';
+import { SizerComponent } from './sizer/sizer.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { VoterComponent } from './voter/voter.component';
     VoteTakerComponent,
     VoterComponent,
     MissionControlComponent,
-    AstronautComponent
+    AstronautComponent,
+    SizerComponent
   ]
 })
 export class SandboxModule { }

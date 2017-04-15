@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
 })
 export class IndexComponent {
 
+  size = 16;
+
   movies: any = [{
     title: 'Star Wars: A New Hope'
   }, {
@@ -15,5 +17,9 @@ export class IndexComponent {
       is a 1983 American epic space opera film directed by Richard Marquand.
     `
   }];
+
+  resetSize() {
+    this.size = 16;
+  }
 
 }
