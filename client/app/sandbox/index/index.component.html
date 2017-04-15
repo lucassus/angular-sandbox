@@ -5,9 +5,12 @@
 
 <h3>Two way data binding</h3>
 
-<app-sizer [size]="size"></app-sizer>
+<app-sizer [size]="size" (sizeUpdated)="size = $event"></app-sizer>
 <button class="btn btn-default" (click)="resetSize()">
   Reset size {{size}}
+</button>
+<button class="btn btn-default" (click)="size = 32">
+  Set size to 32
 </button>
 
 <h3>Movies</h3>

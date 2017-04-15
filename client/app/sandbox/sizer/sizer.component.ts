@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sizer',
@@ -7,6 +7,9 @@ import { Component, Input } from '@angular/core';
 export class SizerComponent {
 
   @Input() size: number;
+
+  @Output()
+  private sizeUpdated = new EventEmitter<number>();
 
   increment() {
     this.resize(this.size + 1);
@@ -18,6 +21,7 @@ export class SizerComponent {
 
   private resize(size) {
     this.size = size;
+    this.sizeUpdated.emit(this.size);
   }
 
 }
