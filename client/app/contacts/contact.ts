@@ -1,8 +1,21 @@
 import { Record } from 'immutable';
 
-import { Address } from './address';
+import { Address, IAddress } from './address';
 
-const ContactRecord = Record({
+export interface IContact {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  favourite: boolean;
+  createdAt: number;
+  updatedAt: number;
+
+  address: Partial<IAddress>;
+}
+
+const ContactRecord = Record<IContact>({
   id: null,
   firstName: null,
   lastName: null,
@@ -17,18 +30,7 @@ const ContactRecord = Record({
 
 export class Contact extends ContactRecord {
 
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  favourite: boolean;
-  createdAt: number;
-  updatedAt: number;
-
-  address: Address;
-
-  constructor(nestedData: any = {}) {
+  constructor(nestedData: Partial<IContact> = {}) {
     const { address: addressData, ...data } = nestedData;
 
     super({
@@ -42,7 +44,8 @@ export class Contact extends ContactRecord {
   }
 
   hasAddress(): boolean {
-    return this.address.isPresent();
+    const { address } = this;
+    return Boolean(address.street || address.town || address.zipCode);
   }
 
   isPersisted(): boolean {
