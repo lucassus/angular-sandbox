@@ -9,9 +9,9 @@ import { MissionControlComponent } from './mission-control/mission-control.compo
 import { MissionService } from './mission.service';
 import { MovieComponent, MovieDescriptionComponent } from './movie-component/movie.component';
 import { SandboxRoutes } from './routes';
+import { SizerComponent } from './sizer/sizer.component';
 import { VoteTakerComponent } from './vote-taker/vote-taker.component';
 import { VoterComponent } from './voter/voter.component';
-import { SizerComponent } from './sizer/sizer.component';
 
 @NgModule({
   imports: [
