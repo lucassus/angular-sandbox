@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { GreetingService } from '../index/greeting.service';
 
+import { GreeterService } from './greeter.service';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
 import { HomeComponent } from './home.component';
 import { IndexComponent } from './index/index.component';
@@ -16,7 +16,7 @@ import { HomeRoutes } from './routes';
     RouterModule.forChild(HomeRoutes)
   ],
   providers: [
-    GreetingService
+    { provide: GreeterService, useFactory: () => new GreeterService('Witaj') }
   ],
   declarations: [
     HelloWorldComponent,
@@ -24,4 +24,10 @@ import { HomeRoutes } from './routes';
     HomeComponent
   ]
 })
-export class HomeModule { }
+export class HomeModule {
+
+  constructor(private greeter: GreeterService) {
+    console.info(greeter.greet('Lucassus'));
+  }
+
+}

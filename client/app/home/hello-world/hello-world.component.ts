@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { GreetingService } from '../../index/greeting.service';
+
+import { GreeterService } from '../greeter.service';
 
 @Component({
   selector: 'app-hello-world',
@@ -11,7 +12,7 @@ export class HelloWorldComponent implements OnChanges {
 
   private _name = HelloWorldComponent.DEFAULT_NAME;
 
-  constructor(private greeting: GreetingService) { }
+  constructor(private greeting: GreeterService) { }
 
   @Input()
   set name(name: string) {

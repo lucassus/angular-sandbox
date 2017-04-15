@@ -1,11 +1,11 @@
-import { GreetingService } from './greeting.service';
+import { GreeterService } from './greeter.service';
 
-describe('GreetingService', () => {
+describe('GreeterService', () => {
 
-  let greeting: GreetingService;
+  let greeting: GreeterService;
 
   beforeEach(() => {
-    greeting = new GreetingService();
+    greeting = new GreeterService();
   });
 
   describe('.greet', () => {
