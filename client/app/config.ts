@@ -5,13 +5,15 @@ import { ICountry } from './contacts/address';
 
 type Environment = 'production' | 'staging' | 'development' | 'test';
 
-const ConfigRecord = Record({
+export interface IConfig {
+  environment: Environment;
+  countries: Array<ICountry>;
+}
+
+const ConfigRecord = Record<IConfig>({
   environment: 'development',
   countries: []
 });
 
 @Injectable()
-export class Config extends ConfigRecord {
-  environment: Environment;
-  countries: Array<ICountry>;
-}
+export class Config extends ConfigRecord { }

@@ -1,5 +1,3 @@
-import { stub } from 'sinon';
-
 import { Address } from './address';
 import { Contact } from './contact';
 
@@ -39,12 +37,14 @@ describe('Contact', () => {
     });
 
     it('returns true when the address is present', () => {
-      stub(contact.address, 'isPresent').returns(true);
+      contact = contact.merge({
+        address: new Address({ town: 'Kraków' })
+      });
+
       expect(contact.hasAddress()).toBeTruthy();
     });
 
     it('returns false when the address is not present', () => {
-      stub(contact.address, 'isPresent').returns(false);
       expect(contact.hasAddress()).toBeFalsy();
     });
 

@@ -5,7 +5,14 @@ export interface ICountry {
   name: string;
 }
 
-const AddressRecord = Record({
+export interface IAddress {
+  street: string;
+  town: string;
+  zipCode: string;
+  countryCode: string;
+}
+
+const AddressRecord = Record<IAddress>({
   street: null,
   town: null,
   zipCode: null,
@@ -14,17 +21,8 @@ const AddressRecord = Record({
 
 export class Address extends AddressRecord {
 
-  street: string;
-  town: string;
-  zipCode: string;
-  countryCode: string;
-
-  constructor(data: any = {}) {
+  constructor(data: Partial<IAddress> = {}) {
     super(data);
-  }
-
-  isPresent(): boolean {
-    return Boolean(this.street || this.town || this.zipCode);
   }
 
 }

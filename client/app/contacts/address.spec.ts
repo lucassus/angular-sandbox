@@ -15,26 +15,4 @@ describe('Address', () => {
     expect(address.countryCode).toEqual('PL');
   });
 
-  describe('.isPresent', () => {
-
-    describe('then the full address is present', () => {
-
-      it('returns true', () => {
-        const address = new Address({ town: 'London' });
-        expect(address.isPresent()).toBeTruthy();
-      });
-
-    });
-
-    describe('otherwise', () => {
-
-      it('returns false', () => {
-        const address = new Address();
-        expect(address.isPresent()).toBeFalsy();
-      });
-
-    });
-
-  });
-
 });
