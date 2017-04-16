@@ -18,7 +18,9 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right" [ngSwitch]="isAuthenticated$ | async">
+      <ul class="nav navbar-nav navbar-right"
+          [ngSwitch]="isAuthenticated$ | async">
+
         <li *ngSwitchCase="false">
           <a href="javascript:;" (click)="login()">
             Login

@@ -1,19 +1,28 @@
+import { Record } from 'immutable';
 import { handleActions } from 'redux-actions';
 
 import { loginAction, logoutAction } from './session-actions';
 
-// TODO use immutable
+export interface ISession {
+  authenticated: boolean;
+}
 
-const DEFAULT_STATE = {
+const SessionRecord = Record<ISession>({
   authenticated: false
-};
+});
+
+class SessionState extends SessionRecord {
+
+}
+
+const DEFAULT_STATE = new SessionState();
 
 export const session = handleActions({
-  [loginAction]() {
-    return { authenticated: true };
+  [loginAction](state: SessionState) {
+    return state.set('authenticated', true);
   },
 
-  [logoutAction]() {
-    return { authenticated: false };
+  [logoutAction](state: SessionState) {
+    return state.set('authenticated', false);
   }
 }, DEFAULT_STATE);
