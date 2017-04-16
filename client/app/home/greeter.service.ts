@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ValueProvider } from '@angular/core';
 
 @Injectable()
 export class GreeterService {
@@ -9,4 +9,11 @@ export class GreeterService {
     return `${this.prefix} ${name}!`;
   }
 
+}
+
+export function greeterWithPrefix(prefix: string): ValueProvider {
+  return {
+    provide: GreeterService,
+    useValue: new GreeterService(prefix)
+  }
 }
