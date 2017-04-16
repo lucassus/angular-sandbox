@@ -1,6 +1,5 @@
-import { Injectable, ValueProvider } from '@angular/core';
+import { FactoryProvider } from '@angular/core';
 
-@Injectable()
 export class GreeterService {
 
   constructor(private prefix: string = 'Hello') { }
@@ -11,9 +10,11 @@ export class GreeterService {
 
 }
 
-export function greeterWithPrefix(prefix: string): ValueProvider {
+export function provideGreeterService(prefix: string): FactoryProvider {
   return {
     provide: GreeterService,
-    useValue: new GreeterService(prefix)
-  }
+    useFactory() {
+      return new GreeterService(prefix);
+    }
+  };
 }

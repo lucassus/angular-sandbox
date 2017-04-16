@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { GreeterService, greeterWithPrefix } from './greeter.service';
+import { provideGreeterService } from './greeter.service';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
 import { HomeComponent } from './home.component';
 import { IndexComponent } from './index/index.component';
@@ -16,7 +16,7 @@ import { HomeRoutes } from './routes';
     RouterModule.forChild(HomeRoutes)
   ],
   providers: [
-    greeterWithPrefix('Witaj')
+    provideGreeterService('Witaj')
   ],
   declarations: [
     HelloWorldComponent,
@@ -24,10 +24,4 @@ import { HomeRoutes } from './routes';
     HomeComponent
   ]
 })
-export class HomeModule {
-
-  constructor(private greeter: GreeterService) {
-    console.info(greeter.greet('Lucassus'));
-  }
-
-}
+export class HomeModule { }
