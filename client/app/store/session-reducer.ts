@@ -2,6 +2,8 @@ import { handleActions } from 'redux-actions';
 
 import { loginAction, logoutAction } from './session-actions';
 
+// TODO use immutable
+
 const DEFAULT_STATE = {
   authenticated: false
 };

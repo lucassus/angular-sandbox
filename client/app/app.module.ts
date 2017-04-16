@@ -8,7 +8,7 @@ import { createLogger } from 'redux-logger';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AppRoutes } from './routes';
+import { AppRoutes, AuthenticationGuard } from './routes';
 import { IAppState, rootReducer } from './store/root-reducer';
 
 @NgModule({
@@ -16,6 +16,9 @@ import { IAppState, rootReducer } from './store/root-reducer';
     AppComponent,
     NavigationComponent,
     PageNotFoundComponent
+  ],
+  providers: [
+    AuthenticationGuard
   ],
   imports: [
     BrowserModule,
