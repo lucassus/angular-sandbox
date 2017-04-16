@@ -17,6 +17,20 @@
           <a routerLink="/sandbox">Sandbox</a>
         </li>
       </ul>
+
+      <ul class="nav navbar-nav navbar-right" [ngSwitch]="isAuthenticated$ | async">
+        <li *ngSwitchCase="false">
+          <a href="javascript:;" (click)="login()">
+            Login
+          </a>
+        </li>
+
+        <li *ngSwitchCase="true">
+          <a href="javascript:;" (click)="logout()">
+            Logout
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
