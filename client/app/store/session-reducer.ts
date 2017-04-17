@@ -3,15 +3,15 @@ import { handleActions } from 'redux-actions';
 
 import { loginAction, logoutAction } from './session-actions';
 
-export interface ISession {
+export interface ISessionState {
   authenticated: boolean;
 }
 
-const SessionRecord = Record<ISession>({
+const SessionRecord = Record<ISessionState>({
   authenticated: false
 });
 
-class SessionState extends SessionRecord {
+export class SessionState extends SessionRecord {
 
 }
 

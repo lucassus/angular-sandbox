@@ -10,6 +10,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutes, AuthenticationGuard } from './routes';
 import { IAppState, rootReducer } from './store/root-reducer';
+import { SessionState } from './store/session-reducer';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,11 @@ import { IAppState, rootReducer } from './store/root-reducer';
 export class AppModule {
 
   constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.configureStore(rootReducer, {}, [
+    const initialState: IAppState = {
+      session: new SessionState()
+    };
+
+    ngRedux.configureStore(rootReducer, initialState, [
       createLogger()
     ]);
   }

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { ISession, session } from './session-reducer';
+import { ISessionState, session } from './session-reducer';
 
 export class IAppState {
-  session?: ISession;
+  session: ISessionState;
 }
 
 export const rootReducer = combineReducers<IAppState>({
