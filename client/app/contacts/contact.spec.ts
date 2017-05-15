@@ -19,6 +19,34 @@ describe('Contact', () => {
     expect(contact.address.zipCode).toBeNull();
   });
 
+  describe('.mergeDeep', () => {
+
+    it('merges', () => {
+      let contact = new Contact({
+        firstName: 'Luke',
+        address: { town: 'London' }
+      });
+
+      contact = contact.mergeDeep({
+        lastName: 'Skywalker',
+        address: { street: 'Liverpool' }
+      });
+
+      expect(contact.firstName).toEqual('Luke');
+      expect(contact.lastName).toEqual('Skywalker');
+      expect(contact.fullName).toEqual('Luke Skywalker');
+
+      expect(contact.address instanceof Address).toBeTruthy();
+      expect(contact.address.town).toEqual('London');
+      expect(contact.address.street).toEqual('Liverpool');
+
+      contact = contact.mergeDeep({ address: null });
+
+      expect(contact.address).toBeNull();
+    });
+
+  });
+
   describe('.fullName', () => {
 
     it('returns contact full name', () => {
