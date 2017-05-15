@@ -21,23 +21,23 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/client",
-      "<rootDir>/server"
+      "./client",
+      "./server"
     ],
     "preset": "jest-preset-angular",
     "globals": {
-      "__TS_CONFIG__": "<rootDir>/client/tsconfig.spec.json",
+      "__TS_CONFIG__": "./client/tsconfig.spec.json",
       "__TRANSFORM_HTML__": true
     },
     "testRegex": ".*\\.spec\\.ts$",
-    "setupTestFrameworkScriptFile": "<rootDir>/client/testing/setup-jest.ts",
+    "setupTestFrameworkScriptFile": "./client/testing/setup-jest.ts",
     "coverageReporters": [
       "json",
       "lcov",
       "text-summary"
     ],
     "coveragePathIgnorePatterns": [
-      "<rootDir>/client/testing/"
+      "./client/testing/"
     ]
   },
   "private": true,

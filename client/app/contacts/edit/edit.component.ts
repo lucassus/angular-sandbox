@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Contact } from '../contact';
@@ -6,7 +6,8 @@ import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-edit',
-  templateUrl: './edit.component.html'
+  templateUrl: './edit.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditComponent implements OnInit {
 
@@ -23,6 +24,10 @@ export class EditComponent implements OnInit {
     this.route.data.subscribe(({ contact }) => {
       this.contact = contact;
     });
+  }
+
+  formChanged(values: any) {
+    this.contact = this.contact.mergeDeep(values);
   }
 
   updateContact(data: any): Promise<boolean> {

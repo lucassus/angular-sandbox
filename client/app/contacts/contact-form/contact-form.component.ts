@@ -16,6 +16,8 @@ export class ContactFormComponent implements OnInit {
 
   @Input() remotePending: boolean;
   @Input() contact: Contact;
+
+  @Output() onChange = new EventEmitter();
   @Output() onSubmit = new EventEmitter();
 
   contactForm: FormGroup;
@@ -50,6 +52,10 @@ export class ContactFormComponent implements OnInit {
         zipCode: [this.contact.address.zipCode, Validators.pattern(/^\d{2}-\d{3}$/)],
         countryCode: this.contact.address.countryCode
       })
+    });
+
+    this.contactForm.valueChanges.subscribe((values) => {
+      this.onChange.emit(values);
     });
   }
 

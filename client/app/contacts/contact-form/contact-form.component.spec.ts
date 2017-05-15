@@ -13,6 +13,7 @@ import { UniqueEmailValidator } from './unique-email-validator';
 @Component({
   template: `
     <app-contact-form [remotePending]="remotePending" [contact]="contact"
+                      (onChange)="formChanged($event)"
                       (onSubmit)="saveContact($event)"></app-contact-form>`
 })
 class TestComponent {
@@ -24,6 +25,7 @@ class TestComponent {
     email: 'luke@rebel.org'
   });
 
+  formChanged = spy();
   saveContact = spy();
 }
 
@@ -112,6 +114,15 @@ describe('ContactFormComponent', () => {
       expect(data.favourite).toBeFalsy();
     });
 
+  });
+
+  it('emits `onChange` event', () => {
+    component.contactForm.get('firstName').setValue('Anakin');
+    expect(testComponent.formChanged.called).toBeTruthy();
+
+    const [data] = testComponent.formChanged.lastCall.args;
+    expect(data.id).toEqual(null);
+    expect(data.firstName).toEqual('Anakin');
   });
 
   describe('submit button', () => {
