@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 export const SESSION_REQUEST_AUTHENTICATION = 'SESSION_REQUEST_AUTHENTICATION';
 export const SESSION_AUTHENTICATION_SUCCESS = 'SESSION_AUTHENTICATION_SUCCESS';
 export const SESSION_AUTHENTICATION_ERROR = 'SESSION_AUTHENTICATION_ERROR';
+export const SESSION_CLEAR_AUTHENTICATION_ERROR = 'SESSION_CLEAR_AUTHENTICATION_ERROR';
 export const SESSION_LOGOUT = 'SESSION_LOGOUT';
 
 interface IRequestAuthenticationActionPayload {
@@ -23,6 +24,12 @@ export class RequestAuthenticationAction implements Action {
 export class AuthenticationSuccessAction implements Action {
 
   readonly type: string = SESSION_AUTHENTICATION_SUCCESS;
+
+}
+
+export class ClearAuthenticationError implements Action {
+
+  readonly type: string = SESSION_CLEAR_AUTHENTICATION_ERROR;
 
 }
 

@@ -18,13 +18,14 @@ export class AuthenticationEffectService {
     .ofType(SESSION_REQUEST_AUTHENTICATION)
     .switchMap((action: RequestAuthenticationAction) => {
       const { login, password } = action.payload;
-      return this.http.post('/api/authenticate', { login, password });
-    })
-    .map(() => {
-      return new AuthenticationSuccessAction();
-    })
-    .catch((error) => {
-      return Observable.of(new AuthenticationErrorAction());
+
+      return this.http.post('/api/authenticate', { login, password })
+        .map(() => {
+          return new AuthenticationSuccessAction();
+        })
+        .catch(() => {
+          return Observable.of(new AuthenticationErrorAction());
+        });
     });
 
   constructor(

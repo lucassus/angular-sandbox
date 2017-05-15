@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-
-import { RequestAuthenticationAction, LogoutAction } from '../store/session-actions';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
+
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { IApplicationState } from '../store/application-state';
+import { LogoutAction } from '../store/session-actions';
 
 @Component({
   selector: 'app-navigation',
@@ -13,13 +15,13 @@ export class NavigationComponent {
   isAuthenticated$ = this.store
     .select((state) => state.session.authenticated);
 
-  constructor(private store: Store<IApplicationState>) {}
+  constructor(
+    private modalService: NgbModal,
+    private store: Store<IApplicationState>
+  ) {}
 
   login() {
-    this.store.dispatch(new RequestAuthenticationAction({
-      login: 'admin',
-      password: 'password'
-    }));
+    this.modalService.open(LoginModalComponent);
   }
 
   logout() {

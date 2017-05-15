@@ -16,16 +16,15 @@
       </li>
     </ul>
 
-    <ul class="navbar-nav navbar-right"
-        [ngSwitch]="isAuthenticated$ | async">
+    <ul class="navbar-nav navbar-right">
 
-      <li class="nav-item" *ngSwitchCase="false">
+      <li class="nav-item" *ngIf="!(isAuthenticated$ | async)">
         <a class="nav-link" href="javascript:;" (click)="login()">
           Login
         </a>
       </li>
 
-      <li class="nav-item" *ngSwitchCase="true">
+      <li class="nav-item" *ngIf="isAuthenticated$ | async">
         <a class="nav-link" href="javascript:;" (click)="logout()">
           Logout
         </a>

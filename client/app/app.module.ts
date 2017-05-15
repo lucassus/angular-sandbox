@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { compose } from '@ngrx/core';
 import { EffectsModule } from '@ngrx/effects';
 import { combineReducers, StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
+import { LoginModalComponent } from './login-modal/login-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutes, AuthenticationGuard } from './routes';
@@ -18,7 +21,11 @@ import { session } from './store/session-reducer';
   declarations: [
     AppComponent,
     NavigationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoginModalComponent
+  ],
+  entryComponents: [
+    LoginModalComponent
   ],
   providers: [
     AuthenticationGuard
@@ -26,6 +33,8 @@ import { session } from './store/session-reducer';
   imports: [
     BrowserModule,
     HttpModule,
+    ReactiveFormsModule,
+    NgbModule.forRoot(),
     RouterModule.forRoot(AppRoutes),
     StoreModule.provideStore(
       compose(combineReducers)({ session }),
