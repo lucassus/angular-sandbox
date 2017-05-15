@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { compose } from '@ngrx/core';
 import { EffectsModule } from '@ngrx/effects';
 import { combineReducers, StoreModule } from '@ngrx/store';
+import { storeLogger } from 'ngrx-store-logger';
 
 import { AppComponent } from './app.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
@@ -16,6 +17,13 @@ import { AppRoutes, AuthenticationGuard } from './routes';
 import { INITIAL_APPLICATION_STATE } from './store/application-state';
 import { AuthenticationEffectService } from './store/effects/authentication-effect.service';
 import { session } from './store/session-reducer';
+
+export function rootReducer(state: any, action: any) {
+  return compose(
+    storeLogger({ collapsed: true }),
+    combineReducers
+  )({ session })(state, action);
+}
 
 @NgModule({
   declarations: [
@@ -37,7 +45,7 @@ import { session } from './store/session-reducer';
     NgbModule.forRoot(),
     RouterModule.forRoot(AppRoutes),
     StoreModule.provideStore(
-      compose(combineReducers)({ session }),
+      rootReducer,
       INITIAL_APPLICATION_STATE
     ),
     EffectsModule.run(AuthenticationEffectService)
