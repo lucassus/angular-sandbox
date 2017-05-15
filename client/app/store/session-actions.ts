@@ -1,24 +1,39 @@
 import { Action } from '@ngrx/store';
 
-export const SESSION_LOGIN = 'SESSION_LOGIN';
+export const SESSION_REQUEST_AUTHENTICATION = 'SESSION_REQUEST_AUTHENTICATION';
+export const SESSION_AUTHENTICATION_SUCCESS = 'SESSION_AUTHENTICATION_SUCCESS';
+export const SESSION_AUTHENTICATION_ERROR = 'SESSION_AUTHENTICATION_ERROR';
 export const SESSION_LOGOUT = 'SESSION_LOGOUT';
 
-export class LoginAction implements Action {
+interface IRequestAuthenticationActionPayload {
+  login: string;
+  password: string;
+}
 
-  readonly type: string = SESSION_LOGIN;
+export class RequestAuthenticationAction implements Action {
 
-  constructor() {
+  readonly type: string = SESSION_REQUEST_AUTHENTICATION;
+
+  constructor(public payload: IRequestAuthenticationActionPayload) {
 
   }
+
+}
+
+export class AuthenticationSuccessAction implements Action {
+
+  readonly type: string = SESSION_AUTHENTICATION_SUCCESS;
+
+}
+
+export class AuthenticationErrorAction implements Action {
+
+  readonly type: string = SESSION_AUTHENTICATION_ERROR;
 
 }
 
 export class LogoutAction implements Action {
 
   readonly type: string = SESSION_LOGOUT;
-
-  constructor() {
-
-  }
 
 }

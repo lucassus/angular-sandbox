@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { LoginAction, LogoutAction } from '../store/session-actions';
+import { RequestAuthenticationAction, LogoutAction } from '../store/session-actions';
 import { Store } from '@ngrx/store';
 import { IApplicationState } from '../store/application-state';
 
@@ -16,7 +16,10 @@ export class NavigationComponent {
   constructor(private store: Store<IApplicationState>) {}
 
   login() {
-    this.store.dispatch(new LoginAction());
+    this.store.dispatch(new RequestAuthenticationAction({
+      login: 'admin',
+      password: 'password'
+    }));
   }
 
   logout() {
