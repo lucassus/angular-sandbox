@@ -1,22 +1,20 @@
-import { NgRedux } from '@angular-redux/store';
 import { Injectable } from '@angular/core';
 import { CanActivateChild, Routes } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { IAppState } from './store/root-reducer';
+import { IApplicationState } from './store/application-state';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivateChild {
 
-  constructor(private ngRedux: NgRedux<IAppState>) { }
+  constructor(private store: Store<IApplicationState>) { }
 
-  canActivateChild(): boolean {
-    const { session: { authenticated } } = this.ngRedux.getState();
-
-    // tslint:disable-next-line
-    console.info('canActivateChild()', authenticated);
-
-    return authenticated;
+  canActivateChild(): Observable<boolean> {
+    // TODO create a selector
+    return this.store
+      .select((state) => state.session.authenticated);
   }
 
 }

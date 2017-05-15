@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { createAction, handleActions } from 'redux-actions';
+import { compose } from '@ngrx/core';
+import { combineReducers, StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutes, AuthenticationGuard } from './routes';
-import { StoreModule } from './store/store.module';
+import { INITIAL_APPLICATION_STATE } from './store/application-state';
+import { session } from './store/session-reducer';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,10 @@ import { StoreModule } from './store/store.module';
   imports: [
     BrowserModule,
     RouterModule.forRoot(AppRoutes),
-    StoreModule
+    StoreModule.provideStore(
+      compose(combineReducers)({ session }),
+      INITIAL_APPLICATION_STATE
+    ),
   ],
   bootstrap: [AppComponent]
 })

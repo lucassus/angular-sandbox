@@ -1,7 +1,7 @@
+import { Action } from '@ngrx/store';
 import { Record } from 'immutable';
-import { handleActions } from 'redux-actions';
 
-import { loginAction, logoutAction } from './session-actions';
+import { SESSION_LOGIN, SESSION_LOGOUT } from './session-actions';
 
 export interface ISessionState {
   authenticated: boolean;
@@ -17,12 +17,15 @@ export class SessionState extends SessionRecord {
 
 const DEFAULT_STATE = new SessionState();
 
-export const session = handleActions({
-  [loginAction](state: SessionState) {
-    return state.set('authenticated', true);
-  },
+export function session(state: SessionState = DEFAULT_STATE, action: Action): SessionState {
+  switch(action.type) {
+    case SESSION_LOGIN:
+      return state.set('authenticated', true);
 
-  [logoutAction](state: SessionState) {
-    return state.set('authenticated', false);
+    case SESSION_LOGOUT:
+      return state.set('authenticated', false);
+
+    default:
+      return state;
   }
-}, DEFAULT_STATE);
+}

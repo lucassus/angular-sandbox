@@ -1,23 +1,13 @@
-import { NgRedux, NgReduxModule } from '@angular-redux/store';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { stub } from 'sinon';
 
 import { click } from '../../testing';
 import { FakeRouterLinkDirective } from '../../testing/router-stubs';
-import { IAppState, rootReducer } from '../store/root-reducer';
 import { NavigationComponent } from './navigation.component';
-
-@NgModule({
-  imports: [NgReduxModule]
-})
-class FakeNgReduxModule {
-
-  constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.configureStore(rootReducer, {});
-  }
-
-}
+import { Observable } from 'rxjs/Observable';
 
 describe('NavigationComponent', () => {
 
@@ -26,13 +16,16 @@ describe('NavigationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FakeNgReduxModule
-      ],
       declarations: [
         FakeRouterLinkDirective,
         NavigationComponent
       ],
+      providers: [{
+        provide: Store, useValue: {
+          select: stub().returns(Observable.of(false)),
+          dispatch: stub()
+        }
+      }],
       schemas: [NO_ERRORS_SCHEMA]
     });
 
@@ -78,16 +71,6 @@ describe('NavigationComponent', () => {
     const { debugElement, componentInstance } = findLinkFor('/sandbox');
     click(debugElement);
     expect(componentInstance.navigatedTo).toEqual('/sandbox');
-  });
-
-  describe('.login', () => {
-
-    it('updates the state', inject([NgRedux], (ngRedux: NgRedux<IAppState>) => {
-      expect(ngRedux.getState().session.authenticated).toBeFalsy();
-      component.login();
-      expect(ngRedux.getState().session.authenticated).toBeTruthy();
-    }));
-
   });
 
 });

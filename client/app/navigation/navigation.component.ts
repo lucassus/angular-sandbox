@@ -1,9 +1,8 @@
-import { NgRedux, select } from '@angular-redux/store';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
-import { IAppState } from '../store/root-reducer';
-import { loginAction, logoutAction } from '../store/session-actions';
+import { LoginAction, LogoutAction } from '../store/session-actions';
+import { Store } from '@ngrx/store';
+import { IApplicationState } from '../store/application-state';
 
 @Component({
   selector: 'app-navigation',
@@ -11,17 +10,17 @@ import { loginAction, logoutAction } from '../store/session-actions';
 })
 export class NavigationComponent {
 
-  @select(['session', 'authenticated'])
-  isAuthenticated$: Observable<boolean>;
+  isAuthenticated$ = this.store
+    .select((state) => state.session.authenticated);
 
-  constructor(private ngRedux: NgRedux<IAppState>) {}
+  constructor(private store: Store<IApplicationState>) {}
 
   login() {
-    this.ngRedux.dispatch(loginAction());
+    this.store.dispatch(new LoginAction());
   }
 
   logout() {
-    this.ngRedux.dispatch(logoutAction());
+    this.store.dispatch(new LogoutAction());
   }
 
 }

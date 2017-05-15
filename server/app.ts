@@ -19,6 +19,18 @@ if (app.get('env') !== 'production') {
   app.use('/api/seed', seedRouter);
 }
 
+// TODO move to the separate file
+// TODO write specs
+app.post('/api/authenticate', (req, res) => {
+  const { login, password } = req.body;
+
+  if (login === 'admin' && password === 'password') {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(422);
+  }
+});
+
 app.use('/api/contacts', contactsRouter);
 
 if (app.get('env') === 'production') {

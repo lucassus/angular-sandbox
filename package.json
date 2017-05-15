@@ -42,7 +42,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-redux/store": "6.1.0",
     "@angular/common": "4.1.2",
     "@angular/compiler": "4.1.2",
     "@angular/core": "4.1.2",
@@ -51,6 +50,9 @@
     "@angular/platform-browser": "4.1.2",
     "@angular/platform-browser-dynamic": "4.1.2",
     "@angular/router": "4.1.2",
+    "@ngrx/core": "1.2.0",
+    "@ngrx/effects": "2.0.3",
+    "@ngrx/store": "2.2.2",
     "bluebird": "3.5.0",
     "body-parser": "1.17.1",
     "bootstrap-sass": "3.3.7",
@@ -60,9 +62,6 @@
     "immutable": "4.0.0-rc.2",
     "intl": "1.2.5",
     "lodash": "4.17.4",
-    "redux": "3.6.0",
-    "redux-actions": "2.0.1",
-    "redux-logger": "3.0.1",
     "rxjs": "5.4.0",
     "zone.js": "0.8.10"
   },
