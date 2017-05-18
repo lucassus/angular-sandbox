@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { stub } from 'sinon';
 
@@ -21,6 +22,8 @@ describe('NavigationComponent', () => {
         NavigationComponent
       ],
       providers: [{
+        provide: NgbModal, useValue: { open: stub() }
+      }, {
         provide: Store, useValue: {
           select: stub().returns(Observable.of(false)),
           dispatch: stub()
@@ -34,26 +37,24 @@ describe('NavigationComponent', () => {
     fixture.detectChanges();
   });
 
-  function findLinkDes() {
+  function findLinkDebugElements() {
     return fixture.debugElement
       .queryAll(By.directive(FakeRouterLinkDirective));
   }
 
   function findLinkFor(path) {
-    return findLinkDes()
-      .map((debugElement) => {
-        const componentInstance = debugElement
-          .injector.get(FakeRouterLinkDirective);
+    return findLinkDebugElements().map((debugElement) => {
+      const componentInstance = debugElement
+        .injector.get(FakeRouterLinkDirective);
 
-        return { debugElement, componentInstance };
-      })
-      .find(({ componentInstance }) => {
-        return componentInstance.linkParams === path;
-      });
+      return { debugElement, componentInstance };
+    }).find(({ componentInstance }) => {
+      return componentInstance.linkParams === path;
+    });
   }
 
   it('has navigation links', () => {
-    expect(findLinkDes().length).toEqual(4);
+    expect(findLinkDebugElements().length).toEqual(4);
 
     expect(findLinkFor('/')).not.toBeUndefined();
     expect(findLinkFor('/contacts')).not.toBeUndefined();

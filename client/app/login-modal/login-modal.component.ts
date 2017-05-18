@@ -21,7 +21,7 @@ export class LoginModalComponent implements OnInit{
     .select((store) => store.session.authenticationPending);
 
   constructor(
-    public activeModal: NgbActiveModal,
+    private activeModal: NgbActiveModal,
     private fb: FormBuilder,
     private store: Store<IApplicationState>
   ) { }
@@ -39,13 +39,17 @@ export class LoginModalComponent implements OnInit{
       .select((store) => store.session.authenticated)
       .subscribe((authenticated) => {
         if (authenticated) {
-          this.activeModal.close();
+          this.close();
         }
       });
   }
 
   private clearErrors() {
     this.store.dispatch(new ClearAuthenticationError());
+  }
+
+  close() {
+    this.activeModal.close();
   }
 
   login() {

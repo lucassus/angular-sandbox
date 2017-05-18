@@ -13,12 +13,12 @@ import { LogoutAction } from '../store/session-actions';
 export class NavigationComponent {
 
   isAuthenticated$ = this.store
-    .select((state) => state.session.authenticated);
+    .select<boolean>((state) => state.session.authenticated);
 
   constructor(
     private modalService: NgbModal,
     private store: Store<IApplicationState>
-  ) {}
+  ) { }
 
   login() {
     this.modalService.open(LoginModalComponent);
