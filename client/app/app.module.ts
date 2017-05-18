@@ -10,6 +10,7 @@ import { combineReducers, StoreModule } from '@ngrx/store';
 import { storeLogger } from 'ngrx-store-logger';
 
 import { AppComponent } from './app.component';
+import { AuthenticationService } from './authentication.service';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -36,6 +37,7 @@ export function rootReducer(state: any, action: any) {
     LoginModalComponent
   ],
   providers: [
+    AuthenticationService,
     AuthenticationGuard
   ],
   imports: [
