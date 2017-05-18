@@ -30,6 +30,9 @@
       "__TRANSFORM_HTML__": true
     },
     "testRegex": ".*\\.spec\\.ts$",
+    "testPathIgnorePatterns": [
+      "(.+).effect.service.spec.ts"
+    ],
     "setupTestFrameworkScriptFile": "./client/testing/setup-jest.ts",
     "coverageReporters": [
       "json",
@@ -68,7 +71,7 @@
     "zone.js": "0.8.10"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.3",
+    "@angular/cli": "1.1.0-rc.0",
     "@angular/compiler-cli": "4.1.2",
     "@types/express": "4.0.35",
     "@types/jasmine": "2.5.47",

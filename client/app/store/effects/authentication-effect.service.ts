@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -9,28 +8,29 @@ import {
   AuthenticationSuccessAction, RequestAuthenticationAction,
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
+import { AuthenticationService } from '../../authentication.service';
 
 @Injectable()
 export class AuthenticationEffectService {
 
   @Effect()
-  requestAthentication$: Observable<Action> = this.actions$
+  requestAuthentication$: Observable<Action> = this.actions$
     .ofType(SESSION_REQUEST_AUTHENTICATION)
     .switchMap((action: RequestAuthenticationAction) => {
       const { login, password } = action.payload;
 
-      return this.http.post('/api/authenticate', { login, password })
-        .map(() => {
+      return this.authentication.authenticate({ login, password }).map((success) => {
+        if (success) {
           return new AuthenticationSuccessAction();
-        })
-        .catch(() => {
-          return Observable.of(new AuthenticationErrorAction());
-        });
+        } else {
+          return new AuthenticationErrorAction();
+        }
+      });
     });
 
   constructor(
     private actions$: Actions,
-    private http: Http
+    private authentication: AuthenticationService
   ) { }
 
 }
