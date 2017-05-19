@@ -1,4 +1,36 @@
 import { DebugElement } from '@angular/core';
+import { BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operator/map';
+import { stub } from 'sinon';
+
+export const HTTP_MOCK_PROVIDERS = [
+  MockBackend,
+  BaseRequestOptions,
+  {
+    provide: Http,
+    deps: [MockBackend, BaseRequestOptions],
+    useFactory: (backend: ConnectionBackend, options: BaseRequestOptions) => {
+      return new Http(backend, options);
+    }
+  }
+];
+
+export class MockStore<T> extends BehaviorSubject<T> {
+
+  dispatch = stub();
+
+  select = <T, R>(pathOrMapFn: any, ...paths: string[]): Observable<R> => {
+    return map.call(this, pathOrMapFn);
+  }
+
+  constructor(private _initialState: T) {
+    super(_initialState);
+  }
+
+}
 
 // See https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
 /** Button events to pass to `DebugElement.triggerEventHandler` for RouterLink event handler */

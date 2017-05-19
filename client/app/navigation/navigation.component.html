@@ -1,22 +1,33 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" routerLink="/">Angular Sandbox</a>
-    </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a routerLink="/">Home</a>
-        </li>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+  <a class="navbar-brand" routerLink="/">Angular Sandbox</a>
 
-        <li routerLinkActive="active">
-          <a routerLink="/contacts">Contacts</a>
-        </li>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="/">Home</a>
+      </li>
 
-        <li routerLinkActive="active">
-          <a routerLink="/sandbox">Sandbox</a>
-        </li>
-      </ul>
-    </div>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/contacts">Contacts</a>
+      </li>
+
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/sandbox">Sandbox</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-right">
+      <li class="nav-item" *ngIf="!(isAuthenticated$ | async)">
+        <a class="nav-link" href="javascript:void(0)" (click)="login()">
+          Login
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="isAuthenticated$ | async">
+        <a class="nav-link" href="javascript:void(0)" (click)="logout()">
+          Logout
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>

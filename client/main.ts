@@ -1,5 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Store } from '@ngrx/store';
 
 import { AppModule } from './app/app.module';
 import { Config } from './app/config';
@@ -22,5 +23,13 @@ fetchConfig().then((config) => {
 
   platformBrowserDynamic([
     { provide: Config, useValue: config }
-  ]).bootstrapModule(AppModule);
+  ]).bootstrapModule(AppModule).then((ref) => {
+    const store = ref.injector.get(Store);
+
+    store
+      .select((state) => state.session.authenticated)
+      .subscribe((authenticated) => {
+        console.log('Authenticated:', authenticated);
+      });
+  });
 });

@@ -30,7 +30,7 @@ describe('ShowComponent', () => {
                 id: 123,
                 firstName: 'Luke', lastName: 'Skywalker',
                 email: 'luke@rebel.org', phone: '+48 111',
-                updateAt: 10001
+                updatedAt: 10001
               })
             })
           }

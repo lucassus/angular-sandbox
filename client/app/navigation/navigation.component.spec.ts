@@ -1,15 +1,23 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Action, Store } from '@ngrx/store';
+import { stub } from 'sinon';
 
-import { click } from '../../testing';
+import { click, MockStore } from '../../testing';
 import { FakeRouterLinkDirective } from '../../testing/router-stubs';
+import { IApplicationState } from '../store/records/application-state';
+import { SessionState } from '../store/records/session-state';
+import { SESSION_LOGOUT } from '../store/session-actions';
 import { NavigationComponent } from './navigation.component';
 
 describe('NavigationComponent', () => {
 
-  let component: NavigationComponent;
+  let store: MockStore<IApplicationState>;
+
   let fixture: ComponentFixture<NavigationComponent>;
+  let component: NavigationComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,34 +25,41 @@ describe('NavigationComponent', () => {
         FakeRouterLinkDirective,
         NavigationComponent
       ],
+      providers: [{
+        provide: NgbModal, useValue: { open: stub() }
+      }, {
+        provide: Store,
+        useValue: new MockStore<IApplicationState>({ session: new SessionState() })
+      }],
       schemas: [NO_ERRORS_SCHEMA]
     });
 
+    store = TestBed.get(Store);
+
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
-  function findLinkDes() {
+  function findLinkDebugElements() {
     return fixture.debugElement
       .queryAll(By.directive(FakeRouterLinkDirective));
   }
 
   function findLinkFor(path) {
-    return findLinkDes()
-      .map((debugElement) => {
-        const componentInstance = debugElement
-          .injector.get(FakeRouterLinkDirective);
+    return findLinkDebugElements().map((debugElement) => {
+      const componentInstance = debugElement
+        .injector.get(FakeRouterLinkDirective);
 
-        return { debugElement, componentInstance };
-      })
-      .find(({ componentInstance }) => {
-        return componentInstance.linkParams === path;
-      });
+      return { debugElement, componentInstance };
+    }).find(({ componentInstance }) => {
+      return componentInstance.linkParams === path;
+    });
   }
 
   it('has navigation links', () => {
-    expect(findLinkDes().length).toEqual(4);
+    expect(findLinkDebugElements().length).toEqual(4);
 
     expect(findLinkFor('/')).not.toBeUndefined();
     expect(findLinkFor('/contacts')).not.toBeUndefined();
@@ -62,6 +77,55 @@ describe('NavigationComponent', () => {
     const { debugElement, componentInstance } = findLinkFor('/sandbox');
     click(debugElement);
     expect(componentInstance.navigatedTo).toEqual('/sandbox');
+  });
+
+  describe('authentication button', () => {
+
+    function findLinkEl() {
+      return fixture.debugElement
+        .query(By.css('.navbar-nav.navbar-right .nav-item'))
+        .nativeElement;
+    }
+
+    describe('when authenticated', () => {
+
+      beforeEach(() => {
+        store.next({ session: new SessionState({ authenticated: true }) });
+        fixture.detectChanges();
+      });
+
+      it('displays log out button', () => {
+        expect(findLinkEl().textContent).toContain('Logout');
+      });
+
+    });
+
+    describe('when not authenticated', () => {
+
+      beforeEach(() => {
+        store.next({ session: new SessionState({ authenticated: false }) });
+        fixture.detectChanges();
+      });
+
+      it('displays log out button', () => {
+        expect(findLinkEl().textContent).toContain('Login');
+      });
+
+    });
+
+  });
+
+  describe('.logout', () => {
+
+    it(`dispatches ${SESSION_LOGOUT} action`, () => {
+      component.logout();
+
+      expect(store.dispatch.called).toBeTruthy();
+
+      const action: Action = store.dispatch.lastCall.args[0];
+      expect(action.type).toEqual(SESSION_LOGOUT);
+    });
+
   });
 
 });

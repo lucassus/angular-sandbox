@@ -1,8 +1,9 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { BaseRequestOptions, ConnectionBackend, Http, RequestMethod, Response, ResponseOptions } from '@angular/http';
+import { RequestMethod, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { List } from 'immutable';
 
+import { HTTP_MOCK_PROVIDERS } from '../../testing/index';
 import { Contact } from './contact';
 import { ContactsService } from './contacts.service';
 
@@ -14,15 +15,7 @@ describe('ContactsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        MockBackend,
-        BaseRequestOptions,
-        {
-          provide: Http,
-          deps: [MockBackend, BaseRequestOptions],
-          useFactory: (backend: ConnectionBackend, options: BaseRequestOptions) => {
-            return new Http(backend, options);
-          }
-        },
+        HTTP_MOCK_PROVIDERS,
         ContactsService
       ]
     });

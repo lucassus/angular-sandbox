@@ -25,7 +25,7 @@ describe('EditComponent', () => {
         firstName: 'Luke', lastName: 'Skywalker',
         email: 'luke@rebel.org', phone: '+48 111',
         address: { town: 'Foo' },
-        updateAt: 10001
+        updatedAt: 10001
       })
     };
 
