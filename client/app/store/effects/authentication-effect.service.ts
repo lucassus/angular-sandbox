@@ -3,12 +3,13 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import { AuthenticationService } from '../../authentication.service';
 import {
   AuthenticationErrorAction,
-  AuthenticationSuccessAction, RequestAuthenticationAction,
+  AuthenticationSuccessAction,
+  RequestAuthenticationAction,
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
-import { AuthenticationService } from '../../authentication.service';
 
 @Injectable()
 export class AuthenticationEffectService {

@@ -10,7 +10,7 @@ import { ClearAuthenticationError, RequestAuthenticationAction } from '../store/
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html'
 })
-export class LoginModalComponent implements OnInit{
+export class LoginModalComponent implements OnInit {
 
   loginForm: FormGroup;
 

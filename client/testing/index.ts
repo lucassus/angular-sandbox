@@ -20,14 +20,14 @@ export const HTTP_MOCK_PROVIDERS = [
 
 export class MockStore<T> extends BehaviorSubject<T> {
 
-  constructor(private _initialState: T) {
-    super(_initialState);
-  }
-
   dispatch = stub();
 
   select = <T, R>(pathOrMapFn: any, ...paths: string[]): Observable<R> => {
     return map.call(this, pathOrMapFn);
+  }
+
+  constructor(private _initialState: T) {
+    super(_initialState);
   }
 
 }

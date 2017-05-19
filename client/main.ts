@@ -1,10 +1,10 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Store } from '@ngrx/store';
 
 import { AppModule } from './app/app.module';
 import { Config } from './app/config';
 import './rxjs-operators';
-import { Store } from '@ngrx/store';
 
 function fetchConfig(): Promise<Config> {
   return fetch('/api/config').then((response: Response) => {
@@ -29,7 +29,7 @@ fetchConfig().then((config) => {
     store
       .select((state) => state.session.authenticated)
       .subscribe((authenticated) => {
-        console.debug('Authenticated:', authenticated)
+        console.log('Authenticated:', authenticated);
       });
   });
 });
