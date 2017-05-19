@@ -4,6 +4,6 @@ export class IApplicationState {
   session: ISessionState;
 }
 
-export const INITIAL_APPLICATION_STATE: IApplicationState = {
+export const DEFAULT_APPLICATION_STATE: IApplicationState = {
   session: new SessionState()
 };

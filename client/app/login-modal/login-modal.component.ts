@@ -14,6 +14,9 @@ export class LoginModalComponent implements OnInit{
 
   loginForm: FormGroup;
 
+  authenticated$ = this.store
+    .select((store) => store.session.authenticated);
+
   authenticationError$ = this.store
     .select((store) => store.session.authenticationError);
 
@@ -35,13 +38,11 @@ export class LoginModalComponent implements OnInit{
     this.clearErrors();
     this.loginForm.valueChanges.subscribe(() => this.clearErrors());
 
-    this.store
-      .select((store) => store.session.authenticated)
-      .subscribe((authenticated) => {
-        if (authenticated) {
-          this.close();
-        }
-      });
+    this.authenticated$.subscribe((authenticated) => {
+      if (authenticated) {
+        this.close();
+      }
+    });
   }
 
   private clearErrors() {

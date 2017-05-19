@@ -15,7 +15,7 @@ import { LoginModalComponent } from './login-modal/login-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutes, AuthenticationGuard } from './routes';
-import { INITIAL_APPLICATION_STATE } from './store/application-state';
+import { DEFAULT_APPLICATION_STATE } from './store/application-state';
 import { AuthenticationEffectService } from './store/effects/authentication-effect.service';
 import { session } from './store/session-reducer';
 
@@ -46,10 +46,7 @@ export function rootReducer(state: any, action: any) {
     ReactiveFormsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(AppRoutes),
-    StoreModule.provideStore(
-      rootReducer,
-      INITIAL_APPLICATION_STATE
-    ),
+    StoreModule.provideStore(rootReducer, DEFAULT_APPLICATION_STATE),
     EffectsModule.run(AuthenticationEffectService)
   ],
   bootstrap: [AppComponent]
