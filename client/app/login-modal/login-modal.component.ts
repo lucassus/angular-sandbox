@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 
-import { IApplicationState } from '../store/application-state';
+import { IApplicationState } from '../store/records/application-state';
 import { ClearAuthenticationError, RequestAuthenticationAction } from '../store/session-actions';
 
 @Component({

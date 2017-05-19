@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { IApplicationState } from './store/application-state';
+import { IApplicationState } from './store/records/application-state';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivateChild {
@@ -12,7 +12,6 @@ export class AuthenticationGuard implements CanActivateChild {
   constructor(private store: Store<IApplicationState>) { }
 
   canActivateChild(): Observable<boolean> {
-    // TODO create a selector
     return this.store
       .select((state) => state.session.authenticated);
   }

@@ -1,13 +1,13 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { stub, spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
-import { IApplicationState } from '../store/application-state';
-import { session } from '../store/session-reducer';
 import { AuthenticationService } from '../authentication.service';
+import { IApplicationState } from '../store/records/application-state';
+import { session } from '../store/reducers/session-reducer';
 import { LoginModalComponent } from './login-modal.component';
 
 describe('LoginModalComponent', () => {

@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 
 import { LoginModalComponent } from '../login-modal/login-modal.component';
-import { IApplicationState } from '../store/application-state';
+import { IApplicationState } from '../store/records/application-state';
 import { LogoutAction } from '../store/session-actions';
 
 @Component({

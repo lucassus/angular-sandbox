@@ -7,9 +7,9 @@ import { stub } from 'sinon';
 
 import { click, MockStore } from '../../testing';
 import { FakeRouterLinkDirective } from '../../testing/router-stubs';
-import { DEFAULT_APPLICATION_STATE, IApplicationState } from '../store/application-state';
+import { IApplicationState } from '../store/records/application-state';
+import { SessionState } from '../store/records/session-state';
 import { SESSION_LOGOUT } from '../store/session-actions';
-import { SessionState } from '../store/session-reducer';
 import { NavigationComponent } from './navigation.component';
 
 describe('NavigationComponent', () => {
@@ -29,7 +29,7 @@ describe('NavigationComponent', () => {
         provide: NgbModal, useValue: { open: stub() }
       }, {
         provide: Store,
-        useValue: new MockStore<IApplicationState>(DEFAULT_APPLICATION_STATE)
+        useValue: new MockStore<IApplicationState>({ session: new SessionState() })
       }],
       schemas: [NO_ERRORS_SCHEMA]
     });

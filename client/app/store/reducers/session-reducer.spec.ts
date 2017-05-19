@@ -1,11 +1,12 @@
+import { SessionState } from '../records/session-state';
 import {
   SESSION_AUTHENTICATION_ERROR,
   SESSION_AUTHENTICATION_SUCCESS,
   SESSION_CLEAR_AUTHENTICATION_ERROR,
   SESSION_LOGOUT,
   SESSION_REQUEST_AUTHENTICATION
-} from './session-actions';
-import { session, SessionState } from './session-reducer';
+} from '../session-actions';
+import { session } from './session-reducer';
 
 describe('session', () => {
 

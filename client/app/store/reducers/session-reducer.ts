@@ -1,26 +1,13 @@
 import { Action } from '@ngrx/store';
-import { Record } from 'immutable';
 
+import { SessionState } from '../records/session-state';
 import {
-  SESSION_REQUEST_AUTHENTICATION, SESSION_LOGOUT, SESSION_AUTHENTICATION_SUCCESS,
-  SESSION_AUTHENTICATION_ERROR, SESSION_CLEAR_AUTHENTICATION_ERROR
-} from './session-actions';
-
-export interface ISessionState {
-  authenticationPending: boolean;
-  authenticationError: boolean;
-  authenticated: boolean;
-}
-
-const SessionRecord = Record<ISessionState>({
-  authenticationPending: false,
-  authenticated: false,
-  authenticationError: false
-});
-
-export class SessionState extends SessionRecord {
-
-}
+  SESSION_AUTHENTICATION_ERROR,
+  SESSION_AUTHENTICATION_SUCCESS,
+  SESSION_CLEAR_AUTHENTICATION_ERROR,
+  SESSION_LOGOUT,
+  SESSION_REQUEST_AUTHENTICATION
+} from '../session-actions';
 
 export const DEFAULT_SESSION_STATE = new SessionState();
 
