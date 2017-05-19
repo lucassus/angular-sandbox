@@ -4,6 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { Config } from './app/config';
 import './rxjs-operators';
+import { Store } from '@ngrx/store';
 
 function fetchConfig(): Promise<Config> {
   return fetch('/api/config').then((response: Response) => {
@@ -22,5 +23,13 @@ fetchConfig().then((config) => {
 
   platformBrowserDynamic([
     { provide: Config, useValue: config }
-  ]).bootstrapModule(AppModule);
+  ]).bootstrapModule(AppModule).then((ref) => {
+    const store = ref.injector.get(Store);
+
+    store
+      .select((state) => state.session.authenticated)
+      .subscribe((authenticated) => {
+        console.debug('Authenticated:', authenticated)
+      });
+  });
 });
