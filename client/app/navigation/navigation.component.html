@@ -18,7 +18,7 @@
 
     <ul class="navbar-nav navbar-right">
       <li class="nav-item" *ngIf="!(isAuthenticated$ | async)">
-        <a class="nav-link" href="javascript:void(0)" (click)="login()">
+        <a class="nav-link" routerLink="/login">
           Login
         </a>
       </li>

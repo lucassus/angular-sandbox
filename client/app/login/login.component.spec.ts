@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { spy, stub } from 'sinon';
@@ -8,12 +8,12 @@ import { spy, stub } from 'sinon';
 import { AuthenticationService } from '../authentication.service';
 import { IApplicationState } from '../store/records/application-state';
 import { session } from '../store/reducers/session-reducer';
-import { LoginModalComponent } from './login-modal.component';
+import { LoginComponent } from './login.component';
 
-describe('LoginModalComponent', () => {
+describe('LoginComponent', () => {
 
-  let component: LoginModalComponent;
-  let fixture: ComponentFixture<LoginModalComponent>;
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   let store: Store<IApplicationState>;
 
@@ -24,18 +24,26 @@ describe('LoginModalComponent', () => {
         StoreModule.provideStore(combineReducers({ session }))
       ],
       providers: [{
-        provide: NgbActiveModal, useValue: { close: stub() }
+        provide: ActivatedRoute,
+        useValue: {
+          snapshot: {
+            queryParams: { returnUrl: '/foo/bar' }
+          }
+        }
+      }, {
+        provide: Router,
+        useValue: { navigate: stub() }
       }, {
         provide: AuthenticationService, useValue: {
           login: stub().returns(Observable.of(true))
         }
       }],
-      declarations: [LoginModalComponent]
+      declarations: [LoginComponent]
     });
 
     store = TestBed.get(Store);
 
-    fixture = TestBed.createComponent(LoginModalComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

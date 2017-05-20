@@ -59,7 +59,7 @@ describe('NavigationComponent', () => {
   }
 
   it('has navigation links', () => {
-    expect(findLinkDebugElements().length).toEqual(4);
+    expect(findLinkDebugElements().length).toEqual(5);
 
     expect(findLinkFor('/')).not.toBeUndefined();
     expect(findLinkFor('/contacts')).not.toBeUndefined();

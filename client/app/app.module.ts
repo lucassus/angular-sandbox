@@ -9,22 +9,19 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './authentication.service';
-import { LoginModalComponent } from './login-modal/login-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutes, AuthenticationGuard } from './routes';
 import { AuthenticationEffectService } from './store/effects/authentication-effect.service';
 import { rootReducer } from './store/reducers/root-reducer';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     PageNotFoundComponent,
-    LoginModalComponent
-  ],
-  entryComponents: [
-    LoginModalComponent
+    LoginComponent
   ],
   providers: [
     AuthenticationService,

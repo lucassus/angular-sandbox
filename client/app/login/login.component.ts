@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { IApplicationState } from '../store/records/application-state';
 import { ClearAuthenticationError, RequestAuthenticationAction } from '../store/session-actions';
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html'
+  selector: 'app-login',
+  templateUrl: './login.component.html'
 })
-export class LoginModalComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
@@ -23,13 +23,25 @@ export class LoginModalComponent implements OnInit {
   authenticationPending$ = this.store
     .select((store) => store.session.authenticationPending);
 
+  private returnUrl: string;
+
   constructor(
-    private activeModal: NgbActiveModal,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
     private store: Store<IApplicationState>
   ) { }
 
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+    // TODO refactor, use the store
+    this.authenticated$.subscribe((authenticated) => {
+      if (authenticated) {
+        this.router.navigate([this.returnUrl]);
+      }
+    });
+
     this.loginForm = this.fb.group({
       login: ['admin', Validators.required],
       password: ['password', Validators.required],
@@ -37,20 +49,10 @@ export class LoginModalComponent implements OnInit {
 
     this.clearErrors();
     this.loginForm.valueChanges.subscribe(() => this.clearErrors());
-
-    this.authenticated$.subscribe((authenticated) => {
-      if (authenticated) {
-        this.close();
-      }
-    });
   }
 
   private clearErrors() {
     this.store.dispatch(new ClearAuthenticationError());
-  }
-
-  close() {
-    this.activeModal.close();
   }
 
   login() {
