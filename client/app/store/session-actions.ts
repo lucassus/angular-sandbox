@@ -15,14 +15,15 @@ interface IRequestAuthenticationActionPayload {
 export class RequestAuthenticationAction implements Action {
 
   readonly type: string = SESSION_REQUEST_AUTHENTICATION;
+  readonly defaultReturnUrl: string = '/';
 
   public payload: IRequestAuthenticationActionPayload;
 
   constructor({ login, password, returnUrl }: IRequestAuthenticationActionPayload) {
     this.payload = {
       login, password,
-      returnUrl: returnUrl || '/'
-    }
+      returnUrl: returnUrl || this.defaultReturnUrl
+    };
   }
 
 }

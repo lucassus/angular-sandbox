@@ -8,15 +8,17 @@ describe('app', () => {
 
     describe('on success', () => {
 
-      it('responds with 200', (done) => {
-        const login = 'admin';
-        const password = 'password';
+      const credentials = {
+        login: 'admin',
+        password: 'password'
+      };
 
+      it('responds with 200', (done) => {
         request(app)
-          .post('/api/contacts')
+          .post('/api/authenticate')
           .set('Accept', 'application/json')
-          .send({ login, password })
-          .expect('Content-Type', /json/)
+          .send(credentials)
+          .expect('Content-Type', /text/)
           .expect(200)
           .end(done);
       });
@@ -25,15 +27,17 @@ describe('app', () => {
 
     describe('on error', () => {
 
-      it('responds with 422', (done) => {
-        const login = 'login';
-        const password = 'wrong';
+      const credentials = {
+        login: 'admin',
+        password: 'wrong'
+      };
 
+      it('responds with 422', (done) => {
         request(app)
-          .post('/api/contacts')
+          .post('/api/authenticate')
           .set('Accept', 'application/json')
-          .send({ login, password })
-          .expect('Content-Type', /json/)
+          .send(credentials)
+          .expect('Content-Type', /text/)
           .expect(422)
           .end(done);
       });
