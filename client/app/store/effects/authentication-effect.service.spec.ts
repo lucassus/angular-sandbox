@@ -8,6 +8,7 @@ import { AuthenticationService } from '../../authentication.service';
 import {
   AuthenticationErrorAction,
   AuthenticationSuccessAction,
+  LogoutAction,
   RequestAuthenticationAction
 } from '../session-actions';
 import { AuthenticationEffectService } from './authentication-effect.service';
@@ -91,6 +92,18 @@ describe('AuthenticationEffectService', () => {
           .toBeTruthy();
       });
 
+    });
+
+  });
+
+  describe('.logout$', () => {
+
+    it('dispatches valid action', () => {
+      runner.queue(new LogoutAction());
+
+      effect.logout$.subscribe((action) => {
+        expect(action).toEqual(go(['/']));
+      });
     });
 
   });

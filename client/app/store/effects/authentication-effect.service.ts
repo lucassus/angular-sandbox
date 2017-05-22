@@ -8,7 +8,7 @@ import { AuthenticationService } from '../../authentication.service';
 import {
   AuthenticationErrorAction,
   AuthenticationSuccessAction,
-  RequestAuthenticationAction,
+  RequestAuthenticationAction, SESSION_LOGOUT,
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
 
@@ -36,6 +36,11 @@ export class AuthenticationEffectService {
         }
       });
     });
+
+  @Effect()
+  logout$: Observable<Action> = this.actions$
+    .ofType(SESSION_LOGOUT)
+    .map(() => go(['/']));
 
   constructor(
     private actions$: Actions,
