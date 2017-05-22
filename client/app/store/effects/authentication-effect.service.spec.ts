@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { stub } from 'sinon';
 
 import { AuthenticationService } from '../../authentication.service';
+import { LocalStorageService } from '../../local-storage.service';
 import {
   AuthenticationErrorAction,
   AuthenticationSuccessAction,
@@ -15,18 +16,21 @@ import { AuthenticationEffectService } from './authentication-effect.service';
 
 describe('AuthenticationEffectService', () => {
 
+  let fakeLocalStorage;
   let fakeAuthentication;
 
   let effect: AuthenticationEffectService;
   let runner: EffectsRunner;
 
   beforeEach(() => {
+    fakeLocalStorage = { remove: stub() };
     fakeAuthentication = { authenticate: stub() };
 
     TestBed.configureTestingModule({
       imports: [EffectsTestingModule],
       providers: [
         { provide: AuthenticationService, useValue: fakeAuthentication },
+        { provide: LocalStorageService, useValue: fakeLocalStorage },
         AuthenticationEffectService
       ]
     });
@@ -96,11 +100,31 @@ describe('AuthenticationEffectService', () => {
 
   });
 
+  describe('.authenticationSuccess$', () => {
+
+    it('alters the local storage', () => {
+      runner.queue(new AuthenticationSuccessAction());
+
+      effect.logout$.subscribe(() => {
+        expect(fakeLocalStorage.set.calledWith('authenticated', true)).toBeTruthy();
+      });
+    });
+
+  });
+
   describe('.logout$', () => {
 
-    it('dispatches valid action', () => {
+    beforeEach(() => {
       runner.queue(new LogoutAction());
+    });
 
+    it('alters the local storage', () => {
+      effect.logout$.subscribe(() => {
+        expect(fakeLocalStorage.remove.calledWith('authenticated')).toBeTruthy();
+      });
+    });
+
+    it('dispatches valid action', () => {
       effect.logout$.subscribe((action) => {
         expect(action).toEqual(go(['/']));
       });

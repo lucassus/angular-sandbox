@@ -5,10 +5,13 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthenticationService } from '../../authentication.service';
+import { LocalStorageService } from '../../local-storage.service';
 import {
   AuthenticationErrorAction,
   AuthenticationSuccessAction,
-  RequestAuthenticationAction, SESSION_LOGOUT,
+  RequestAuthenticationAction,
+  SESSION_AUTHENTICATION_SUCCESS,
+  SESSION_LOGOUT,
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
 
@@ -37,14 +40,22 @@ export class AuthenticationEffectService {
       });
     });
 
+  @Effect({ dispatch: false })
+  authenticationSuccess$: Observable<Action> = this.actions$
+    .ofType(SESSION_AUTHENTICATION_SUCCESS)
+    .do(() => this.localStorage.set('authenticated', true));
+
   @Effect()
   logout$: Observable<Action> = this.actions$
-    .ofType(SESSION_LOGOUT)
-    .map(() => go(['/']));
+    .ofType(SESSION_LOGOUT).map(() => {
+      this.localStorage.remove('authenticated');
+      return go(['/']);
+    });
 
   constructor(
     private actions$: Actions,
-    private authentication: AuthenticationService
+    private authentication: AuthenticationService,
+    private localStorage: LocalStorageService
   ) { }
 
 }

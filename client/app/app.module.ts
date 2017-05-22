@@ -37,12 +37,15 @@ import { DEFAULT_APPLICATION_STATE, rootReducer } from './store/reducers/root-re
     },
     {
       provide: INITIAL_STATE,
-      useFactory(): IApplicationState {
+      useFactory(localStorage: LocalStorageService): IApplicationState {
+        const authenticated = localStorage.get('authenticated') === 'true' || false;
+
         return {
           ...DEFAULT_APPLICATION_STATE,
-          session: new SessionState({ authenticated: true })
+          session: new SessionState({ authenticated })
         };
-      }
+      },
+      deps: [LocalStorageService]
     }
   ],
   imports: [
