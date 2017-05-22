@@ -1,48 +1,50 @@
 <h2>Show contact</h2>
 
-<dl class="dl-horizontal">
-  <dt>Id</dt>
-  <dd>{{contact.id}}</dd>
+<dl class="row">
+  <dt class="col-sm-3">Id</dt>
+  <dd class="col-sm-9">{{contact.id}}</dd>
 
-  <dt>First name</dt>
-  <dd>{{contact.firstName}}</dd>
+  <dt class="col-sm-3">First name</dt>
+  <dd class="col-sm-9">{{contact.firstName}}</dd>
 
-  <dt>Last name</dt>
-  <dd>{{contact.lastName}}</dd>
+  <dt class="col-sm-3">Last name</dt>
+  <dd class="col-sm-9">{{contact.lastName}}</dd>
 
-  <dt>Email</dt>
-  <dd>{{contact.email}}</dd>
+  <dt class="col-sm-3">Email</dt>
+  <dd class="col-sm-9">{{contact.email}}</dd>
 
-  <dt>Phone</dt>
-  <dd>{{contact.phone}}</dd>
+  <dt class="col-sm-3">Phone</dt>
+  <dd class="col-sm-9">{{contact.phone}}</dd>
 
-  <dt>Favourite</dt>
-  <dd>{{contact.favourite | checkmark}}</dd>
+  <dt class="col-sm-3">Favourite</dt>
+  <dd class="col-sm-9">{{contact.favourite | checkmark}}</dd>
 
-  <dt>Created At</dt>
-  <dd>{{contact.createdAt | date:'medium'}}</dd>
+  <dt class="col-sm-3">Created At</dt>
+  <dd class="col-sm-9">{{contact.createdAt | date:'medium'}}</dd>
 
-  <dt>Updated At</dt>
-  <dd>{{contact.updatedAt | date:'medium'}}</dd>
+  <dt class="col-sm-3">Updated At</dt>
+  <dd class="col-sm-9">{{contact.updatedAt | date:'medium'}}</dd>
 </dl>
 
-<dl class="dl-horizontal" *ngIf="contact.hasAddress()">
-  <dt>Street</dt>
-  <dd>{{contact.address.street}}</dd>
+<dl class="row" *ngIf="contact.hasAddress()">
+  <dt class="col-sm-3">Street</dt>
+  <dd class="col-sm-9">{{contact.address.street}}</dd>
 
-  <dt>Town</dt>
-  <dd>{{contact.address.town}}</dd>
+  <dt class="col-sm-3">Town</dt>
+  <dd class="col-sm-9">{{contact.address.town}}</dd>
 
-  <dt>Zip code</dt>
-  <dd>{{contact.address.zipCode}}</dd>
+  <dt class="col-sm-3">Zip code</dt>
+  <dd class="col-sm-9">{{contact.address.zipCode}}</dd>
 
-  <span *ngIf="contact.address.countryCode">
-    <dt>Country</dt>
-    <dd>
-      {{contact.address.countryCode | countryName}}
-      ({{contact.address.countryCode}})
-    </dd>
-  </span>
+  <dt class="col-sm-3">Country</dt>
+  <dd class="col-sm-9" *ngIf="contact.address.countryCode">
+    {{contact.address.countryCode | countryName}}
+    ({{contact.address.countryCode}})
+  </dd>
+  <dd class="col-sm-9" *ngIf="!contact.address.countryCode">
+    <i>none</i>
+  </dd>
+
 </dl>
 
 <a [routerLink]="['./edit']">Edit</a>
