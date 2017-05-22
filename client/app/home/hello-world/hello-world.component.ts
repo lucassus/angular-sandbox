@@ -21,7 +21,8 @@ export class HelloWorldComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('HelloWorldComponent.ngOnChanges', changes);
+    // TODO replace with toastr
+    // console.log('HelloWorldComponent.ngOnChanges', changes);
   }
 
 }
