@@ -15,3 +15,5 @@ export const SessionRecord = Record<ISessionState>({
 export class SessionState extends SessionRecord {
 
 }
+
+export const DEFAULT_SESSION_STATE = new SessionState();

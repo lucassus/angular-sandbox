@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { SessionState } from '../records/session-state';
+import { DEFAULT_SESSION_STATE, SessionState } from '../records/session-state';
 import {
   SESSION_AUTHENTICATION_ERROR,
   SESSION_AUTHENTICATION_SUCCESS,
@@ -8,8 +8,6 @@ import {
   SESSION_LOGOUT,
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
-
-export const DEFAULT_SESSION_STATE = new SessionState();
 
 export function sessionReducer(state: SessionState = DEFAULT_SESSION_STATE, action: Action): SessionState {
   switch (action.type) {
