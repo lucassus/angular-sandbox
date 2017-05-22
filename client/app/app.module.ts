@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterStoreModule } from '@ngrx/router-store';
-import { INITIAL_STATE, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './authentication.service';
@@ -16,8 +16,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AnonymousRequiredGuard, AppRoutes, AuthenticationRequiredGuard } from './routes';
 import { AuthenticationEffectService } from './store/effects/authentication-effect.service';
-import { DEFAULT_APPLICATION_STATE, IApplicationState } from './store/records/application-state';
-import { SessionState } from './store/records/session-state';
+import { provideInitialState } from './store/provide-initial-state';
 import { rootReducer } from './store/reducers/root-reducer';
 
 @NgModule({
@@ -31,22 +30,8 @@ import { rootReducer } from './store/reducers/root-reducer';
     AuthenticationService,
     AuthenticationRequiredGuard,
     AnonymousRequiredGuard,
-    {
-      provide: LocalStorageService,
-      useFactory: localStorageServiceFactory
-    },
-    {
-      provide: INITIAL_STATE,
-      useFactory(localStorage: LocalStorageService): IApplicationState {
-        const authenticated = localStorage.get('authenticated') === 'true' || false;
-
-        return {
-          ...DEFAULT_APPLICATION_STATE,
-          session: new SessionState({ authenticated })
-        };
-      },
-      deps: [LocalStorageService]
-    }
+    { provide: LocalStorageService, useFactory: localStorageServiceFactory },
+    provideInitialState()
   ],
   imports: [
     BrowserModule,
