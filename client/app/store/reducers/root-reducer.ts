@@ -2,9 +2,10 @@ import { compose } from '@ngrx/core';
 import { routerReducer as router } from '@ngrx/router-store';
 import { combineReducers } from '@ngrx/store';
 import { storeLogger } from 'ngrx-store-logger';
-import { sessionReducer as session } from './session-reducer';
+
 import { IApplicationState } from '../records/application-state';
 import { SessionState } from '../records/session-state';
+import { sessionReducer as session } from './session-reducer';
 
 const reducers = { session, router };
 

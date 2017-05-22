@@ -58,7 +58,7 @@ describe('AuthenticationEffectService', () => {
         const actions = [];
 
         effect.requestAuthentication$.subscribe((action) => {
-          actions.push(action)
+          actions.push(action);
         });
 
         expect(actions.length).toEqual(2);

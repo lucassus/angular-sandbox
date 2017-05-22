@@ -13,7 +13,7 @@ import { AuthenticationService } from './authentication.service';
 import { LoginComponent } from './login/login.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AppRoutes, AuthenticationGuard } from './routes';
+import { AnonymousRequiredGuard, AppRoutes, AuthenticationRequiredGuard } from './routes';
 import { AuthenticationEffectService } from './store/effects/authentication-effect.service';
 import { IApplicationState } from './store/records/application-state';
 import { SessionState } from './store/records/session-state';
@@ -28,7 +28,8 @@ import { DEFAULT_APPLICATION_STATE, rootReducer } from './store/reducers/root-re
   ],
   providers: [
     AuthenticationService,
-    AuthenticationGuard,
+    AuthenticationRequiredGuard,
+    AnonymousRequiredGuard,
     {
       provide: INITIAL_STATE,
       useFactory(): IApplicationState {
