@@ -39,7 +39,7 @@ export class AnonymousRequiredGuard implements CanActivate {
 
   constructor(private store: Store<IApplicationState>) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     return this.authenticated$.map((authenticated) => {
       if (authenticated) {
         this.store.dispatch(go(['/']));

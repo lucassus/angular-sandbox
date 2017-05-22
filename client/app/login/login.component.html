@@ -4,13 +4,13 @@
   <div class="form-group" [ngClass]="{ 'has-danger': authenticationError$ | async }">
     <label class="form-control-label" for="login-field">Login</label>
     <input type="text" formControlName="login"
-           class="form-control" id="login-field" placeholder="admin" />
+           class="form-control" id="login-field" placeholder="Login" />
   </div>
 
   <div class="form-group" [ngClass]="{ 'has-danger': authenticationError$ | async }">
     <label class="form-control-label" for="password-field">Password</label>
     <input type="password" formControlName="password"
-           class="form-control" id="password-field" placeholder="password" />
+           class="form-control" id="password-field" placeholder="Password" />
 
     <div class="form-control-feedback" *ngIf="authenticationError$ | async">
       Invalid login or password!
@@ -20,7 +20,9 @@
   <button type="submit" class="btn btn-success"
           [disabled]="loginForm.invalid || (authenticationPending$ | async)"
           (click)="login()">
-    <span *ngIf="!(authenticationPending$ | async)">Login</span>
-    <span *ngIf="authenticationPending$ | async">Logging in...</span>
+    <span *ngIf="!(authenticationPending$ | async); else pendingLabel">
+      Login
+    </span>
+    <ng-template #pendingLabel>Logging in...</ng-template>
   </button>
 </form>
