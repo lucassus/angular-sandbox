@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
+import { go } from '@ngrx/router-store';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -11,6 +12,8 @@ import {
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
 
+const DEFAULT_RETURN_URL = '/';
+
 @Injectable()
 export class AuthenticationEffectService {
 
@@ -18,13 +21,18 @@ export class AuthenticationEffectService {
   requestAuthentication$: Observable<Action> = this.actions$
     .ofType(SESSION_REQUEST_AUTHENTICATION)
     .switchMap((action: RequestAuthenticationAction) => {
-      const { login, password } = action.payload;
+      const { login, password, returnUrl } = action.payload;
 
-      return this.authentication.authenticate({ login, password }).map((success) => {
+      return this.authentication.authenticate({ login, password }).mergeMap((success) => {
         if (success) {
-          return new AuthenticationSuccessAction();
+          return [
+            new AuthenticationSuccessAction(),
+            go([returnUrl || DEFAULT_RETURN_URL])
+          ];
         } else {
-          return new AuthenticationErrorAction();
+          return [
+            new AuthenticationErrorAction()
+          ];
         }
       });
     });

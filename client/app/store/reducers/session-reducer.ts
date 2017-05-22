@@ -11,7 +11,7 @@ import {
 
 export const DEFAULT_SESSION_STATE = new SessionState();
 
-export function session(state: SessionState = DEFAULT_SESSION_STATE, action: Action): SessionState {
+export function sessionReducer(state: SessionState = DEFAULT_SESSION_STATE, action: Action): SessionState {
   switch (action.type) {
     case SESSION_REQUEST_AUTHENTICATION:
       return state

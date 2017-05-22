@@ -56,6 +56,7 @@
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.25",
     "@ngrx/core": "1.2.0",
     "@ngrx/effects": "2.0.3",
+    "@ngrx/router-store": "1.2.6",
     "@ngrx/store": "2.2.2",
     "bluebird": "3.5.0",
     "body-parser": "1.17.2",

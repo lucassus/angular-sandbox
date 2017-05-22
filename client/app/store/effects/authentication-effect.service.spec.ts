@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { stub } from 'sinon';
 
@@ -47,12 +48,21 @@ describe('AuthenticationEffectService', () => {
           .returns(Observable.of(true));
       });
 
-      it('returns valid action', () => {
-        runner.queue(new RequestAuthenticationAction(credentials));
+      it('dispatches valid actions', () => {
+        runner.queue(new RequestAuthenticationAction({
+          ...credentials,
+          returnUrl: '/foo/bar'
+        }));
+
+        const actions = [];
 
         effect.requestAuthentication$.subscribe((action) => {
-          expect(action instanceof AuthenticationSuccessAction).toBeTruthy();
+          actions.push(action)
         });
+
+        expect(actions.length).toEqual(2);
+        expect(actions[0] instanceof AuthenticationSuccessAction).toBeTruthy();
+        expect(actions[1]).toEqual(go(['/foo/bar']));
 
         expect(fakeAuthentication.authenticate.calledWith(credentials))
           .toBeTruthy();
@@ -67,8 +77,11 @@ describe('AuthenticationEffectService', () => {
           .returns(Observable.of(false));
       });
 
-      it('returns valid action', () => {
-        runner.queue(new RequestAuthenticationAction(credentials));
+      it('dispatches valid actions', () => {
+        runner.queue(new RequestAuthenticationAction({
+          ...credentials,
+          returnUrl: '/foo/bar'
+        }));
 
         effect.requestAuthentication$.subscribe((action) => {
           expect(action instanceof AuthenticationErrorAction).toBeTruthy();

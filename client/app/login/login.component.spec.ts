@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { spy, stub } from 'sinon';
+import { stub } from 'sinon';
 
+import { MockStore } from '../../testing/index';
 import { AuthenticationService } from '../authentication.service';
 import { IApplicationState } from '../store/records/application-state';
-import { session } from '../store/reducers/session-reducer';
+import { SessionState } from '../store/records/session-state';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -20,8 +21,7 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        StoreModule.provideStore(combineReducers({ session }))
+        ReactiveFormsModule
       ],
       providers: [{
         provide: ActivatedRoute,
@@ -31,12 +31,12 @@ describe('LoginComponent', () => {
           }
         }
       }, {
-        provide: Router,
-        useValue: { navigate: stub() }
-      }, {
         provide: AuthenticationService, useValue: {
           login: stub().returns(Observable.of(true))
         }
+      }, {
+        provide: Store,
+        useValue: new MockStore<IApplicationState>({ session: new SessionState(), router: null })
       }],
       declarations: [LoginComponent]
     });
@@ -60,17 +60,16 @@ describe('LoginComponent', () => {
       component.loginForm.get('login').setValue(credentials.login);
       component.loginForm.get('password').setValue(credentials.password);
 
-      const dispatchSpy = spy(store, 'dispatch');
-
       // When
       component.login();
 
       // Then
-      expect(dispatchSpy.called).toBeTruthy();
+      expect(store.dispatch['called']).toBeTruthy();
 
-      const action = dispatchSpy.lastCall.args[0];
+      const action = store.dispatch['lastCall'].args[0];
       expect(action.payload.login).toEqual(credentials.login);
       expect(action.payload.password).toEqual(credentials.password);
+      expect(action.payload.returnUrl).toEqual('/foo/bar');
     });
 
   });

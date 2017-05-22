@@ -29,7 +29,7 @@ describe('NavigationComponent', () => {
         provide: NgbModal, useValue: { open: stub() }
       }, {
         provide: Store,
-        useValue: new MockStore<IApplicationState>({ session: new SessionState() })
+        useValue: new MockStore<IApplicationState>({ session: new SessionState(), router: null })
       }],
       schemas: [NO_ERRORS_SCHEMA]
     });
@@ -90,7 +90,7 @@ describe('NavigationComponent', () => {
     describe('when authenticated', () => {
 
       beforeEach(() => {
-        store.next({ session: new SessionState({ authenticated: true }) });
+        store.next({ session: new SessionState({ authenticated: true }), router: null });
         fixture.detectChanges();
       });
 
@@ -103,7 +103,7 @@ describe('NavigationComponent', () => {
     describe('when not authenticated', () => {
 
       beforeEach(() => {
-        store.next({ session: new SessionState({ authenticated: false }) });
+        store.next({ session: new SessionState({ authenticated: false }), router: null });
         fixture.detectChanges();
       });
 

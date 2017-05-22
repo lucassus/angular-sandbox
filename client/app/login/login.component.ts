@@ -14,34 +14,19 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  authenticated$ = this.store
-    .select((store) => store.session.authenticated);
-
   authenticationError$ = this.store
     .select((store) => store.session.authenticationError);
 
   authenticationPending$ = this.store
     .select((store) => store.session.authenticationPending);
 
-  private returnUrl: string;
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
     private store: Store<IApplicationState>
   ) { }
 
   ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
-    // TODO refactor, use the store
-    this.authenticated$.subscribe((authenticated) => {
-      if (authenticated) {
-        this.router.navigate([this.returnUrl]);
-      }
-    });
-
     this.loginForm = this.fb.group({
       login: ['admin', Validators.required],
       password: ['password', Validators.required],
@@ -57,9 +42,12 @@ export class LoginComponent implements OnInit {
 
   login() {
     const { login, password } = this.loginForm.value;
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'];
 
     this.store.dispatch(new RequestAuthenticationAction({
-      login, password
+      login,
+      password,
+      returnUrl
     }));
   }
 

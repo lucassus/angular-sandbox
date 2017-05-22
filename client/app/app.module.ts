@@ -15,6 +15,7 @@ import { AppRoutes, AuthenticationGuard } from './routes';
 import { AuthenticationEffectService } from './store/effects/authentication-effect.service';
 import { rootReducer } from './store/reducers/root-reducer';
 import { LoginComponent } from './login/login.component';
+import { RouterStoreModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(AppRoutes),
+    RouterStoreModule.connectRouter(),
     StoreModule.provideStore(rootReducer),
     EffectsModule.run(AuthenticationEffectService)
   ],
