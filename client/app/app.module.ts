@@ -10,6 +10,7 @@ import { INITIAL_STATE, StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './authentication.service';
+import { LocalStorageService, localStorageServiceFactory } from './local-storage.service';
 import { LoginComponent } from './login/login.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -30,6 +31,10 @@ import { DEFAULT_APPLICATION_STATE, rootReducer } from './store/reducers/root-re
     AuthenticationService,
     AuthenticationRequiredGuard,
     AnonymousRequiredGuard,
+    {
+      provide: LocalStorageService,
+      useFactory: localStorageServiceFactory
+    },
     {
       provide: INITIAL_STATE,
       useFactory(): IApplicationState {
@@ -52,4 +57,5 @@ import { DEFAULT_APPLICATION_STATE, rootReducer } from './store/reducers/root-re
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
