@@ -15,8 +15,6 @@ import {
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
 
-const DEFAULT_RETURN_URL = '/';
-
 @Injectable()
 export class AuthenticationEffectService {
 
@@ -30,7 +28,7 @@ export class AuthenticationEffectService {
         if (success) {
           return [
             new AuthenticationSuccessAction(),
-            go([returnUrl || DEFAULT_RETURN_URL])
+            go([returnUrl])
           ];
         } else {
           return [

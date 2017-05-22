@@ -16,8 +16,13 @@ export class RequestAuthenticationAction implements Action {
 
   readonly type: string = SESSION_REQUEST_AUTHENTICATION;
 
-  constructor(public payload: IRequestAuthenticationActionPayload) {
+  public payload: IRequestAuthenticationActionPayload;
 
+  constructor({ login, password, returnUrl }: IRequestAuthenticationActionPayload) {
+    this.payload = {
+      login, password,
+      returnUrl: returnUrl || '/'
+    }
   }
 
 }
