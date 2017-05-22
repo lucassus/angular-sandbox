@@ -6,7 +6,7 @@ export interface ISessionState {
   authenticated: boolean;
 }
 
-const SessionRecord = Record<ISessionState>({
+export const SessionRecord = Record<ISessionState>({
   authenticationPending: false,
   authenticated: false,
   authenticationError: false
