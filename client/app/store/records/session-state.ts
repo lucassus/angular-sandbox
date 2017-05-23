@@ -6,7 +6,7 @@ export interface ISessionState {
   authenticated: boolean;
 }
 
-const SessionRecord = Record<ISessionState>({
+export const SessionRecord = Record<ISessionState>({
   authenticationPending: false,
   authenticated: false,
   authenticationError: false
@@ -15,3 +15,5 @@ const SessionRecord = Record<ISessionState>({
 export class SessionState extends SessionRecord {
 
 }
+
+export const DEFAULT_SESSION_STATE = new SessionState();

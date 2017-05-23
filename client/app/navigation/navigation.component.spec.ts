@@ -7,7 +7,7 @@ import { stub } from 'sinon';
 
 import { click, MockStore } from '../../testing';
 import { FakeRouterLinkDirective } from '../../testing/router-stubs';
-import { IApplicationState } from '../store/records/application-state';
+import { DEFAULT_APPLICATION_STATE, IApplicationState } from '../store/records/application-state';
 import { SessionState } from '../store/records/session-state';
 import { SESSION_LOGOUT } from '../store/session-actions';
 import { NavigationComponent } from './navigation.component';
@@ -29,7 +29,7 @@ describe('NavigationComponent', () => {
         provide: NgbModal, useValue: { open: stub() }
       }, {
         provide: Store,
-        useValue: new MockStore<IApplicationState>({ session: new SessionState() })
+        useValue: new MockStore<IApplicationState>(DEFAULT_APPLICATION_STATE)
       }],
       schemas: [NO_ERRORS_SCHEMA]
     });
@@ -59,7 +59,7 @@ describe('NavigationComponent', () => {
   }
 
   it('has navigation links', () => {
-    expect(findLinkDebugElements().length).toEqual(4);
+    expect(findLinkDebugElements().length).toEqual(5);
 
     expect(findLinkFor('/')).not.toBeUndefined();
     expect(findLinkFor('/contacts')).not.toBeUndefined();
@@ -90,7 +90,11 @@ describe('NavigationComponent', () => {
     describe('when authenticated', () => {
 
       beforeEach(() => {
-        store.next({ session: new SessionState({ authenticated: true }) });
+        store.next({
+          ...DEFAULT_APPLICATION_STATE,
+          session: new SessionState({ authenticated: true })
+        });
+
         fixture.detectChanges();
       });
 
@@ -103,7 +107,11 @@ describe('NavigationComponent', () => {
     describe('when not authenticated', () => {
 
       beforeEach(() => {
-        store.next({ session: new SessionState({ authenticated: false }) });
+        store.next({
+          ...DEFAULT_APPLICATION_STATE,
+          session: new SessionState({ authenticated: false })
+        });
+
         fixture.detectChanges();
       });
 

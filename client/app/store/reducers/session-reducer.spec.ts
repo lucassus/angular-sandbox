@@ -6,7 +6,7 @@ import {
   SESSION_LOGOUT,
   SESSION_REQUEST_AUTHENTICATION
 } from '../session-actions';
-import { session } from './session-reducer';
+import { sessionReducer } from './session-reducer';
 
 describe('session', () => {
 
@@ -19,7 +19,7 @@ describe('session', () => {
       });
 
       // When
-      const newState = session(state, { type: 'INVALID_ACTION' });
+      const newState = sessionReducer(state, { type: 'INVALID_ACTION' });
 
       // Then
       expect(state === newState).toBeTruthy();
@@ -36,7 +36,7 @@ describe('session', () => {
         authenticationPending: false
       });
 
-      newState = session(state, { type: SESSION_REQUEST_AUTHENTICATION });
+      newState = sessionReducer(state, { type: SESSION_REQUEST_AUTHENTICATION });
     });
 
     it('toggles `authenticationPending` flag', () => {
@@ -56,7 +56,7 @@ describe('session', () => {
         authenticationError: true
       });
 
-      newState = session(state, { type: SESSION_AUTHENTICATION_SUCCESS });
+      newState = sessionReducer(state, { type: SESSION_AUTHENTICATION_SUCCESS });
     });
 
     it('toggles `authenticationPending` flag', () => {
@@ -84,7 +84,7 @@ describe('session', () => {
         authenticationError: false
       });
 
-      newState = session(state, { type: SESSION_AUTHENTICATION_ERROR });
+      newState = sessionReducer(state, { type: SESSION_AUTHENTICATION_ERROR });
     });
 
     it('toggles `authenticationPending` flag', () => {
@@ -110,7 +110,7 @@ describe('session', () => {
         authenticationError: true
       });
 
-      newState = session(state, { type: SESSION_CLEAR_AUTHENTICATION_ERROR });
+      newState = sessionReducer(state, { type: SESSION_CLEAR_AUTHENTICATION_ERROR });
     });
 
     it('toggles `authenticationError` flag', () => {
@@ -128,7 +128,7 @@ describe('session', () => {
         authenticated: true
       });
 
-      newState = session(state, { type: SESSION_LOGOUT });
+      newState = sessionReducer(state, { type: SESSION_LOGOUT });
     });
 
     it('toggles `authenticated` flag', () => {

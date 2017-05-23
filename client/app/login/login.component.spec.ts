@@ -1,41 +1,49 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { spy, stub } from 'sinon';
+import { stub } from 'sinon';
 
+import { MockStore } from '../../testing/index';
 import { AuthenticationService } from '../authentication.service';
 import { IApplicationState } from '../store/records/application-state';
-import { session } from '../store/reducers/session-reducer';
-import { LoginModalComponent } from './login-modal.component';
+import { SessionState } from '../store/records/session-state';
+import { LoginComponent } from './login.component';
 
-describe('LoginModalComponent', () => {
+describe('LoginComponent', () => {
 
-  let component: LoginModalComponent;
-  let fixture: ComponentFixture<LoginModalComponent>;
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   let store: Store<IApplicationState>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        StoreModule.provideStore(combineReducers({ session }))
+        ReactiveFormsModule
       ],
       providers: [{
-        provide: NgbActiveModal, useValue: { close: stub() }
+        provide: ActivatedRoute,
+        useValue: {
+          snapshot: {
+            queryParams: { returnUrl: '/foo/bar' }
+          }
+        }
       }, {
         provide: AuthenticationService, useValue: {
           login: stub().returns(Observable.of(true))
         }
+      }, {
+        provide: Store,
+        useValue: new MockStore<IApplicationState>({ session: new SessionState(), router: null })
       }],
-      declarations: [LoginModalComponent]
+      declarations: [LoginComponent]
     });
 
     store = TestBed.get(Store);
 
-    fixture = TestBed.createComponent(LoginModalComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -52,17 +60,16 @@ describe('LoginModalComponent', () => {
       component.loginForm.get('login').setValue(credentials.login);
       component.loginForm.get('password').setValue(credentials.password);
 
-      const dispatchSpy = spy(store, 'dispatch');
-
       // When
       component.login();
 
       // Then
-      expect(dispatchSpy.called).toBeTruthy();
+      expect(store.dispatch['called']).toBeTruthy();
 
-      const action = dispatchSpy.lastCall.args[0];
+      const action = store.dispatch['lastCall'].args[0];
       expect(action.payload.login).toEqual(credentials.login);
       expect(action.payload.password).toEqual(credentials.password);
+      expect(action.payload.returnUrl).toEqual('/foo/bar');
     });
 
   });

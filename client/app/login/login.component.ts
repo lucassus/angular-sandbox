@@ -1,21 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { IApplicationState } from '../store/records/application-state';
 import { ClearAuthenticationError, RequestAuthenticationAction } from '../store/session-actions';
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html'
+  selector: 'app-login',
+  templateUrl: './login.component.html'
 })
-export class LoginModalComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-
-  authenticated$ = this.store
-    .select((store) => store.session.authenticated);
 
   authenticationError$ = this.store
     .select((store) => store.session.authenticationError);
@@ -24,8 +21,8 @@ export class LoginModalComponent implements OnInit {
     .select((store) => store.session.authenticationPending);
 
   constructor(
-    private activeModal: NgbActiveModal,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private store: Store<IApplicationState>
   ) { }
 
@@ -37,27 +34,20 @@ export class LoginModalComponent implements OnInit {
 
     this.clearErrors();
     this.loginForm.valueChanges.subscribe(() => this.clearErrors());
-
-    this.authenticated$.subscribe((authenticated) => {
-      if (authenticated) {
-        this.close();
-      }
-    });
   }
 
   private clearErrors() {
     this.store.dispatch(new ClearAuthenticationError());
   }
 
-  close() {
-    this.activeModal.close();
-  }
-
   login() {
     const { login, password } = this.loginForm.value;
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'];
 
     this.store.dispatch(new RequestAuthenticationAction({
-      login, password
+      login,
+      password,
+      returnUrl
     }));
   }
 

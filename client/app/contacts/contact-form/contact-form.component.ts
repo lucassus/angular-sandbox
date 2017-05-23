@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Config } from '../../config';
-import { phoneValidator } from '../../phone-validator';
+import { phoneValidator } from '../../forms/phone-validator';
 import { ICountry } from '../address';
 import { Contact } from '../contact';
 import { UniqueEmailValidator } from './unique-email-validator';
