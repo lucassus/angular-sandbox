@@ -1,5 +1,4 @@
 <h2>Editing contact for {{contact.fullName}}</h2>
 
 <app-contact-form [remotePending]="remotePending" [contact]="contact"
-                  (onChange)="formChanged($event)"
                   (onSubmit)="updateContact($event)"></app-contact-form>

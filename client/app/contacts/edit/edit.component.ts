@@ -26,10 +26,6 @@ export class EditComponent implements OnInit {
     });
   }
 
-  formChanged(values: any) {
-    this.contact = this.contact.mergeDeep(values);
-  }
-
   updateContact(data: any): Promise<boolean> {
     const contact = this.contact.mergeDeep(data);
 
@@ -41,6 +37,7 @@ export class EditComponent implements OnInit {
         return this.redirectToShow(updatedContact);
       }).catch(() => {
         this.remotePending = false;
+        return false;
       });
     } else {
       return this.redirectToShow(contact);

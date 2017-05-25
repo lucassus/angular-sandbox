@@ -6,7 +6,7 @@ import { AbstractControl } from '@angular/forms';
 })
 export class HasErrorDirective implements OnInit {
 
-  static CSS_CLASS = 'has-error';
+  static CSS_CLASS = 'has-danger';
 
   @Input('appHasError') control: AbstractControl;
 
