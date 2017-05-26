@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { GreeterService } from '../greeter.service';
 import { HelloWorldComponent } from './hello-world.component';
 
 @Component({
@@ -19,6 +20,12 @@ describe('HelloWorldComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: GreeterService,
+          useValue: new GreeterService('Hello')
+        }
+      ],
       declarations: [
         HelloWorldComponent,
         TestComponent
